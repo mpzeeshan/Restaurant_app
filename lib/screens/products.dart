@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/home.dart';
+import 'package:simplify/screens/cart.dart';
 
 Commons c = Commons();
 
@@ -360,7 +361,16 @@ class _ProductsState extends State<Products> {
                   ),
                 ),
               ),
-              bottomNavigationBar: c.cartTotal(),
+              bottomNavigationBar: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Cart(),
+                      ),
+                    );
+                  },
+                  child: c.cartTotal()),
             ),
           ),
         ),

@@ -196,24 +196,22 @@ class DataSearch extends SearchDelegate<String>{
         ? s.recent_search
         : s.suggestion_list.where((p) => p.startsWith(query.toLowerCase())).toList();
 
-    return Expanded(
-      child: ListView.separated(
-        separatorBuilder: (context, index) => Divider(color: Colors.grey[400],),
-        itemCount: SuggestionList.length,
-        itemBuilder: (context, index) => ListTile(
-          onTap: (){
-            showResults(context);
-          },
-          title: RichText(text: TextSpan(
-            text: SuggestionList[index].substring(0,query.length),
-            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-            children: [TextSpan(
-              text: SuggestionList[index].substring(query.length),
-              style: TextStyle(color: Colors.grey),
-            )],
-          ),),
-          leading: Icon(Icons.search, color: Colors.black,),
-        ),
+    return ListView.separated(
+      separatorBuilder: (context, index) => Divider(color: Colors.grey[400],),
+      itemCount: SuggestionList.length,
+      itemBuilder: (context, index) => ListTile(
+        onTap: (){
+          showResults(context);
+        },
+        title: RichText(text: TextSpan(
+          text: SuggestionList[index].substring(0,query.length),
+          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+          children: [TextSpan(
+            text: SuggestionList[index].substring(query.length),
+            style: TextStyle(color: Colors.grey),
+          )],
+        ),),
+        leading: Icon(Icons.search, color: Colors.black,),
       ),
     );
   }

@@ -3,7 +3,8 @@ import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
-import 'package:simplify/screens/more.dart';
+import 'package:simplify/UserAccount/more.dart';
+import 'package:simplify/UserAccount/SavedAddresses.dart';
 
 
 
@@ -144,10 +145,21 @@ class _HomeState extends State<Home> {
                                   )
                                 ],
                               ),
-                              Text(
-                                '31 A, RK Flats, near Vasushiti Mall. ...',
-                                style: TextStyle(
-                                    fontSize: 11.0, color: Colors.grey[600]),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SavedAddresses(),
+                                    ),
+                                  );
+
+                                },
+                                child: Text(
+                                  '31 A, RK Flats, near Vasushiti Mall. ...',
+                                  style: TextStyle(
+                                      fontSize: 11.0, color: Colors.grey[600]),
+                                ),
                               ),
                             ],
                           ),
