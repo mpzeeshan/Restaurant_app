@@ -11,7 +11,6 @@ class Otp extends StatefulWidget {
 }
 
 class _OtpState extends State<Otp> {
-
   bool isFilled = false;
 
   TextEditingController _myController = TextEditingController();
@@ -46,12 +45,12 @@ class _OtpState extends State<Otp> {
                 Material(
                   elevation: 2.0,
                   child: Container(
-
-                    color:  Colors.red[50],
+                    color: Colors.red[50],
                     height: 150.0,
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
-                      padding: const EdgeInsets.only(left:12.0,top: 10.0 ,right:40.0 ,bottom: 25.0 ),
+                      padding: const EdgeInsets.only(
+                          left: 12.0, top: 10.0, right: 40.0, bottom: 25.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -73,17 +72,35 @@ class _OtpState extends State<Otp> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left:6.0,bottom: 10.0),
+                                padding: const EdgeInsets.only(
+                                    left: 6.0, bottom: 10.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('VERIFY NUMBER',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0, letterSpacing: 2.0),),
-                                    SizedBox(height: 5.0,),
-                                    Text('OTP sent to $phone', style: TextStyle(fontSize: 12.0, color: Colors.grey),),
+                                    Text(
+                                      'VERIFY NUMBER',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                          letterSpacing: 2.0),
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Text(
+                                      'OTP sent to $phone',
+                                      style: TextStyle(
+                                          fontSize: 12.0, color: Colors.grey),
+                                    ),
                                   ],
                                 ),
                               ),
-                              Image(image: AssetImage('imgs/mobile.png',),height: 55.0),
+                              Image(
+                                  image: AssetImage(
+                                    'imgs/mobile.png',
+                                  ),
+                                  height: 55.0),
                             ],
                           ),
                         ],
@@ -92,51 +109,47 @@ class _OtpState extends State<Otp> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0,top:100.0, bottom: 20.0, right: 15.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, top: 100.0, bottom: 20.0, right: 15.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       OTPTextField(
-
                         length: 4,
-                        width: MediaQuery.of(context).size.width*0.62,
+                        width: MediaQuery.of(context).size.width * 0.62,
                         textFieldAlignment: MainAxisAlignment.spaceEvenly,
                         fieldWidth: 50,
-
                         fieldStyle: FieldStyle.underline,
-                        style: TextStyle(
-                            fontSize: 17
-                        ),
+                        style: TextStyle(fontSize: 35),
                         onCompleted: (pin) {
                           setState(() {
                             isFilled = true;
                           });
                           print("Completed: " + pin);
                         },
-
-
                       ),
-
-
-                    ],),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left:13.0,right: 13.0,bottom: 20.0),
+                    padding: const EdgeInsets.only(
+                        left: 13.0, right: 13.0, bottom: 20.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(
                           height: 46.0,
                           child: RaisedButton(
-                            color: isFilled? Colors.green:Colors.grey[400],
+                            color: isFilled ? Colors.green : Colors.grey[400],
                             child: Center(
-                                child: Text( isFilled?'VERIFY':'ENTER OTP',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      letterSpacing: 1.0,
-                                      fontSize: 17.0),
-                                )),
+                                child: Text(
+                              isFilled ? 'VERIFY' : 'ENTER OTP',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  letterSpacing: 1.0,
+                                  fontSize: 17.0),
+                            )),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -152,9 +165,7 @@ class _OtpState extends State<Otp> {
                   ),
                 ),
               ],
-
             ),
-
           ),
         ),
       ),

@@ -12,7 +12,6 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-
   //bool isTextFiledFocus = false;
 
   @override
@@ -32,7 +31,6 @@ class _SearchState extends State<Search> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(2.0),
-
                     child: GestureDetector(
                       child: Container(
                         color: Colors.grey[200],
@@ -41,34 +39,66 @@ class _SearchState extends State<Search> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            IconButton( icon: Icon(Icons.search), color: Colors.black, onPressed: (){},),
-                            SizedBox(width: 5.0,),
-                            Text("Search Restaurant / Cafe",style: TextStyle(color: Colors.grey, fontSize: 15.0),),
-
+                            IconButton(
+                              icon: Icon(Icons.search),
+                              color: Colors.black,
+                              onPressed: () {},
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              "Search Restaurant / Cafe",
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 15.0),
+                            ),
                           ],
                         ),
                       ),
-                      onTap: (){
+                      onTap: () {
                         showSearch(context: context, delegate: DataSearch());
                       },
                     ),
                   ),
-                  SizedBox(height: 35.0,),
-                  Text('RECENT SEARCH',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold,letterSpacing: 1.0),),
-                  SizedBox(height: 20.0,),
-                  Divider(height: 1.0,thickness: 1.3, color: Colors.black,),
-                  SizedBox(height: 5.0,),
-            Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(color: Colors.grey[400],),
-                itemCount: s.recent_search.length,
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(s.recent_search[index],style: TextStyle(color: Colors.grey[600]),),
-                  leading: Icon(Icons.search, color: Colors.black,),
-                ),
-              ),
-            ),
-
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  Text(
+                    'RECENT SEARCH',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Divider(
+                    height: 1.0,
+                    thickness: 1.3,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.grey[400],
+                      ),
+                      itemCount: s.recentSearch.length,
+                      itemBuilder: (context, index) => ListTile(
+                        title: Text(
+                          s.recentSearch[index],
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                        leading: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -115,40 +145,47 @@ class _SearchState extends State<Search> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
+            // ignore: deprecated_member_use
             title: Text(
               'Home',
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_offer),
+            // ignore: deprecated_member_use
             title: Text(
               'Offers',
               style: TextStyle(
-                color: Colors.black, ),
+                color: Colors.black,
+              ),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
+            // ignore: deprecated_member_use
             title: Text(
               'Search',
               style: TextStyle(
-                color: Colors.black,),
+                color: Colors.black,
+              ),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business_center),
+            // ignore: deprecated_member_use
             title: Text(
               'Cart',
               style: TextStyle(
-                color: Colors.black,),
+                color: Colors.black,
+              ),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
+            // ignore: deprecated_member_use
             title: Text(
               'More',
-              style: TextStyle(
-                  color: Colors.black),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         ],
@@ -157,26 +194,28 @@ class _SearchState extends State<Search> {
   }
 }
 
-class DataSearch extends SearchDelegate<String>{
-
-
+class DataSearch extends SearchDelegate<String> {
   @override
   List<Widget> buildActions(BuildContext context) {
     // TODO: implement buildActions
-    return [IconButton(icon: Icon(Icons.clear), onPressed: (){
-      query = "";
-    })];
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
+    ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     // TODO: implement buildLeading
     return IconButton(
-      icon : AnimatedIcon(
+      icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
       ),
-      onPressed: (){
+      onPressed: () {
         close(context, null);
       },
     );
@@ -192,29 +231,38 @@ class DataSearch extends SearchDelegate<String>{
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
 
-    final SuggestionList = query.isEmpty
-        ? s.recent_search
-        : s.suggestion_list.where((p) => p.startsWith(query.toLowerCase())).toList();
+    final suggestionList = query.isEmpty
+        ? s.recentSearch
+        : s.suggestionList
+            .where((p) => p.startsWith(query.toLowerCase()))
+            .toList();
 
     return ListView.separated(
-      separatorBuilder: (context, index) => Divider(color: Colors.grey[400],),
-      itemCount: SuggestionList.length,
+      separatorBuilder: (context, index) => Divider(
+        color: Colors.grey[400],
+      ),
+      itemCount: suggestionList.length,
       itemBuilder: (context, index) => ListTile(
-        onTap: (){
+        onTap: () {
           showResults(context);
         },
-        title: RichText(text: TextSpan(
-          text: SuggestionList[index].substring(0,query.length),
-          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-          children: [TextSpan(
-            text: SuggestionList[index].substring(query.length),
-            style: TextStyle(color: Colors.grey),
-          )],
-        ),),
-        leading: Icon(Icons.search, color: Colors.black,),
+        title: RichText(
+          text: TextSpan(
+            text: suggestionList[index].substring(0, query.length),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
+                text: suggestionList[index].substring(query.length),
+                style: TextStyle(color: Colors.grey),
+              )
+            ],
+          ),
+        ),
+        leading: Icon(
+          Icons.search,
+          color: Colors.black,
+        ),
       ),
     );
   }
-
 }
-

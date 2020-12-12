@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/screens/order_history.dart';
 
 class Payments extends StatefulWidget {
   @override
@@ -122,7 +123,14 @@ class _PaymentsState extends State<Payments> {
                                         0.055,
                                     width: MediaQuery.of(context).size.width,
                                     child: RaisedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OrderHistory()),
+                                        );
+                                      },
                                       child: Text(
                                         'PAY WITH CASH',
                                         style: TextStyle(color: Colors.white),

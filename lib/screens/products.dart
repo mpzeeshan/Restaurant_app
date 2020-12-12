@@ -5,18 +5,15 @@ import 'package:simplify/screens/cart.dart';
 
 Commons c = Commons();
 
-
 class Products extends StatefulWidget {
   @override
   _ProductsState createState() => _ProductsState();
 }
 
 class _ProductsState extends State<Products> {
-
   //*********************** METHOD FOR INCREMENT AND DECREMENT BUTTON **********************************************//
 
   Container size(count) {
-
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 1, color: Colors.grey[300]),
@@ -25,21 +22,21 @@ class _ProductsState extends State<Products> {
         height: 25.0,
         width: 75.0,
         child: Container(
-          color: c.flag_list[count] ? Colors.white : Colors.grey[100],
+          color: c.flagList[count] ? Colors.white : Colors.grey[100],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Visibility(
-                visible: !c.flag_list[count],
+                visible: !c.flagList[count],
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      c.coun_list[count] = c.coun_list[count] - 1;
-                      if (c.coun_list[count] >= 1) {
-                        c.price_list[count] = c.price_list[count] - 10;
+                      c.counList[count] = c.counList[count] - 1;
+                      if (c.counList[count] >= 1) {
+                        c.priceList[count] = c.priceList[count] - 10;
                       }
-                      if (c.coun_list[count] <= 0) {
-                        c.flag_list[count] = true;
+                      if (c.counList[count] <= 0) {
+                        c.flagList[count] = true;
                       }
                     });
                   },
@@ -50,12 +47,12 @@ class _ProductsState extends State<Products> {
                 ),
               ),
               Visibility(
-                visible: c.flag_list[count],
+                visible: c.flagList[count],
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      c.coun_list[count] = c.coun_list[count] + 1;
-                      c.flag_list[count] = false;
+                      c.counList[count] = c.counList[count] + 1;
+                      c.flagList[count] = false;
                     });
                   },
                   child: Text(
@@ -65,20 +62,20 @@ class _ProductsState extends State<Products> {
                 ),
               ),
               Visibility(
-                visible: !c.flag_list[count],
+                visible: !c.flagList[count],
                 child: Text(
-                  c.coun_list[count].toString(),
+                  c.counList[count].toString(),
                   style: TextStyle(color: Colors.black),
                 ),
               ),
               Visibility(
-                visible: !c.flag_list[count],
+                visible: !c.flagList[count],
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      c.coun_list[count] = c.coun_list[count] + 1;
-                      if (c.coun_list[count] > 1) {
-                        c.price_list[count] = c.price_list[count] + 10;
+                      c.counList[count] = c.counList[count] + 1;
+                      if (c.counList[count] > 1) {
+                        c.priceList[count] = c.priceList[count] + 10;
                       }
                     });
                   },
@@ -96,7 +93,6 @@ class _ProductsState extends State<Products> {
   }
 
   //***************************************************************************************************************//
-
 
   //****************************************METHOD FOR PRODUCTS****************************************************//
 
@@ -159,7 +155,7 @@ class _ProductsState extends State<Products> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '\$ ' + c.price_list[count].toString(),
+                        '\$ ' + c.priceList[count].toString(),
                         style: TextStyle(
                             color: Colors.blue[900], letterSpacing: -0.3),
                       ),
@@ -348,12 +344,12 @@ class _ProductsState extends State<Products> {
                             controller: ScrollController(),
                             scrollDirection: Axis.vertical,
                             children:
-                                List.generate(c.image_list.length, (index) {
+                                List.generate(c.imageList.length, (index) {
                               return products(
-                                  c.image_list[index],
-                                  c.cat_list[index],
-                                  c.pname_list[index],
-                                  c.coins_list[index],
+                                  c.imageList[index],
+                                  c.catList[index],
+                                  c.pnameList[index],
+                                  c.coinsList[index],
                                   index);
                             })),
                       ),
@@ -362,7 +358,7 @@ class _ProductsState extends State<Products> {
                 ),
               ),
               bottomNavigationBar: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

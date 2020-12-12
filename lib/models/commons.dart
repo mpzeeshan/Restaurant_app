@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-
-
 class Commons {
-  // ignore: non_constant_identifier_names
-  List<String> image_list = [
+  List<String> imageList = [
     "imgs/pimgone.jpeg",
     "imgs/pimgthree.jpeg",
     "imgs/pimgthree.jpeg",
@@ -12,7 +9,7 @@ class Commons {
     "imgs/pimgone.jpeg",
     "imgs/pimgthree.jpeg"
   ];
-  List<String> cat_list = [
+  List<String> catList = [
     "Regular",
     "Beverages",
     "Lunch",
@@ -20,7 +17,7 @@ class Commons {
     "Regular",
     "Beverages"
   ];
-  List<String> pname_list = [
+  List<String> pnameList = [
     "Ika Pirikara",
     "Sashimi Salad",
     "Spicy Trio",
@@ -28,17 +25,15 @@ class Commons {
     "Ika Parikara",
     "Sashimi Salad"
   ];
-  List<String> coins_list = ["100", "200", "300", "400", "500", "600"];
-  List<int> coun_list = [0, 0, 0, 0, 0, 0];
-  List<int> price_list = [10, 10, 10, 10, 10, 10];
-  List<bool> flag_list = [true, true, true, true, true, true];
+  List<String> coinsList = ["100", "200", "300", "400", "500", "600"];
+  List<int> counList = [0, 0, 0, 0, 0, 0];
+  List<int> priceList = [10, 10, 10, 10, 10, 10];
+  List<bool> flagList = [true, true, true, true, true, true];
 
   var price = 10;
   bool pressed_1 = false;
   bool pressed_2 = false;
   bool pressed_3 = true;
-
-
 
   //**************************OFFER*********************************//
 
@@ -60,7 +55,6 @@ class Commons {
   }
 
   //****************************************************************************************//
-
 
   //*********************************CART TOTAL BOTTOM NAV**********************************//
 
@@ -101,7 +95,4 @@ class Commons {
   }
 //***************************************************************************************
 
-
 }
-
-

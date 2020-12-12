@@ -1,6 +1,6 @@
 class SearchModels {
-  final List<String> recent_search = ["Brown Burger", "Pavbhaji", "Cafe Mocha"];
-  final List<String> suggestion_list = [
+  final List<String> recentSearch = ["Brown Burger", "Pavbhaji", "Cafe Mocha"];
+  final List<String> suggestionList = [
     "ika Parikara",
     "pavbhaji",
     "cafe Mocha",

@@ -29,10 +29,4 @@ class MoreModel {
     "Referrals",
     "Offers"
   ];
-
-  MoreModel({String fname, String lname, var email}) {
-    this.fname;
-    this.lname;
-    this.email;
-  }
 }

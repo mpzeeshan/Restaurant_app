@@ -5,7 +5,6 @@ import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
 
-
 MoreModel m = MoreModel();
 
 class More extends StatefulWidget {
@@ -134,54 +133,84 @@ class _MoreState extends State<More> {
                             DottedLine(
                               dashColor: Colors.grey,
                             ),
-                            Container(height: 350,
-                                child:
-                                ListView.builder(
-                                  itemCount: 2,
-                                  itemBuilder: (context, index) => Padding(
-                                    padding: const EdgeInsets.only(top:30.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-
-                                        Image(image: AssetImage(m.recentOrders[index]), height: 80.0,),
-                                        SizedBox(width: 15.0,),
-                                        Container(
-
-                                          width: MediaQuery.of(context).size.width*0.45,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-
-                                            children: [
-                                              Text(m.recentName[index]),
-                                              SizedBox(height: 7.0,),
-                                              Text(m.recentDate[index],style: TextStyle(color:Colors.grey,fontSize: 12.0),),
-                                              SizedBox(height: 5.0,),
-                                              Text(m.recentPrice[index],style: TextStyle(color:Colors.grey, fontSize: 12.0),),
-
-                                              RaisedButton(onPressed: (){},
-                                                child: Text('RE ORDER',style: TextStyle(color: Colors.white),),
-                                                color: Colors.grey[400],
+                            Container(
+                              height: 350,
+                              child: ListView.builder(
+                                itemCount: 2,
+                                itemBuilder: (context, index) => Padding(
+                                  padding: const EdgeInsets.only(top: 30.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image(
+                                        image:
+                                            AssetImage(m.recentOrders[index]),
+                                        height: 80.0,
+                                      ),
+                                      SizedBox(
+                                        width: 15.0,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.45,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(m.recentName[index]),
+                                            SizedBox(
+                                              height: 7.0,
+                                            ),
+                                            Text(
+                                              m.recentDate[index],
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12.0),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Text(
+                                              m.recentPrice[index],
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12.0),
+                                            ),
+                                            RaisedButton(
+                                              onPressed: () {},
+                                              child: Text(
+                                                'RE ORDER',
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              SizedBox(height: 15.0,),
-                                              Divider(thickness: 1.3,height: 1.0,color: Colors.grey,),
-                                            ],
-                                          ),
+                                              color: Colors.grey[400],
+                                            ),
+                                            SizedBox(
+                                              height: 15.0,
+                                            ),
+                                            Divider(
+                                              thickness: 1.3,
+                                              height: 1.0,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
                                         ),
-
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-
                                 ),
                               ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  Divider(height: 3.0, thickness: 17.0, color: Colors.grey[350]),
+                  Divider(
+                      height: 3.0, thickness: 17.0, color: Colors.grey[350]),
                   Padding(
                     padding: const EdgeInsets.only(left: 26.0, top: 27.0),
                     child: Text(
@@ -210,7 +239,6 @@ class _MoreState extends State<More> {
               );
               break;
 
-
             case 2:
               Navigator.push(
                 context,
@@ -236,40 +264,39 @@ class _MoreState extends State<More> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text(
-              'Home',
-            ),
+            // ignore: deprecated_member_use
+            title: Text('Home'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_offer),
+            // ignore: deprecated_member_use
             title: Text(
               'Offers',
-              style: TextStyle(
-                color: Colors.black, ),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
+            // ignore: deprecated_member_use
             title: Text(
               'Search',
-              style: TextStyle(
-                color: Colors.black,),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business_center),
+            // ignore: deprecated_member_use
             title: Text(
               'Cart',
               style: TextStyle(
-                color: Colors.black,),
+                color: Colors.black,
+              ),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
+            // ignore: deprecated_member_use
             title: Text(
               'More',
-              style: TextStyle(
-                  color: Colors.black),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         ],

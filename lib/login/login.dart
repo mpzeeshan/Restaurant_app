@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simplify/screens/otp.dart';
-
+import 'package:simplify/login/otp.dart';
 
 class Login extends StatelessWidget {
   @override

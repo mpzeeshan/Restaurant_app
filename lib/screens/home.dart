@@ -6,11 +6,6 @@ import 'package:simplify/screens/search.dart';
 import 'package:simplify/UserAccount/more.dart';
 import 'package:simplify/UserAccount/SavedAddresses.dart';
 
-
-
-
-
-
 Commons c = Commons();
 
 class Home extends StatefulWidget {
@@ -19,28 +14,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   //********************************** TOP DISHES ********************************************************//
 
-  Column topDishes(image, category) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(5.0),
-          child: Image(
-            height: 115.0,
-            image: AssetImage('$image'),
+  GestureDetector topDishes(image, category) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Products(),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 7.0),
-          child: Text(
-            '$category',
-            style: TextStyle(color: Colors.black, letterSpacing: 0.3),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: Image(
+              height: 115.0,
+              image: AssetImage('$image'),
+            ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 7.0),
+            child: Text(
+              '$category',
+              style: TextStyle(color: Colors.black, letterSpacing: 0.3),
+            ),
+          ),
+        ],
+      ),
     );
   } // TOP DISHES
 
@@ -59,7 +63,7 @@ class _HomeState extends State<Home> {
         Positioned(
             bottom: 0.0,
             child:
-            Image(image: AssetImage('imgs/image_shado.png'), height: 84.0)),
+                Image(image: AssetImage('imgs/image_shado.png'), height: 84.0)),
         Positioned(
           bottom: 0.0,
           child: Padding(
@@ -94,7 +98,6 @@ class _HomeState extends State<Home> {
   }
 
   //************************************************************************************************//
-
 
   @override
   Widget build(BuildContext context) {
@@ -146,14 +149,13 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                               GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => SavedAddresses(),
                                     ),
                                   );
-
                                 },
                                 child: Text(
                                   '31 A, RK Flats, near Vasushiti Mall. ...',
@@ -185,7 +187,7 @@ class _HomeState extends State<Home> {
                               width: MediaQuery.of(context).size.width,
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   on_offer(
                                       "imgs/image_home1.png",
@@ -205,55 +207,10 @@ class _HomeState extends State<Home> {
                               width: MediaQuery.of(context).size.width,
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  Stack(
-                                    children: [
-                                      Image(
-                                        image:
-                                        AssetImage('imgs/image_home3.png'),
-                                        height: 169.0,
-                                      ),
-                                      Positioned(
-                                        bottom: 0.0,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10.0, bottom: 10.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              c.offer(),
-                                              Text(
-                                                "SANDWICH'S",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: 'Robot'),
-                                              ),
-                                              Text(
-                                                "START FROM \$ 20",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                    FontWeight.bold),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 5.0),
-                                                child: Text(
-                                                  'EXPLORE NOW',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 8.0),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  on_offer("imgs/image_home3.png", "SANDWICH'S",
+                                      "START FROM \$ 20", "EXPLORE NOW"),
                                   on_offer("imgs/image_home4.png",
                                       "BREAKFAST AT", "50% OFF", "EXPLORE NOW"),
                                 ],
@@ -285,27 +242,8 @@ class _HomeState extends State<Home> {
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Products(),
-                                  ),
-                                );
-                              },
-                              child: topDishes("imgs/four.jpeg", "Regular")),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Products(),
-                                ),
-                              );
-                            },
-                            child: topDishes("imgs/pimgone.jpeg", "Beverages"),
-                          ),
+                          topDishes("imgs/four.jpeg", "Regular"),
+                          topDishes("imgs/pimgone.jpeg", "Beverages"),
 //
                         ],
                       ),
@@ -350,7 +288,6 @@ class _HomeState extends State<Home> {
                       );
                       break;
 
-
                     case 2:
                       Navigator.push(
                         context,
@@ -370,46 +307,51 @@ class _HomeState extends State<Home> {
                       );
                       break;
                   }
-
-                  setState(() {});
                 },
                 items: [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
+                    // ignore: deprecated_member_use
                     title: Text(
                       'Home',
                     ),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.local_offer),
+                    // ignore: deprecated_member_use
                     title: Text(
                       'Offers',
                       style: TextStyle(
-                        color: Colors.black, ),
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.search),
+                    // ignore: deprecated_member_use
                     title: Text(
                       'Search',
                       style: TextStyle(
-                        color: Colors.black,),
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.business_center),
+                    // ignore: deprecated_member_use
                     title: Text(
                       'Cart',
                       style: TextStyle(
-                        color: Colors.black,),
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.more_horiz),
+                    // ignore: deprecated_member_use
                     title: Text(
                       'More',
-                      style: TextStyle(
-                          color: Colors.black),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
