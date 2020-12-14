@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simplify/screens/order_history.dart';
+import 'package:simplify/Orders/order_history.dart';
 
 class Payments extends StatefulWidget {
   @override

@@ -32,12 +32,12 @@ class _HomeState extends State<Home> {
           ClipRRect(
             borderRadius: BorderRadius.circular(5.0),
             child: Image(
-              height: 115.0,
+              height: MediaQuery.of(context).size.height*0.14,
               image: AssetImage('$image'),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 7.0),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005,),
             child: Text(
               '$category',
               style: TextStyle(color: Colors.black, letterSpacing: 0.3),
@@ -58,12 +58,12 @@ class _HomeState extends State<Home> {
       children: [
         Image(
           image: AssetImage('$image'),
-          height: 171.0,
+          height: MediaQuery.of(context).size.height*0.209,
         ),
         Positioned(
             bottom: 0.0,
             child:
-                Image(image: AssetImage('imgs/image_shado.png'), height: 84.0)),
+                Image(image: AssetImage('imgs/image_shado.png'), height: MediaQuery.of(context).size.height*0.103)),
         Positioned(
           bottom: 0.0,
           child: Padding(
@@ -111,12 +111,12 @@ class _HomeState extends State<Home> {
             child: Scaffold(
               backgroundColor: Colors.white,
               body: Padding(
-                padding: const EdgeInsets.only(
-                    left: 17.0, top: 0.0, right: 17.0, bottom: 0.0),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width*0.05, top: 0.0, right: MediaQuery.of(context).size.width*0.05, bottom: 0.0),
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
+                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.012),
                       child: Row(
                         children: [
                           Padding(
@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02, bottom: MediaQuery.of(context).size.height*0.03),
                       child: Container(
                         child: Column(
                           children: [
@@ -237,7 +237,7 @@ class _HomeState extends State<Home> {
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
                       child: Row(
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -249,7 +249,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 14.0),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
                       child: Row(
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -260,7 +260,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 14.0),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
                       child: Row(
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

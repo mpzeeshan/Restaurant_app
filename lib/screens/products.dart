@@ -98,7 +98,7 @@ class _ProductsState extends State<Products> {
 
   Padding products(image, category, name, coins, count) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 55.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: Row(
         //Top Dishes
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,19 +109,19 @@ class _ProductsState extends State<Products> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: Image(
-                  height: 119.0,
+                  height: MediaQuery.of(context).size.width*0.3,
                   image: AssetImage('$image'),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
                 child: Text(
                   '$category',
                   style: TextStyle(color: Colors.grey[500], fontSize: 11.0),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005, bottom: MediaQuery.of(context).size.height*0.005),
                 child: Text(
                   '$name',
                   style: TextStyle(color: Colors.black),
@@ -130,12 +130,12 @@ class _ProductsState extends State<Products> {
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 7.5,
+                    radius: MediaQuery.of(context).size.width*0.015,
                     backgroundColor: Colors.orange,
                     child: Icon(
                       Icons.add_circle_outline,
                       color: Colors.yellow[600],
-                      size: 15.0,
+                      size: MediaQuery.of(context).size.width*0.025,
                     ),
                   ),
                   Text(
@@ -147,7 +147,7 @@ class _ProductsState extends State<Products> {
                   )
                 ],
               ),
-              Padding(
+              Padding(  ///////444444444444444
                 padding: const EdgeInsets.only(top: 10.0),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.45,
@@ -185,17 +185,17 @@ class _ProductsState extends State<Products> {
             builder: (context) => Scaffold(
               backgroundColor: Colors.white,
               body: Padding(
-                padding: const EdgeInsets.only(
-                    left: 10.0, top: 15.0, right: 10.0, bottom: 0.0),
+                padding:  EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width*0.03, top: 15.0, right: MediaQuery.of(context).size.width*0.03, bottom: 0.0),
                 child: Container(
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
+                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.02),
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
+                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.01),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -215,18 +215,18 @@ class _ProductsState extends State<Products> {
                                   Text(
                                     ' Single Serve Meals. Free Delivery.',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 17.0),
+                                        color: Colors.black, fontSize: 16.0),
                                   ),
                                 ],
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 4.0),
+                              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.01),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 7.0),
+                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.01),
                                     child: FlatButton(
                                       onPressed: () {
                                         print("Vegetarian");
@@ -237,7 +237,7 @@ class _ProductsState extends State<Products> {
                                         });
                                       },
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 18.0, vertical: 0.0),
+                                          horizontal: MediaQuery.of(context).size.width*0.04, vertical: 0.0),
                                       color: c.pressed_1
                                           ? Colors.blue[900]
                                           : Colors.white,
@@ -261,7 +261,7 @@ class _ProductsState extends State<Products> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 7.0),
+                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.014),
                                     child: FlatButton(
                                       onPressed: () {
                                         print("Non-Vegetarian");
@@ -272,7 +272,7 @@ class _ProductsState extends State<Products> {
                                         });
                                       },
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 0.0),
+                                          horizontal: MediaQuery.of(context).size.width*0.04, vertical: 0.0),
                                       color: c.pressed_2
                                           ? Colors.blue[900]
                                           : Colors.white,
@@ -296,7 +296,7 @@ class _ProductsState extends State<Products> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 7.0),
+                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.014),
                                     child: FlatButton(
                                       onPressed: () {
                                         print("Under \$15");
@@ -307,7 +307,7 @@ class _ProductsState extends State<Products> {
                                         });
                                       },
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 0.0),
+                                          horizontal: MediaQuery.of(context).size.width*0.03, vertical: 0.0),
                                       color: c.pressed_3
                                           ? Colors.blue[900]
                                           : Colors.white,
@@ -340,7 +340,7 @@ class _ProductsState extends State<Products> {
                       Expanded(
                         child: GridView.count(
                             crossAxisCount: 2,
-                            childAspectRatio: (0.68),
+                            childAspectRatio: (0.65),
                             controller: ScrollController(),
                             scrollDirection: Axis.vertical,
                             children:

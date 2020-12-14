@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/Orders/track_order.dart';
 
 final List<String> recentOrders = [
   "imgs/myAccount/pavbhaji.png",
@@ -214,7 +215,11 @@ class OrderHistory extends StatelessWidget {
                                                       .height *
                                                   0.03,
                                               child: RaisedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  index == 0 ? Navigator.push(context,MaterialPageRoute(
+                                                    builder: (context) => TrackOrder()
+                                                  ),) : index == 0 ;
+                                                },
                                                 child: Text(
                                                   index == 0
                                                       ? 'TRACK ORDER'
