@@ -13,8 +13,18 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+
 class _HomeState extends State<Home> {
   //********************************** TOP DISHES ********************************************************//
+
+  final List<String> textList = ["KFC", "Burger King"];
+  String _currentItemSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentItemSelected = textList[0];
+  }
 
   GestureDetector topDishes(image, category) {
     return GestureDetector(
@@ -29,12 +39,9 @@ class _HomeState extends State<Home> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5.0),
-            child: Image(
-              height: MediaQuery.of(context).size.height*0.14,
-              image: AssetImage('$image'),
-            ),
+          Image(
+            height: MediaQuery.of(context).size.height*0.145,
+            image: AssetImage('$image'),
           ),
           Padding(
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005,),
@@ -58,12 +65,12 @@ class _HomeState extends State<Home> {
       children: [
         Image(
           image: AssetImage('$image'),
-          height: MediaQuery.of(context).size.height*0.209,
+          height: MediaQuery.of(context).size.height*0.221,
         ),
         Positioned(
             bottom: 0.0,
             child:
-                Image(image: AssetImage('imgs/image_shado.png'), height: MediaQuery.of(context).size.height*0.103)),
+                Image(image: AssetImage('imgs/image_shado.png'), height: MediaQuery.of(context).size.height*0.109)),
         Positioned(
           bottom: 0.0,
           child: Padding(
@@ -112,19 +119,16 @@ class _HomeState extends State<Home> {
               backgroundColor: Colors.white,
               body: Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width*0.05, top: 0.0, right: MediaQuery.of(context).size.width*0.05, bottom: 0.0),
+                    left: MediaQuery.of(context).size.width*0.024, top: 0.0, right: MediaQuery.of(context).size.width*0.024, bottom: 0.0),
                 child: ListView(
                   children: [
                     Padding(
                       padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.012),
                       child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 11.0),
-                            child: Icon(
-                              Icons.menu,
-                              color: Colors.black,
-                            ),
+                          Icon(
+                            Icons.menu,
+                            color: Colors.black,
                           ),
                           SizedBox(
                             width: 10.0,
@@ -134,35 +138,32 @@ class _HomeState extends State<Home> {
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    'HOME',
-                                    style: TextStyle(
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue[900]),
-                                  ),
-                                  Icon(
-                                    Icons.expand_more,
-                                    color: Colors.indigo[200],
-                                    size: 22.0,
-                                  )
+                                  PopupMenuButton<String>(
+                              itemBuilder: (context) {
+                                return textList.map((str) {
+                                  return PopupMenuItem(
+                                  value: str,
+                                  child: Text(str,style: TextStyle(color: Colors.blue[900]),),
+                               );
+                                      }).toList();
+                                      },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Text(_currentItemSelected,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[900],fontSize: 15.0,letterSpacing: 0.7),),
+                                            Icon(Icons.arrow_drop_down,color: Colors.blue[900],),
+                                          ],
+                                        ),
+                                        onSelected: (v) {
+                                          setState(() {
+                                            print('!!!===== $v');
+                                            _currentItemSelected = v;
+                                          });
+                                        },
+                                      ),
                                 ],
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SavedAddresses(),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  '31 A, RK Flats, near Vasushiti Mall. ...',
-                                  style: TextStyle(
-                                      fontSize: 11.0, color: Colors.grey[600]),
-                                ),
-                              ),
+
                             ],
                           ),
                           Expanded(
@@ -363,3 +364,19 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+//GestureDetector(
+//onTap: () {
+//Navigator.push(
+//context,
+//MaterialPageRoute(
+//builder: (context) => SavedAddresses(),
+//),
+//);
+//},
+//child: Text(
+//'31 A, RK Flats, near Vasushiti Mall. ...',
+//style: TextStyle(
+//fontSize: 11.0, color: Colors.grey[600]),
+//),
+//),

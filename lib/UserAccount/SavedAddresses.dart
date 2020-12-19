@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/models/Address_model.dart';
-//import 'package:simplify/UserAccount/NewAddress.dart';
+import 'package:simplify/UserAccount/NewAddress.dart';
 
 AddressModel am = AddressModel();
 
@@ -127,10 +127,10 @@ class SavedAddresses extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         onPressed: () {
-//                          Navigator.push(
-//                            context,
-//                            MaterialPageRoute(builder: (context) => NewAddress()),
-//                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NewAddress()),
+                          );
                         },
                         child: Text(
                           'Add New Address',

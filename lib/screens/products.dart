@@ -24,7 +24,7 @@ class _ProductsState extends State<Products> {
         child: Container(
           color: c.flagList[count] ? Colors.white : Colors.grey[100],
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
                 visible: !c.flagList[count],
@@ -40,9 +40,15 @@ class _ProductsState extends State<Products> {
                       }
                     });
                   },
-                  child: Text(
-                    '-',
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
+                  child: SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: Center(
+                      child: Text(
+                        '-',
+                        style: TextStyle(color: Colors.black, fontSize: 19.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -55,17 +61,23 @@ class _ProductsState extends State<Products> {
                       c.flagList[count] = false;
                     });
                   },
-                  child: Text(
-                    '+ Add',
-                    style: TextStyle(color: Colors.orange[700]),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:6.0),
+                    child: Text(
+                      '+ Add',
+                      style: TextStyle(color: Colors.orange[700]),
+                    ),
                   ),
                 ),
               ),
               Visibility(
                 visible: !c.flagList[count],
-                child: Text(
-                  c.counList[count].toString(),
-                  style: TextStyle(color: Colors.black),
+                child: Padding(
+                  padding: const EdgeInsets.only(right:3.0),
+                  child: Text(
+                    c.counList[count].toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
               Visibility(
@@ -79,9 +91,15 @@ class _ProductsState extends State<Products> {
                       }
                     });
                   },
-                  child: Text(
-                    '+',
-                    style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  child: SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: Center(
+                      child: Text(
+                        '+',
+                        style: TextStyle(color: Colors.black, fontSize: 17.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -106,12 +124,9 @@ class _ProductsState extends State<Products> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5.0),
-                child: Image(
-                  height: MediaQuery.of(context).size.width*0.3,
-                  image: AssetImage('$image'),
-                ),
+              Image(
+                height: MediaQuery.of(context).size.width*0.3,
+                image: AssetImage('$image'),
               ),
               Padding(
                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
@@ -340,7 +355,7 @@ class _ProductsState extends State<Products> {
                       Expanded(
                         child: GridView.count(
                             crossAxisCount: 2,
-                            childAspectRatio: (0.65),
+                            childAspectRatio: (0.73),
                             controller: ScrollController(),
                             scrollDirection: Axis.vertical,
                             children:

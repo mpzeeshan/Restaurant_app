@@ -21,7 +21,7 @@ class _CartState extends State<Cart> {
         child: Container(
           color: c.flagList[count] ? Colors.white : Colors.grey[100],
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
                 visible: !c.flagList[count],
@@ -37,9 +37,15 @@ class _CartState extends State<Cart> {
                       }
                     });
                   },
-                  child: Text(
-                    '-',
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
+                  child: SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: Center(
+                      child: Text(
+                        '-',
+                        style: TextStyle(color: Colors.black, fontSize: 19.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -52,17 +58,23 @@ class _CartState extends State<Cart> {
                       c.flagList[count] = false;
                     });
                   },
-                  child: Text(
-                    '+ Add',
-                    style: TextStyle(color: Colors.orange[700]),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:6.0),
+                    child: Text(
+                      '+ Add',
+                      style: TextStyle(color: Colors.orange[700]),
+                    ),
                   ),
                 ),
               ),
               Visibility(
                 visible: !c.flagList[count],
-                child: Text(
-                  c.counList[count].toString(),
-                  style: TextStyle(color: Colors.black),
+                child: Padding(
+                  padding: const EdgeInsets.only(right:3.0),
+                  child: Text(
+                    c.counList[count].toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
               Visibility(
@@ -76,9 +88,15 @@ class _CartState extends State<Cart> {
                       }
                     });
                   },
-                  child: Text(
-                    '+',
-                    style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  child: SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: Center(
+                      child: Text(
+                        '+',
+                        style: TextStyle(color: Colors.black, fontSize: 17.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -367,69 +385,69 @@ class _CartState extends State<Cart> {
       bottomNavigationBar: Row(
         children: [
           Expanded(
-            child: Container(
-              height: 45.0,
-              //width: MediaQuery.of(context).size.width,
-              color: Colors.blue[900],
-              child: Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '\$ 17',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderSummary()),
+                );
+              },
+              child: Container(
+                height: 45.0,
+                //width: MediaQuery.of(context).size.width,
+                color: Colors.blue[900],
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15.0, right: 0.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '\$ 17',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13.0,
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OrderSummary()),
-                              );
-                            },
-                            child: Text(
+                            Text(
                               'VIEW DETAILED BILL',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.0,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Payments()),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        height: 45.0,
-                        color: Colors.green,
-                        child: Center(
-                          child: Text(
-                            'PROCEED TO PAY',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Payments()),
+                          );
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          height: 45.0,
+                          color: Colors.green,
+                          child: Center(
+                            child: Text(
+                              'PROCEED TO PAY',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -2,27 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:simplify/screens/home.dart';
+import 'package:simplify/models/otp_model.dart';
+import 'package:simplify/services/otp_service.dart';
+import 'package:simplify/login/login.dart';
 
-int phone = 9876545321;
 
-class Otp extends StatefulWidget {
+
+var pinn;
+
+
+class Ottp extends StatefulWidget {
+
   @override
   _OtpState createState() => _OtpState();
 }
 
-class _OtpState extends State<Otp> {
+class _OtpState extends State<Ottp> {
+  Login l = Login();
+  OtpService s = OtpService();
   bool isFilled = false;
+  int phone = 7302368005;
+  bool _wrong = false;
+
+  Future<OtpModel> _otpModel;
 
   TextEditingController _myController = TextEditingController();
 
+  static var r_pinn;
+
   @override
   void initState() {
+    pinfunc();
     super.initState();
     _myController.text = '';
     _myController.addListener(() {
       setState(() {}); // setState every time text changes
     });
   }
+
+  void pinfunc() async{
+     r_pinn = await s.getOTP();
+    print(r_pinn);
+  }
+
 
   @override
   void dispose() {
@@ -120,12 +142,15 @@ class _OtpState extends State<Otp> {
                         textFieldAlignment: MainAxisAlignment.spaceEvenly,
                         fieldWidth: 50,
                         fieldStyle: FieldStyle.underline,
+
                         style: TextStyle(fontSize: 35),
+
                         onCompleted: (pin) {
                           setState(() {
                             isFilled = true;
                           });
                           print("Completed: " + pin);
+                          pinn = int.parse(pin);
                         },
                       ),
                     ],
@@ -136,8 +161,9 @@ class _OtpState extends State<Otp> {
                     padding: const EdgeInsets.only(
                         left: 13.0, right: 13.0, bottom: 20.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Visibility(visible: (_wrong), child: Text('Wrong Otp Entered',style: TextStyle(color: Colors.red),),),
                         SizedBox(
                           height: 46.0,
                           child: RaisedButton(
@@ -151,12 +177,27 @@ class _OtpState extends State<Otp> {
                                   fontSize: 17.0),
                             )),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ),
-                              );
+
+                              var ph = int.parse(r_pinn);
+
+                                if(ph == pinn){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Home(),
+                                    ),
+                                  );
+                                }else if(ph != pinn){
+                                  setState(() {
+                                    _wrong = !_wrong;
+                                  });
+
+                                  print('Wrong otp');
+                                  print(pinn);
+                                  print(ph);
+                                }
+
+
                             },
                           ),
                         ),
