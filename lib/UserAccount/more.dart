@@ -4,6 +4,7 @@ import 'package:simplify/models/more_model.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
+import 'package:simplify/screens/wallet.dart';
 
 MoreModel m = MoreModel();
 
@@ -99,15 +100,23 @@ class _MoreState extends State<More> {
                         SizedBox(
                           height: 8.0,
                         ),
-                        ListTile(
-                          title: Text('HELP'),
-                          subtitle: Text(
-                            'Order related queries or any other',
-                            style: TextStyle(
-                                fontSize: 11.0, color: Colors.grey[500]),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Wallet()),
+                            );
+                          },
+                          child: ListTile(
+                            title: Text('HELP'),
+                            subtitle: Text(
+                              'Order related queries or any other',
+                              style: TextStyle(
+                                  fontSize: 11.0, color: Colors.grey[500]),
+                            ),
+                            trailing: Icon(Icons.keyboard_arrow_right,
+                                color: Colors.black),
                           ),
-                          trailing: Icon(Icons.keyboard_arrow_right,
-                              color: Colors.black),
                         ),
                         SizedBox(
                           height: 8.0,
