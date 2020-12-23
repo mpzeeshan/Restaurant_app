@@ -4,7 +4,6 @@ import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
 import 'package:simplify/UserAccount/more.dart';
-import 'package:simplify/UserAccount/SavedAddresses.dart';
 
 Commons c = Commons();
 

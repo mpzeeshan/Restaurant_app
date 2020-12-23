@@ -1,7 +1,6 @@
 // To parse this JSON data, do
 //
 //     final otpModel = otpModelFromJson(jsonString);
-
 import 'dart:convert';
 
 OtpModel otpModelFromJson(String str) => OtpModel.fromJson(json.decode(str));

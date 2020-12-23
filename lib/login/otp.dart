@@ -3,47 +3,26 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:simplify/screens/home.dart';
 import 'package:simplify/models/otp_model.dart';
+import 'package:get_it/get_it.dart';
 import 'package:simplify/services/otp_service.dart';
-import 'package:simplify/login/login.dart';
-
-
-
-var pinn;
-
 
 class Ottp extends StatefulWidget {
-
   @override
   _OtpState createState() => _OtpState();
 }
 
 class _OtpState extends State<Ottp> {
-  Login l = Login();
-  OtpService s = OtpService();
-  bool isFilled = false;
-  int phone = 7302368005;
-  bool _wrong = false;
 
-  Future<OtpModel> _otpModel;
+  OtpService get serviceOtp => GetIt.I<OtpService>();
+  bool isFilled = false;
+  bool _wrong = false;
+  String errorMessage;
+  OtpModel otpModel;
+  var pinn;
 
   TextEditingController _myController = TextEditingController();
 
-  static var r_pinn;
-
-  @override
-  void initState() {
-    pinfunc();
-    super.initState();
-    _myController.text = '';
-    _myController.addListener(() {
-      setState(() {}); // setState every time text changes
-    });
-  }
-
-  void pinfunc() async{
-     r_pinn = await s.getOTP();
-    print(r_pinn);
-  }
+  static var receivedPinn;
 
 
   @override
@@ -51,6 +30,23 @@ class _OtpState extends State<Ottp> {
     _myController.dispose();
     super.dispose();
   }
+
+  @override
+  void initState() {
+
+    super.initState();
+    _myController.text = '';
+    _myController.addListener(() {
+      setState(() {});// setState every time text changes
+    });
+    serviceOtp.getOTP().then((response){
+      if (response.error) {
+        errorMessage = response.errorMessage ?? 'An error occurred';
+      }
+      otpModel = response.data;
+      receivedPinn = otpModel.otp;
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +107,7 @@ class _OtpState extends State<Ottp> {
                                       height: 5.0,
                                     ),
                                     Text(
-                                      'OTP sent to $phone',
+                                      'OTP sent to ' + serviceOtp.phone,
                                       style: TextStyle(
                                           fontSize: 12.0, color: Colors.grey),
                                     ),
@@ -142,9 +138,7 @@ class _OtpState extends State<Ottp> {
                         textFieldAlignment: MainAxisAlignment.spaceEvenly,
                         fieldWidth: 50,
                         fieldStyle: FieldStyle.underline,
-
                         style: TextStyle(fontSize: 35),
-
                         onCompleted: (pin) {
                           setState(() {
                             isFilled = true;
@@ -163,7 +157,13 @@ class _OtpState extends State<Ottp> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Visibility(visible: (_wrong), child: Text('Wrong Otp Entered',style: TextStyle(color: Colors.red),),),
+                        Visibility(
+                          visible: (_wrong),
+                          child: Text(
+                            'Wrong Otp Entered',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
                         SizedBox(
                           height: 46.0,
                           child: RaisedButton(
@@ -177,27 +177,24 @@ class _OtpState extends State<Ottp> {
                                   fontSize: 17.0),
                             )),
                             onPressed: () {
+                              var ph = int.parse(receivedPinn);
 
-                              var ph = int.parse(r_pinn);
+                              if (ph == pinn) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Home(),
+                                  ),
+                                );
+                              } else if (ph != pinn) {
+                                setState(() {
+                                  _wrong = !_wrong;
+                                });
 
-                                if(ph == pinn){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ),
-                                  );
-                                }else if(ph != pinn){
-                                  setState(() {
-                                    _wrong = !_wrong;
-                                  });
-
-                                  print('Wrong otp');
-                                  print(pinn);
-                                  print(ph);
-                                }
-
-
+                                print('Wrong otp');
+                                print(pinn);
+                                print(ph);
+                              }
                             },
                           ),
                         ),

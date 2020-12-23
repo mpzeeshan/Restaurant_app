@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:simplify/screens/payments.dart';
+import 'package:simplify/payment/payments.dart';
 import 'package:simplify/Orders/order_summary.dart';
 
 class Cart extends StatefulWidget {

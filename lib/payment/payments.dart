@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/Orders/order_history.dart';
+import 'package:simplify/payment/payment_success.dart';
 
 class Payments extends StatefulWidget {
   @override
@@ -129,7 +130,7 @@ class _PaymentsState extends State<Payments> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    OrderHistory()),
+                                                    PaymentSuccess()),
                                           );
                                         },
                                         child: Text(

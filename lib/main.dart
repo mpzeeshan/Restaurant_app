@@ -3,14 +3,14 @@ import 'package:simplify/login/login.dart';
 import 'package:get_it/get_it.dart';
 import 'package:simplify/services/otp_service.dart';
 
-//
-//void setupLocator(){
-// GetIt.I.registerLazySingleton(() => OtpService());
-//}
+
+void setupLocator(){
+ GetIt.I.registerLazySingleton(() => OtpService());
+}
 
 void main() {
   runApp(App());
-//  setupLocator();
+  setupLocator();
 }
 
 class App extends StatefulWidget {

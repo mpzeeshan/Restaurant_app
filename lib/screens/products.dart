@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/home.dart';
 import 'package:simplify/screens/cart.dart';
+import 'package:simplify/screens/single_product_view.dart';
 
 Commons c = Commons();
 
@@ -62,7 +63,7 @@ class _ProductsState extends State<Products> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left:6.0),
+                    padding: const EdgeInsets.only(left: 6.0),
                     child: Text(
                       '+ Add',
                       style: TextStyle(color: Colors.orange[700]),
@@ -73,7 +74,7 @@ class _ProductsState extends State<Products> {
               Visibility(
                 visible: !c.flagList[count],
                 child: Padding(
-                  padding: const EdgeInsets.only(right:3.0),
+                  padding: const EdgeInsets.only(right: 3.0),
                   child: Text(
                     c.counList[count].toString(),
                     style: TextStyle(color: Colors.black),
@@ -124,19 +125,30 @@ class _ProductsState extends State<Products> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image(
-                height: MediaQuery.of(context).size.width*0.3,
-                image: AssetImage('$image'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SingleProduct()),
+                  );
+                },
+                child: Image(
+                  height: MediaQuery.of(context).size.width * 0.31,
+                  image: AssetImage('$image'),
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.01),
                 child: Text(
                   '$category',
                   style: TextStyle(color: Colors.grey[500], fontSize: 11.0),
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005, bottom: MediaQuery.of(context).size.height*0.005),
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.005,
+                    bottom: MediaQuery.of(context).size.height * 0.005),
                 child: Text(
                   '$name',
                   style: TextStyle(color: Colors.black),
@@ -145,12 +157,12 @@ class _ProductsState extends State<Products> {
               Row(
                 children: [
                   CircleAvatar(
-                    radius: MediaQuery.of(context).size.width*0.015,
+                    radius: MediaQuery.of(context).size.width * 0.015,
                     backgroundColor: Colors.orange,
                     child: Icon(
                       Icons.add_circle_outline,
                       color: Colors.yellow[600],
-                      size: MediaQuery.of(context).size.width*0.025,
+                      size: MediaQuery.of(context).size.width * 0.025,
                     ),
                   ),
                   Text(
@@ -162,7 +174,8 @@ class _ProductsState extends State<Products> {
                   )
                 ],
               ),
-              Padding(  ///////444444444444444
+              Padding(
+                ///////444444444444444
                 padding: const EdgeInsets.only(top: 10.0),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.45,
@@ -190,202 +203,90 @@ class _ProductsState extends State<Products> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.blueGrey[900], fontFamily: 'Robot'),
-      debugShowCheckedModeBanner: false,
-      home: Container(
-        color: Colors.teal[700],
-        child: SafeArea(
-          child: Builder(
-            builder: (context) => Scaffold(
-              backgroundColor: Colors.white,
-              body: Padding(
-                padding:  EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width*0.03, top: 15.0, right: MediaQuery.of(context).size.width*0.03, bottom: 0.0),
-                child: Container(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.02),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.01),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    child: Icon(
-                                      Icons.arrow_back,
-                                      color: Colors.black,
-                                    ),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Home()),
-                                      );
-                                    },
-                                  ),
-                                  Text(
-                                    ' Single Serve Meals. Free Delivery.',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 16.0),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.01),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.01),
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        print("Vegetarian");
-                                        setState(() {
-                                          c.pressed_1 = !c.pressed_1;
-                                          c.pressed_2 = false;
-                                          c.pressed_3 = false;
-                                        });
-                                      },
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context).size.width*0.04, vertical: 0.0),
-                                      color: c.pressed_1
-                                          ? Colors.blue[900]
-                                          : Colors.white,
-                                      textColor: c.pressed_1
-                                          ? Colors.white
-                                          : Colors.grey[500],
-                                      child: Text(
-                                        "Vegetarian",
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      shape: new RoundedRectangleBorder(
-                                        side: BorderSide(
-                                            color: c.pressed_1
-                                                ? Colors.blue[900]
-                                                : Colors.grey[300]),
-                                        borderRadius:
-                                            new BorderRadius.circular(0.0),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.014),
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        print("Non-Vegetarian");
-                                        setState(() {
-                                          c.pressed_2 = !c.pressed_2;
-                                          c.pressed_1 = false;
-                                          c.pressed_3 = false;
-                                        });
-                                      },
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context).size.width*0.04, vertical: 0.0),
-                                      color: c.pressed_2
-                                          ? Colors.blue[900]
-                                          : Colors.white,
-                                      textColor: c.pressed_2
-                                          ? Colors.white
-                                          : Colors.grey[500],
-                                      child: Text(
-                                        "Non-Vegetarian",
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      shape: new RoundedRectangleBorder(
-                                        side: BorderSide(
-                                            color: c.pressed_2
-                                                ? Colors.blue[900]
-                                                : Colors.grey[300]),
-                                        borderRadius:
-                                            new BorderRadius.circular(0.0),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.014),
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        print("Under \$15");
-                                        setState(() {
-                                          c.pressed_3 = !c.pressed_3;
-                                          c.pressed_2 = false;
-                                          c.pressed_1 = false;
-                                        });
-                                      },
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context).size.width*0.03, vertical: 0.0),
-                                      color: c.pressed_3
-                                          ? Colors.blue[900]
-                                          : Colors.white,
-                                      textColor: c.pressed_3
-                                          ? Colors.white
-                                          : Colors.grey[500],
-                                      child: Text(
-                                        "Under \$15",
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      shape: new RoundedRectangleBorder(
-                                        side: BorderSide(
-                                            color: c.pressed_3
-                                                ? Colors.blue[900]
-                                                : Colors.grey[300]),
-                                        borderRadius:
-                                            new BorderRadius.circular(0.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ), //SwitchTabs
-                          ],
-                        ),
-                      ),
-                      //product scroll view
-                      Expanded(
-                        child: GridView.count(
-                            crossAxisCount: 2,
-                            childAspectRatio: (0.73),
-                            controller: ScrollController(),
-                            scrollDirection: Axis.vertical,
-                            children:
-                                List.generate(c.imageList.length, (index) {
-                              return products(
-                                  c.imageList[index],
-                                  c.catList[index],
-                                  c.pnameList[index],
-                                  c.coinsList[index],
-                                  index);
-                            })),
-                      ),
+    return  DefaultTabController(
+        length: 3,
+        child: Container(
+          color: Colors.teal[700],
+          child: SafeArea(
+            child: Scaffold(
+                appBar: AppBar(
+                  elevation: 0.0,
+                  backgroundColor: Colors.white,
+                  bottom: TabBar(
+                    indicatorPadding: EdgeInsets.all(4.0),
+                    unselectedLabelColor: Colors.grey[600],
+
+                    indicatorColor: Colors.blue[900],
+                    labelColor: Colors.white,
+                    indicator: BoxDecoration(
+
+                    gradient: LinearGradient(
+                    colors: [Colors.blue[900], Colors.blue[900]]),
+
+                    ),
+                    tabs: [
+                      Tab(text: 'Vegetarian',),
+                      Tab(text: 'Non-Vegetarian',),
+                      Tab(text: 'Under \$ 15',),
                     ],
                   ),
+                  leading: GestureDetector(
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Home()),
+                      );
+                    },
+
+                  ),
+                  title: Text(
+                    ' Single Serve Meals. Free Delivery.',
+                    style: TextStyle(
+                        color: Colors.black, fontSize: 16.0),
+                  ),
                 ),
+                backgroundColor: Colors.white,
+                body: TabBarView(children : [
+                  Padding(
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.01),
+                    child: GridView.count(
+                        crossAxisCount: 2,
+                        childAspectRatio: (0.73),
+                        controller: ScrollController(),
+                        scrollDirection: Axis.vertical,
+                        children:
+                        List.generate(c.imageList.length, (index) {
+                          return products(
+                              c.imageList[index],
+                              c.catList[index],
+                              c.pnameList[index],
+                              c.coinsList[index],
+                              index);
+                        })),
+                  ),
+                  Icon(Icons.history_toggle_off_rounded),
+                  Icon(Icons.table_chart_sharp),
+                ]),
+
+                bottomNavigationBar: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Cart(),
+                        ),
+                      );
+                    },
+                    child: c.cartTotal()),
               ),
-              bottomNavigationBar: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Cart(),
-                      ),
-                    );
-                  },
-                  child: c.cartTotal()),
-            ),
+
           ),
         ),
-      ),
-    );
+      );
   }
 }

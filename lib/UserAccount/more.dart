@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
@@ -14,6 +15,9 @@ class More extends StatefulWidget {
 }
 
 class _MoreState extends State<More> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +44,97 @@ class _MoreState extends State<More> {
                             style: TextStyle(
                                 fontSize: 11.0, color: Colors.grey[500]),
                           ),
-                          trailing: Text(
-                            'EDIT',
-                            style: TextStyle(color: Colors.orange),
+                          trailing: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.25,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Edit Account',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,fontSize: 17.0),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.02,
+                                            ),
+                                            TextField(
+                                              controller: _emailController,
+                                              decoration: InputDecoration(
+                                                hintText: 'john@gmail.com',
+                                              ),
+                                            ),
+                                            TextField(
+                                              controller: _phoneController,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: InputDecoration(
+                                                hintText: '9876567890',
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.01,
+                                            ),
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.045,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.67,
+                                                    child: RaisedButton(
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      child: Center(
+                                                          child: Text(
+                                                        'UPDATE',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            letterSpacing: 1.0,
+                                                            fontSize: 17.0),
+                                                      )),
+                                                      onPressed: () {
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
+                            child: Text(
+                              'EDIT',
+                              style: TextStyle(color: Colors.orange,fontWeight: FontWeight.bold,letterSpacing: 1.0),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -84,6 +176,28 @@ class _MoreState extends State<More> {
                                   ),
                                   trailing: Icon(Icons.keyboard_arrow_right,
                                       color: Colors.grey),
+                                  onTap: (){
+                                    if(index == 0){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => SavedAddresses()),
+                                      );
+                                    }
+                                    if(index == 4){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Offers()),
+                                      );
+                                    }
+                                    if(index == 1){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Wallet()),
+                                      );
+
+                                    }
+
+                                  },
                                 ),
                               ),
                             ),
@@ -100,23 +214,15 @@ class _MoreState extends State<More> {
                         SizedBox(
                           height: 8.0,
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Wallet()),
-                            );
-                          },
-                          child: ListTile(
-                            title: Text('HELP'),
-                            subtitle: Text(
-                              'Order related queries or any other',
-                              style: TextStyle(
-                                  fontSize: 11.0, color: Colors.grey[500]),
-                            ),
-                            trailing: Icon(Icons.keyboard_arrow_right,
-                                color: Colors.black),
+                        ListTile(
+                          title: Text('HELP'),
+                          subtitle: Text(
+                            'Order related queries or any other',
+                            style: TextStyle(
+                                fontSize: 11.0, color: Colors.grey[500]),
                           ),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.black),
                         ),
                         SizedBox(
                           height: 8.0,

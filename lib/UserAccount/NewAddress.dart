@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-var button_one = true;
-var button_two = false;
-var button_three = false;
+var buttonOne = true;
+var buttonTwo = false;
+var buttonThree = false;
 
 class NewAddress extends StatefulWidget {
   @override
@@ -131,44 +131,44 @@ class _NewAddressState extends State<NewAddress> {
                           GestureDetector(
                              onTap: (){
                                setState(() {
-                                 button_one = true;
-                                 button_two = false;
-                                 button_three = false;
+                                 buttonOne = true;
+                                 buttonTwo = false;
+                                 buttonThree = false;
                                });
                              },
                             child: Container(
                               height: 25.0,
                               width: 57.0,
                               decoration: BoxDecoration(
-                                border: Border(bottom: BorderSide(color: button_one ? Colors.blue[900]: Colors.white,),
+                                border: Border(bottom: BorderSide(color: buttonOne ? Colors.blue[900]: Colors.white,),
                               ),),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                Icon(Icons.home_outlined,color: button_one ? Colors.blue[900]: Colors.black,size: 21.0  ,),
-                                Text('HOME',style: TextStyle(color: button_one ? Colors.blue[900]: Colors.black,fontSize: 11.0),),
+                                Icon(Icons.home_outlined,color: buttonOne ? Colors.blue[900]: Colors.black,size: 21.0  ,),
+                                Text('HOME',style: TextStyle(color: buttonOne ? Colors.blue[900]: Colors.black,fontSize: 11.0),),
                               ],),
                             ),
                           ),
                           GestureDetector(
                             onTap: (){
                               setState(() {
-                                button_one = false;
-                                button_two = true;
-                                button_three = false;
+                                buttonOne = false;
+                                buttonTwo = true;
+                                buttonThree = false;
                               });
                             },
                             child: Container(
                               height: 26.0,
                               width: 59.0,
                               decoration: BoxDecoration(
-                                border: Border(bottom: BorderSide(color: button_two ? Colors.blue[900]: Colors.white,),
+                                border: Border(bottom: BorderSide(color: buttonTwo ? Colors.blue[900]: Colors.white,),
                                 ),),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.work_outline,color: button_two ? Colors.blue[900]: Colors.black,size: 21.0  ,),
-                                  Text('OFFICE',style: TextStyle(color: button_two ? Colors.blue[900]: Colors.black,fontSize: 11.0),),
+                                  Icon(Icons.work_outline,color: buttonTwo ? Colors.blue[900]: Colors.black,size: 21.0  ,),
+                                  Text('OFFICE',style: TextStyle(color: buttonTwo ? Colors.blue[900]: Colors.black,fontSize: 11.0),),
                                 ],),
                             ),
                           ),
@@ -177,22 +177,22 @@ class _NewAddressState extends State<NewAddress> {
                             child: GestureDetector(
                               onTap: (){
                                 setState(() {
-                                  button_one = false;
-                                  button_two = false;
-                                  button_three = true;
+                                  buttonOne = false;
+                                  buttonTwo = false;
+                                  buttonThree = true;
                                 });
                               },
                               child: Container(
                                 height: 25.0,
                                 width: 57.0,
                                 decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: button_three ? Colors.blue[900]: Colors.white,),
+                                  border: Border(bottom: BorderSide(color: buttonThree ? Colors.blue[900]: Colors.white,),
                                   ),),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(Icons.more_horiz,color: button_three ? Colors.blue[900]: Colors.black,size: 21.0  ,),
-                                    Text('OTHER',style: TextStyle(color: button_three ? Colors.blue[900]: Colors.black,fontSize: 11.0),),
+                                    Icon(Icons.more_horiz,color: buttonThree ? Colors.blue[900]: Colors.black,size: 21.0  ,),
+                                    Text('OTHER',style: TextStyle(color: buttonThree ? Colors.blue[900]: Colors.black,fontSize: 11.0),),
                                   ],),
                               ),
                             ),
