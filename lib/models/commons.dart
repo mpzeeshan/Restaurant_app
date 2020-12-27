@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:simplify/Orders/track_order.dart';
 
@@ -26,6 +28,7 @@ class Commons {
     "Ika Parikara",
     "Sashimi Salad"
   ];
+
   List<String> coinsList = ["100", "200", "300", "400", "500", "600"];
   List<int> counList = [0, 0, 0, 0, 0, 0];
   List<int> priceList = [10, 10, 10, 10, 10, 10];
@@ -59,16 +62,16 @@ class Commons {
 
   //*********************************CART TOTAL BOTTOM NAV**********************************//
 
-  Row cartTotal() {
+  Row cartTotal(height) {
     return Row(
       children: [
         Expanded(
           child: Container(
-            height: 40.0,
+            height: height*0.062,
             //width: MediaQuery.of(context).size.width,
             color: Colors.blue[900],
             child: Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 34.0),
+              padding: EdgeInsets.only(left: height*0.02, right: height*0.02),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -76,15 +79,15 @@ class Commons {
                     'Total Amount',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold),
+                        fontSize: 16.0,
+                        ),
                   ),
                   Text(
-                    '\$15',
+                    '\$15.00',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold),
+                        fontSize: 16.0,
+                        ),
                   ),
                 ],
               ),
@@ -245,7 +248,7 @@ Container OrderHist(height,width,recentOrders, buildCount, orderFlag){
                                             fontSize: 11.0),
                                       ),
                                       Text(
-                                        '\$ 15',
+                                        '\$15.00',
                                         style: TextStyle(height: 1.3),
                                       ),
                                       SizedBox(

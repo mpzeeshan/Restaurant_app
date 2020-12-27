@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/home.dart';
 import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/single_product_view.dart';
 
 Commons c = Commons();
+
 
 class Products extends StatefulWidget {
   @override
@@ -183,7 +185,7 @@ class _ProductsState extends State<Products> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '\$ ' + c.priceList[count].toString(),
+                        '\$'+ c.priceList[count].toString()+'.00',
                         style: TextStyle(
                             color: Colors.blue[900], letterSpacing: -0.3),
                       ),
@@ -203,6 +205,7 @@ class _ProductsState extends State<Products> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return  DefaultTabController(
         length: 3,
         child: Container(
@@ -253,7 +256,7 @@ class _ProductsState extends State<Products> {
                 backgroundColor: Colors.white,
                 body: TabBarView(children : [
                   Padding(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.01),
+                    padding: EdgeInsets.only(left:MediaQuery.of(context).size.height*0.01,top: 0.0,right: MediaQuery.of(context).size.height*0.01,bottom: 0.0),
                     child: GridView.count(
                         crossAxisCount: 2,
                         childAspectRatio: (0.73),
@@ -269,8 +272,19 @@ class _ProductsState extends State<Products> {
                               index);
                         })),
                   ),
-                  Icon(Icons.history_toggle_off_rounded),
-                  Icon(Icons.table_chart_sharp),
+                  Center(child: Padding(
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
+                    child: LinearProgressIndicator(
+                      backgroundColor: Colors.teal,
+                    ),
+                  )),
+                  Center(child: Padding(
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
+                    child: LinearProgressIndicator(
+                      backgroundColor: Colors.teal,
+
+                    ),
+                  )),
                 ]),
 
                 bottomNavigationBar: GestureDetector(
@@ -278,11 +292,11 @@ class _ProductsState extends State<Products> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Cart(),
+                          builder: (context) => SavedAddresses(),
                         ),
                       );
                     },
-                    child: c.cartTotal()),
+                    child: c.cartTotal(height)),
               ),
 
           ),

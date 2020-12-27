@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/models/Address_model.dart';
 import 'package:simplify/UserAccount/NewAddress.dart';
+import 'package:simplify/screens/cart.dart';
 
 AddressModel am = AddressModel();
 
@@ -87,11 +88,19 @@ class SavedAddresses extends StatelessWidget {
                                     children: [
                                       GestureDetector(
                                         child: Text(
-                                          'Edit',
+                                          'Edit Address',
                                           style: TextStyle(
                                               color: Colors.deepOrangeAccent,
                                               fontSize: 15.0),
                                         ),
+                                        onTap: (){
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => NewAddress()),
+                                          );
+
+
+                                        },
                                       ),
                                       SizedBox(
                                         width: 15.0,
@@ -129,12 +138,12 @@ class SavedAddresses extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => NewAddress()),
+                            MaterialPageRoute(builder: (context) => Cart()),
                           );
                         },
                         child: Text(
-                          'Add New Address',
-                          style: TextStyle(color: Colors.white),
+                          'CART',
+                          style: TextStyle(color: Colors.white,letterSpacing: 1.0,fontSize: 16.0),
                         ),
                         color: Colors.green,
                       ),

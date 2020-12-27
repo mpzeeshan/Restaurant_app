@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:simplify/payment/payments.dart';
@@ -10,7 +11,20 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+
+  TextEditingController _instructionsController = TextEditingController();
+  static var pricew;
+  var disc = 5;
+  var delFee = 2;
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+
   Container size(count) {
+    pricew = count;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 1, color: Colors.grey[300]),
@@ -109,27 +123,27 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'CART (LUNCHBOX)',
-          style: TextStyle(color: Colors.black, fontSize: 15.0),
-        ),
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            )),
-        elevation: 0.0,
-      ),
-      body: Container(
-        color: Colors.teal[700],
-        child: SafeArea(
-          child: Container(
+    return Container(
+      color: Colors.teal,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: Text(
+              'CART',
+              style: TextStyle(color: Colors.black, fontSize: 16.0),
+            ),
+            leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                )),
+            elevation: 1.8,
+          ),
+          body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             color: Colors.white,
@@ -140,50 +154,38 @@ class _CartState extends State<Cart> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
-                    Text(
-                      'Vadiwadi Road',
-                      style: TextStyle(
-                        color: Colors.deepOrangeAccent,
-                        fontSize: 13.0,
-                      ),
-                    ),
+
+
+
+
                     SizedBox(
-                      height: 15.0,
-                    ),
-                    Divider(
-                      thickness: 0.6,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(
-                      height: 15.0,
+                      height: MediaQuery.of(context).size.height*0.04,
                     ),
                     Container(
-                      height: 55.0,
+                      height: MediaQuery.of(context).size.height*0.07,
                       child: ListView.builder(
                         itemCount: 1,
                         itemBuilder: (context, index) => Row(
+
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Spicy Trio',
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                  Text(
-                                    '\$ ' + c.priceList[index].toString(),
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.grey[600],
-                                        height: 1.5),
-                                  ),
-                                ],
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Spicy Trio',
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                                Text(
+                                  '\$'+c.priceList[index].toString()+'.00',
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey[600],
+                                      height: 1.5),
+                                ),
+                              ],
                             ),
+
                             size(index),
                           ],
                         ),
@@ -192,20 +194,18 @@ class _CartState extends State<Cart> {
                     DottedLine(
                       dashColor: Colors.grey,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.03,
-                          bottom: MediaQuery.of(context).size.height * 0.03),
-                      child: GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            'Any Instructions? We promise to pass them on',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 11.0,
-                                letterSpacing: 1.0),
-                          )),
+                    TextField(
+                      controller: _instructionsController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Any instructions? We promise to pass them on',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[400],
+                          fontSize: 13.0,
+                        ),
+                      ),
                     ),
+
                     Divider(
                       height: 1.0,
                       thickness: 1.3,
@@ -254,7 +254,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                         Text(
-                          '\$ 15',
+                          '\$'+c.priceList[0].toString()+'.00',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -270,7 +270,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.green),
                         ),
                         Text(
-                          '\$ 5',
+                            '\$'+disc.toString()+'.00',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -293,7 +293,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                         Text(
-                          '\$ 2',
+                          '\$'+delFee.toString()+'.00',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -316,7 +316,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                         Text(
-                          '\$ 17',
+                          '\$'+(c.priceList[0]+delFee+disc).toString()+'.00',
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                       ],
@@ -370,89 +370,99 @@ class _CartState extends State<Cart> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.02,
                     ),
-                    Text(
-                      'CHANGE ADDRESS',
-                      style: TextStyle(
-                          letterSpacing: 1.0, color: Colors.deepOrangeAccent),
+                    GestureDetector(
+                      child: Text(
+                        'CHANGE ADDRESS',
+                        style: TextStyle(
+                            letterSpacing: 1.0, color: Colors.deepOrangeAccent),
+                      ),
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: (context) => SavedAddresses()
+                            ),
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderSummary()),
-                );
-              },
-              child: Container(
-                height: 45.0,
-                //width: MediaQuery.of(context).size.width,
-                color: Colors.blue[900],
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '\$ 17',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.0,
-                              ),
+          bottomNavigationBar: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrderSummary()),
+                    );
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height*0.065,
+                    //width: MediaQuery.of(context).size.width,
+                    color: Colors.blue[900],
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0, right: 0.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding:  EdgeInsets.only(top:MediaQuery.of(context).size.height*0.016,),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '\$ 17',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13.0,
+                                  ),
+                                ),
+                                Text(
+                                  'VIEW DETAILED BILL',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'VIEW DETAILED BILL',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Payments()),
-                          );
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: 45.0,
-                          color: Colors.green,
-                          child: Center(
-                            child: Text(
-                              'PROCEED TO PAY',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Payments()),
+                              );
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: MediaQuery.of(context).size.height*0.065,
+                              color: Colors.green,
+                              child: Center(
+                                child: Text(
+                                  'PROCEED TO PAY',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

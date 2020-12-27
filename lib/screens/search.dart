@@ -48,7 +48,7 @@ class _SearchState extends State<Search> {
                               width: 5.0,
                             ),
                             Text(
-                              "Search Restaurant / Cafe",
+                              "Search Restaurant / Dishes",
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 15.0),
                             ),

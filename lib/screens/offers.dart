@@ -6,7 +6,15 @@ class Offers extends StatefulWidget {
 }
 
 class _OffersState extends State<Offers> {
-  Column availableOffers(image, percentageText, code) {
+
+  List<String> offerName = ['OFF50', 'DINNER20', 'BF40'];
+  List<String> offerDesc = [
+    'This is a dummy text, this area will be used to describe the offer and its validity',
+    'This is a dummy text this area will be used to describe the offer and its validity',
+    'This is a dummy text this area will be used to describe the offer and its validity'
+  ];
+
+  Column availableOffers(image) {
     return Column(
       children: [
         Stack(
@@ -33,46 +41,53 @@ class _OffersState extends State<Offers> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding:  EdgeInsets.all(MediaQuery.of(context).size.width*0.045),
+          child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  percentageText.toUpperCase(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.0),
-                ),
-                SizedBox(
-                  height: 4.0,
-                ),
-                Row(
+          height: MediaQuery.of(context).size.height * 0.735,
+          child: ListView.builder(
+          itemCount: offerName.length,
+          itemBuilder: (context, index) => Row(
+
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width*0.91,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 8.0,
+                    Visibility(
+                        visible: index == 0,
+                        child: Column(
+                          children: [
+                            Text('Offers',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20.0),),
+                            SizedBox(height: MediaQuery.of(context).size.height*0.04,),
+                          ],
+                        )),
+                    Visibility(
+                      visible: index > 0,
+                      child: SizedBox(height: MediaQuery.of(context).size.height*0.015,),),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                        colors: [Colors.teal[500], Colors.green[200]]),
+                      ),
+                      child: SizedBox(
+                          height: MediaQuery.of(context).size.height*0.043,
+                          width: MediaQuery.of(context).size.width*0.25,
+                          child: Center(child: Text(offerName[index],style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),))),
                     ),
-                    Text(
-                      'Use Code : ',
-                      style: TextStyle(
-                          color: Colors.grey[800],
-                          fontSize: 12.0,
-                          letterSpacing: 1.0),
-                    ),
-                    Text(
-                      code,
-                      style: TextStyle(color: Colors.blue[900]),
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                    Text(offerDesc[index],style: TextStyle(color: Colors.grey[500]),),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.015,),
+                    Divider(thickness:0.7 ,color: Colors.black,),
                   ],
                 ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                Text(
-                  'Valid once every 2 hours | Additional RS 30 Cashback via\nAmazon pay (Valid 10 times per user till 12th june)',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12.0),
-                ),
-              ],
-            ),
-          ),
+              ),
+
+
+            ],
+          ),),),),
         ),
       ],
     );
@@ -87,10 +102,14 @@ class _OffersState extends State<Offers> {
         builder: (context) => SafeArea(
           child: Scaffold(
             backgroundColor: Colors.white,
-            body: Container(
-              width: MediaQuery.of(context).size.width,
-              child: availableOffers(
-                  'imgs/snack_img.png', 'GET UPTO 60% OFF', 'TIPTOP60'),
+            body: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: availableOffers(
+                      'imgs/snack_img.png'),
+                ),
+              ],
             ),
           ),
         ),

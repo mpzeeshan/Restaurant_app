@@ -13,6 +13,7 @@ class SingleProduct extends StatefulWidget {
 }
 
 class _SingleProductState extends State<SingleProduct> {
+
   @override
   void initState() {
     super.initState();
@@ -20,6 +21,7 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Builder(
       builder: (context) => Scaffold(
         backgroundColor: Colors.white,
@@ -100,20 +102,26 @@ class _SingleProductState extends State<SingleProduct> {
                               'Tuna,albacore and salmon sashimi with spicy sauce. We are passionate about producing delicious'
                               ', natural, exceptionally high-quality foods. We handcraft everything we make using original, authentic recipes.',
                               style: TextStyle(
-                                  fontSize: 16.0,
+                                  fontSize: 12.0,
                                   color: Colors.grey[600],
                                   height: 1.25),
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.015,
+                              height: MediaQuery.of(context).size.height * 0.020,
                             ),
-                            ListTile(
-                              leading: Text(
-                                '\$ 10',
-                                style: TextStyle(
-                                    color: Colors.blue[900], fontSize: 18.0),
-                              ),
-                              trailing: size(0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '\$10.00',
+                                  style: TextStyle(
+                                      color: Colors.blue[900], fontSize: 18.0),
+                                ),
+                                size(0),
+                              ],
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.015,
                             ),
                           ],
                         ),
@@ -133,64 +141,68 @@ class _SingleProductState extends State<SingleProduct> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(children: [
-                              Icon(Icons.add_circle_outline,color: Colors.black,),
-                              SizedBox(width: MediaQuery.of(context).size.width*0.025,),
-                              Text('Add Extra',style: TextStyle(color: Colors.grey[600],fontSize: 17.0),),
-                            ],),
-
-                            Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.025),
-                              child: ListTile(
-                                leading: Column(
+                            Text('Add Extra',style: TextStyle(color: Colors.grey[600],fontSize: 17.0),),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.03,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Extra Cheese',style: TextStyle(fontSize: 16.0),),
                                     Text(
-                                      '\$ 10',
+                                      '\$10.00',
                                       style: TextStyle(
                                           color: Colors.blue[900], fontSize: 14.0),
                                     ),
                                   ],
                                 ),
-                                trailing: size(0),
-                              ),
-
+                                size(0),
+                            ],),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.025,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.025),
-                              child: ListTile(
-                                leading: Column(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Baked',style: TextStyle(fontSize: 16.0),),
                                     Text(
-                                      '\$ 10',
+                                      '\$10.00',
                                       style: TextStyle(
                                           color: Colors.blue[900], fontSize: 14.0),
                                     ),
                                   ],
                                 ),
-                                trailing: size(0),
-                              ),
+                                size(0),
+                              ],),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.025,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.025),
-                              child: ListTile(
-                                leading: Column(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Spice',style: TextStyle(fontSize: 16.0),),
                                     Text(
-                                      '\$ 10',
+                                      '\$10.00',
                                       style: TextStyle(
                                           color: Colors.blue[900], fontSize: 14.0),
                                     ),
                                   ],
                                 ),
-                                trailing: size(0),
-                              ),
+                                size(0),
+                              ],),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
                             ),
+
                           ],
                         ),
                       ),
@@ -210,7 +222,7 @@ class _SingleProductState extends State<SingleProduct> {
                 ),
               );
             },
-            child: c.cartTotal()),
+            child: c.cartTotal(height)),
       ),
     );
   }
@@ -264,9 +276,9 @@ class _SingleProductState extends State<SingleProduct> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
+                    padding: const EdgeInsets.only(left: 11.0),
                     child: Text(
-                      '+ Add',
+                      'Add',
                       style: TextStyle(color: Colors.orange[700]),
                     ),
                   ),

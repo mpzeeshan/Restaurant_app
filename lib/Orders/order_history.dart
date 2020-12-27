@@ -20,43 +20,48 @@ class OrderHistory extends StatelessWidget {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
-
-        home: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'ORDER HISTORY',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.0,
+        debugShowCheckedModeBanner: false,
+        home: Container(
+          color: Colors.teal,
+          child: SafeArea(
+            child: DefaultTabController(
+              length: 2,
+              child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  'ORDER HISTORY',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                  ),
+                ),
+                bottom: TabBar(
+                  indicatorColor: Colors.teal,
+                  tabs: [
+                    Tab(icon: Icon(Icons.history_toggle_off_rounded,color: Colors.black),),
+                    Tab(icon: Icon(Icons.history,color: Colors.black),),
+                  ],
+                ),
+                backgroundColor: Colors.white,
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-            ),
-            bottom: TabBar(
-              indicatorColor: Colors.teal,
-              tabs: [
-                Tab(icon: Icon(Icons.history,color: Colors.black),),
-                Tab(icon: Icon(Icons.history_toggle_off_rounded,color: Colors.black),),
-              ],
-            ),
-            backgroundColor: Colors.white,
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
+              body: TabBarView(
+                children: [
+                  h.OrderHist(screenHeight, screenWidth, recentOrders, 1, true),
+                  h.OrderHist(screenHeight, screenWidth, recentOrders, 4, false),
+                ],
               ),
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              h.OrderHist(screenHeight, screenWidth, recentOrders, 4, false),
-              h.OrderHist(screenHeight, screenWidth, recentOrders, 1, true),
-            ],
-          ),
       ),
+            ),
+          ),
         ),
     );
   }

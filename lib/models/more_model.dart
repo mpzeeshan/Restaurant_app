@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class MoreModel {
   String fname;
   String lname;
@@ -22,11 +24,12 @@ class MoreModel {
     "imgs/myAccount/group_r.png",
     "imgs/myAccount/group_o.png"
   ];
+  // final List<Icons> myAccIcons = [
+  //   Icon(Icons.place),
+  // ];
   final List<String> myAccTitle = [
     "Manage Address",
-    "Payment",
-    "Favourites",
-    "Referrals",
-    "Offers"
+    "Wallet",
+    "Gift Card",
   ];
 }

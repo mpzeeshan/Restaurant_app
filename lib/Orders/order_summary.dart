@@ -47,7 +47,7 @@ class OrderSummary extends StatelessWidget {
                           children: [
                             Image(
                               image: AssetImage(m.recentOrders[0]),
-                              height: 80.0,
+                              height: MediaQuery.of(context).size.height*0.1,
                             ),
                             SizedBox(
                               width: 15.0,
@@ -157,13 +157,13 @@ class OrderSummary extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          '2 X \$ 10 ',
+                                          '2 X \$10.00 ',
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.black,
                                               height: 2.0),
                                         ),
-                                        Text('\$ 20'),
+                                        Text('\$20.00'),
                                       ],
                                     ),
                                   ),
@@ -192,7 +192,7 @@ class OrderSummary extends StatelessWidget {
                                   color: Colors.black,
                                   height: 2.0),
                             ),
-                            Text('\$ 20'),
+                            Text('\$20.00'),
                           ],
                         ),
                       ),
@@ -212,7 +212,7 @@ class OrderSummary extends StatelessWidget {
                                   height: 2.0),
                             ),
                             Text(
-                              '\$ 10.00',
+                              '\$10.00',
                               style: TextStyle(color: Colors.grey),
                             ),
                           ],
@@ -240,7 +240,7 @@ class OrderSummary extends StatelessWidget {
                                   height: 2.0),
                             ),
                             Text(
-                              '\$ 15',
+                              '\$15.00',
                               style: TextStyle(color: Colors.black),
                             ),
                           ],

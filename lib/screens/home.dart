@@ -12,11 +12,24 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class Item {
+  Item(this.name,this.icon);
+  String name;
+  Image icon;
+
+  List<Item> restaurants = <Item>[
+    Item('KFC',Image(image: AssetImage('imgs/kfc.png'),height: 10.0,)),
+    Item('Burger King',Image(image: AssetImage('imgs/kfc.png'),height: 10.0,)),
+  ];
+}
+
 
 class _HomeState extends State<Home> {
   //********************************** TOP DISHES ********************************************************//
 
-  final List<String> textList = ["KFC", "Burger King"];
+  final List<String> textList = ['KFC','Burger King'];
+
+  final List<String> imgList = ["imgs/kfc.png","imgs/kfc.png"];
   String _currentItemSelected;
 
   @override
@@ -118,7 +131,7 @@ class _HomeState extends State<Home> {
               backgroundColor: Colors.white,
               body: Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width*0.024, top: 0.0, right: MediaQuery.of(context).size.width*0.024, bottom: 0.0),
+                    left: MediaQuery.of(context).size.width*0.024, top: 0.0, right: MediaQuery.of(context).size.width*0.024, bottom:0.0 ),
                 child: ListView(
                   children: [
                     Padding(
@@ -138,12 +151,16 @@ class _HomeState extends State<Home> {
                               Row(
                                 children: [
                                   PopupMenuButton<String>(
-                              itemBuilder: (context) {
-                                return textList.map((str) {
-                                  return PopupMenuItem(
-                                  value: str,
-                                  child: Text(str,style: TextStyle(color: Colors.blue[900]),),
-                               );
+                                      itemBuilder: (context) {
+                                        return textList.map((str) {
+                                          return PopupMenuItem(
+                                            value: str,
+                                            child: Row(
+                                              children: [
+                                                Text(str,style: TextStyle(color: Colors.blue[900]),),
+                                              ],
+                                            ),
+                                          );
                                       }).toList();
                                       },
                                         child: Row(
@@ -233,7 +250,7 @@ class _HomeState extends State<Home> {
                           },
                           child: Text(
                             'Top Dishes',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17.0),
                           )),
                     ),
                     Padding(
@@ -260,7 +277,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02,bottom: MediaQuery.of(context).size.height*0.03),
                       child: Row(
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
