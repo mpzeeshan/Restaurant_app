@@ -9,6 +9,11 @@ class EditAccount extends StatefulWidget {
 
 class _EditAccountState extends State<EditAccount> {
 
+  final phoneRegex = RegExp(r"([6789]\d\d\d\d\d\d\d\d\d)");
+  final emailRegex = RegExp(r"(^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$)");
+  final dobRegex = RegExp(r"(^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$)");
+  List<bool> _validate = [false,false,false,false];
+
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -59,6 +64,7 @@ class _EditAccountState extends State<EditAccount> {
                               color: Colors.grey[400],
                             ),
                             prefixIcon: Icon(Icons.person),
+                            errorText: _validate[3]? 'Please enter your name' : null,
                           ),
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*0.03,),
@@ -71,6 +77,7 @@ class _EditAccountState extends State<EditAccount> {
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
                             ),
+                            errorText: _validate[0]? 'Please enter a valid email': null,
                           ),
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*0.03,),
@@ -86,18 +93,22 @@ class _EditAccountState extends State<EditAccount> {
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
                             ),
+                            errorText: _validate[1]? 'Please enter a valid phone': null,
+
                           ),
+                          maxLength: 10,
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*0.03,),
-                        Text('Email',style: TextStyle(color: Colors.black),),
+                        Text('Date of Birth',style: TextStyle(color: Colors.black),),
                         TextField(
                           controller: _dobController,
                           decoration: InputDecoration(
-                            hintText: '28.04.1998',
+                            hintText: '28/04/1998',
                             prefixIcon: Icon(Icons.cake),
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
                             ),
+                            errorText: _validate[2]? 'Please enter a valid Date': null,
                           ),
                         ),
                         Expanded(
@@ -118,7 +129,24 @@ class _EditAccountState extends State<EditAccount> {
                                       )),
                                   onPressed: () {
                                     setState(() {
-
+                                      if(_nameController.text == ""){
+                                        _validate[3] = true;
+                                      }
+                                      if (emailRegex.hasMatch(_emailController.text)){
+                                        _validate[0] = false;
+                                      }else{
+                                        _validate[0] = true;
+                                      }
+                                      if (phoneRegex.hasMatch(_phoneController.text)){
+                                        _validate[1] = false;
+                                      }else{
+                                        _validate[1] = true;
+                                      }
+                                      if (dobRegex.hasMatch(_dobController.text)){
+                                        _validate[2] = false;
+                                      }else{
+                                        _validate[2] = true;
+                                      }
                                     });
                                   },
                                 ),

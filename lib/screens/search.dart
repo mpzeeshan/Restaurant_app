@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/models/search_model.dart';
+import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/home.dart';
@@ -110,7 +112,7 @@ class _SearchState extends State<Search> {
         selectedItemColor: Colors.blue[900],
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
-        currentIndex: 2,
+        currentIndex: 0,
         onTap: (value) {
           switch (value) {
             case 0:
@@ -129,13 +131,13 @@ class _SearchState extends State<Search> {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Products()),
+                MaterialPageRoute(builder: (context) => Cart()),
               );
               break;
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Search()),
+                MaterialPageRoute(builder: (context) => OrderHistory()),
               );
               break;
           }
@@ -161,10 +163,10 @@ class _SearchState extends State<Search> {
             ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.history),
             // ignore: deprecated_member_use
             title: Text(
-              'Search',
+              'Orders',
               style: TextStyle(
                 color: Colors.black,
               ),

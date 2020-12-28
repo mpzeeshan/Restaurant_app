@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/models/commons.dart';
+import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
@@ -31,11 +33,13 @@ class _HomeState extends State<Home> {
 
   final List<String> imgList = ["imgs/kfc.png","imgs/kfc.png"];
   String _currentItemSelected;
+  bool _selected = false;
 
   @override
   void initState() {
     super.initState();
     _currentItemSelected = textList[0];
+    var value = textList[0];
   }
 
   GestureDetector topDishes(image, category) {
@@ -138,66 +142,92 @@ class _HomeState extends State<Home> {
                       padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.012),
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.menu,
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 10.0,
-                          ),
+                          // Icon(
+                          //   Icons.menu,
+                          //   color: Colors.black,
+                          // ),
+                          // SizedBox(
+                          //   width: 10.0,
+                          // ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  PopupMenuButton<String>(
-                                      itemBuilder: (context) {
-                                        return textList.map((str) {
-                                          return PopupMenuItem(
-                                            value: str,
+                                  Image(image: AssetImage('imgs/kfc.png'),height: MediaQuery.of(context).size.height*0.055,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      PopupMenuButton<String>(
+                                          itemBuilder: (context) {
+                                            return textList.map((str) {
+                                              return PopupMenuItem(
+                                                value: str,
+                                                child: Row(
+                                                  children: [
+                                                    Text(str,style: TextStyle(color: Colors.blue[900]),),
+                                                  ],
+                                                ),
+                                              );
+                                          }).toList();
+                                          },
                                             child: Row(
-                                              children: [
-                                                Text(str,style: TextStyle(color: Colors.blue[900]),),
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Text(_currentItemSelected,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[900],fontSize: 15.0,letterSpacing: 0.7),),
+
                                               ],
                                             ),
-                                          );
-                                      }).toList();
+                                            onSelected: (v) {
+                                              setState(() {
+                                                print('!!!===== $v');
+                                                _currentItemSelected = v;
+                                                _selected = !_selected;
+                                              });
+                                            },
+                                          ),
+                                      Text(_selected?'East Texas, #7 Wall street...':'Tulsa, #1 This street...',style: TextStyle(fontSize: 11.0),),
+                                    ],
+                                  ),
+                                  GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => More(),
+                                          ),
+                                        );
                                       },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            Text(_currentItemSelected,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[900],fontSize: 15.0,letterSpacing: 0.7),),
-                                            Icon(Icons.arrow_drop_down,color: Colors.blue[900],),
-                                          ],
-                                        ),
-                                        onSelected: (v) {
-                                          setState(() {
-                                            print('!!!===== $v');
-                                            _currentItemSelected = v;
-                                          });
-                                        },
-                                      ),
+                                      child: Icon(Icons.arrow_right,color: Colors.blue[900],size: MediaQuery.of(context).size.height*0.034,)),
                                 ],
                               ),
-
+                             // Padding(
+                             //   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.1),
+                             //   child: Text('East Texas, #7 Wall street...',style: TextStyle(fontSize: 11.0),),
+                             // ),
                             ],
                           ),
                           Expanded(
                             child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Text(
-                                  'Offers',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                )),
+                                child: GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Search(),
+                                        ),
+                                      );
+                                    },
+                                    child: Icon(Icons.search))),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02, bottom: MediaQuery.of(context).size.height*0.03),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005, bottom: MediaQuery.of(context).size.height*0.03),
                       child: Container(
+
                         child: Column(
                           children: [
                             SizedBox(
@@ -308,13 +338,13 @@ class _HomeState extends State<Home> {
                     case 2:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Search()),
+                        MaterialPageRoute(builder: (context) => OrderHistory()),
                       );
                       break;
                     case 3:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Products()),
+                        MaterialPageRoute(builder: (context) => Cart()),
                       );
                       break;
                     case 4:
@@ -344,10 +374,10 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
+                    icon: Icon(Icons.history),
                     // ignore: deprecated_member_use
                     title: Text(
-                      'Search',
+                      'Orders',
                       style: TextStyle(
                         color: Colors.black,
                       ),

@@ -1,5 +1,5 @@
 
-
+import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:flutter/material.dart';
 import 'package:simplify/Orders/track_order.dart';
 
@@ -38,6 +38,8 @@ class Commons {
   bool pressed_1 = false;
   bool pressed_2 = false;
   bool pressed_3 = true;
+
+
 
   //**************************OFFER*********************************//
 
@@ -99,8 +101,9 @@ class Commons {
   }
 //***************************************************************************************
 
-Container OrderHist(height,width,recentOrders, buildCount, orderFlag){
+Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
     return Container(
+
       height: height,
       width: width,
       color: Colors.white,
@@ -110,10 +113,29 @@ Container OrderHist(height,width,recentOrders, buildCount, orderFlag){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Visibility(
+              visible: orderFlag == false,
+              child: MaterialButton(
+                  color: Colors.deepOrangeAccent,
+                  onPressed: () async {
+                    final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                        context: conte,
+                        initialFirstDate: new DateTime.now(),
+                        initialLastDate: (new DateTime.now()).add(new Duration(days: 7)),
+                        firstDate: new DateTime(2015),
+                        lastDate: new DateTime(2020)
+                    );
+                    if (picked != null && picked.length == 2) {
+                      print(picked);
+                    }
+                  },
+                  child: new Text("Pick date range")
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                height: height * 0.83,
+                height: orderFlag?height * 0.83: height* 0.774,
                 child: ListView.builder(
                   itemCount: buildCount,
                   itemBuilder: (context, index) => Column(
