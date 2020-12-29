@@ -56,10 +56,12 @@ class OrderHistory extends StatelessWidget {
               body: TabBarView(
                 children: [
                   h.orderHist(screenHeight, screenWidth, recentOrders, 1, true,context),
+
                   h.orderHist(screenHeight, screenWidth, recentOrders, 4, false,context),
+
                 ],
               ),
-      ),
+              ),
             ),
           ),
         ),

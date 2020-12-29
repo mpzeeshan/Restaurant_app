@@ -32,6 +32,8 @@ dependencies:
   dotted_line: ^2.0.2
   get_it: ^5.0.3
   http: ^0.12.2
+  date_range_picker: ^1.0.5
+  flutter_svg: ^0.19.0
 
 dev_dependencies:
   flutter_test:

@@ -66,24 +66,7 @@ class _TrackOrderState extends State<TrackOrder> {
                       child: ListTile(
                         leading: Padding(
                           padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01),
-                          child: Column(
-                            children: [
-                              Image(image: AssetImage('imgs/trackOrder/slip.png',),height: 20.0,),
-                              Padding(
-                                padding: EdgeInsets.only(top:5.0),
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height*0.02,
-                                  width: MediaQuery.of(context).size.width*0.11,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.blue[800],
-                                    ),
-                                  ),
-                                  child: Center(child: Text('WAIT',style: TextStyle(color: Colors.blue[800],fontSize: 8.0),)),
-                                ),
-                              )
-                            ],
-                          ),
+                          child: Icon(Icons.list_alt,size: 30.0,color: Colors.blue[900],), //Image(image: AssetImage('imgs/trackOrder/slip.png',),height: 20.0,),
                         ),
                         title: Text('Waiting for Restaurant to accept order',style: TextStyle(fontSize: 14.0, ),),
                       ),
@@ -94,25 +77,8 @@ class _TrackOrderState extends State<TrackOrder> {
                       child: ListTile(
 
                         leading: Padding(
-                          padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01),
-                          child: Column(
-                            children: [
-                              Image(image: AssetImage('imgs/trackOrder/cooker.png'),height: 20.0,),
-                              Padding(
-                                padding: EdgeInsets.only(top:5.0),
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height*0.02,
-                                  width: MediaQuery.of(context).size.width*0.11,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  child: Center(child: Text('NEXT',style: TextStyle(color: Colors.grey,fontSize: 8.0),)),
-                                ),
-                              )
-                            ],
-                          ),
+                          padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01,bottom: MediaQuery.of(context).size.height*0.01 ),
+                          child: Icon(Icons.outdoor_grill,size: 30.0,color: Colors.black,),//Image(image: AssetImage('imgs/trackOrder/cooker.png'),height: 20.0,),
                         ),
                         title: Text('Food is being prepared',style: TextStyle(fontSize: 12.0),),
                       ),
@@ -123,26 +89,55 @@ class _TrackOrderState extends State<TrackOrder> {
                       child: ListTile(
                         leading: Padding(
                           padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01),
-                          child: Column(
-                            children: [
-                              Image(image: AssetImage('imgs/trackOrder/scooter.png'),height: 20.0,),
-                              Padding(
-                                padding: EdgeInsets.only(top:5.0),
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height*0.02,
-                                  width: MediaQuery.of(context).size.width*0.11,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  child: Center(child: Text('On the way',style: TextStyle(color: Colors.grey,fontSize: 8.0),)),
-                                ),
-                              )
-                            ],
-                          ),
+                          child: Icon(Icons.moped,size: 30.0,color: Colors.black,),//Image(image: AssetImage('imgs/trackOrder/scooter.png'),height: 20.0,),
                         ),
-                        title: Text('Order Accepted',style: TextStyle(fontSize: 12.0),),
+                        title: Text('Order on the way',style: TextStyle(fontSize: 12.0),),
+                      ),
+                    ),
+                    Divider(thickness: 0.8,color: Colors.grey,),
+                    Padding(
+                      padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01,bottom: MediaQuery.of(context).size.height*0.01 ),
+                      child: ListTile(
+                        leading: Padding(
+                          padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01),
+                          child: Icon(Icons.check_circle,size: 30.0,color: Colors.black,),
+                        ),
+                        title: Text('Delivered',style: TextStyle(fontSize: 12.0),),
+                      ),
+                    ),
+
+
+
+
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height*0.06,
+                        child: RaisedButton(
+                          color: Colors.deepOrangeAccent,
+                          child: Center(
+                              child: Text(
+                                'CANCEL ORDER',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: 1.0,
+                                    fontSize: 17.0),
+                              )),
+                          onPressed: () {
+                            setState(() {
+
+
+
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -159,3 +154,17 @@ class _TrackOrderState extends State<TrackOrder> {
     );
   }
 }
+//
+// Padding(
+// padding: EdgeInsets.only(top:5.0),
+// child: Container(
+// height: MediaQuery.of(context).size.height*0.02,
+// width: MediaQuery.of(context).size.width*0.11,
+// decoration: BoxDecoration(
+// border: Border.all(
+// color: Colors.blue[800],
+// ),
+// ),
+// child: Center(child: Text('WAIT',style: TextStyle(color: Colors.blue[800],fontSize: 8.0),)),
+// ),
+// )

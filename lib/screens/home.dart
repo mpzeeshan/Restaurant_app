@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _currentItemSelected = textList[0];
-    var value = textList[0];
+
   }
 
   GestureDetector topDishes(image, category) {

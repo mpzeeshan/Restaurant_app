@@ -13,7 +13,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
 
   TextEditingController _instructionsController = TextEditingController();
-  static var pricew;
+
   var disc = 5;
   var delFee = 2;
 
@@ -24,7 +24,6 @@ class _CartState extends State<Cart> {
 
 
   Container size(count) {
-    pricew = count;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 1, color: Colors.grey[300]),

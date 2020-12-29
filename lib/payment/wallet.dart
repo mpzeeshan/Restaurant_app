@@ -8,8 +8,6 @@ class Wallet extends StatefulWidget {
 class _WalletState extends State<Wallet> {
   TextEditingController amount = TextEditingController();
 
-  var _rupees = '2000';
-
   @override
   Widget build(BuildContext context) {
     return Container(

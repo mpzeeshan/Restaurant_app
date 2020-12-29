@@ -101,7 +101,7 @@ class Commons {
   }
 //***************************************************************************************
 
-Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
+Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
     return Container(
 
       height: height,
@@ -113,25 +113,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Visibility(
-              visible: orderFlag == false,
-              child: MaterialButton(
-                  color: Colors.deepOrangeAccent,
-                  onPressed: () async {
-                    final List<DateTime> picked = await DateRagePicker.showDatePicker(
-                        context: conte,
-                        initialFirstDate: new DateTime.now(),
-                        initialLastDate: (new DateTime.now()).add(new Duration(days: 7)),
-                        firstDate: new DateTime(2015),
-                        lastDate: new DateTime(2020)
-                    );
-                    if (picked != null && picked.length == 2) {
-                      print(picked);
-                    }
-                  },
-                  child: new Text("Pick date range")
-              ),
-            ),
+
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
@@ -144,7 +126,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
                         height: 10.0,
                       ),
                       Container(
-                        height: 250.0,
+                        height: MediaQuery.of(context).size.height*0.28,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(5.0),
@@ -155,62 +137,34 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
                             )),
                         child: Column(
                           children: [
-                            Row(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: height *
-                                          0.015,
-                                      top: height *
-                                          0.015,
-                                      right: height *
-                                          0.015,
-                                      bottom: height *
-                                          0.01),
-                                  child: SizedBox(
-                                    height: height *
-                                        0.05,
-                                    width: width *
-                                        0.7,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                      children: [
-                                        Image(
-                                          image: AssetImage(
-                                              recentOrders[index]),
-                                          height: 35.0,
-                                        ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Santushti Smoothies and Shakes',
-                                              style: TextStyle(
-                                                  fontSize: 13.0),
-                                            ),
-                                            Text(
-                                              'Fatehgunj',
-                                              style: TextStyle(
-                                                  fontSize: 11.0,
-                                                  color: Colors.grey[600],
-                                                  height: 2.0),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                            Padding(
+                              padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.04),
+                              child: Row(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'ITEMS',
+                                        style: TextStyle(
+                                            color: Colors.grey[500],
+                                            fontSize: 11.0),
+                                      ),
+                                      Text(
+                                        '2 X French Fries',
+                                        style: TextStyle(height: 1.3),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    'Order No: 34521',
+                                    style: TextStyle(height: 1.3),
+                                  ),
+                                ],
+                              ),
                             ),
                             Divider(
                               thickness: 1.0,
@@ -235,16 +189,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'ITEMS',
-                                        style: TextStyle(
-                                            color: Colors.grey[500],
-                                            fontSize: 11.0),
-                                      ),
-                                      Text(
-                                        '2 X French Fries',
-                                        style: TextStyle(height: 1.3),
-                                      ),
+
                                       SizedBox(
                                         height: height *
                                             0.015,
@@ -322,3 +267,56 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,conte){
 }
 
 }
+
+
+// Padding(
+// padding: EdgeInsets.only(
+// left: height *
+// 0.015,
+// top: height *
+// 0.015,
+// right: height *
+// 0.015,
+// bottom: height *
+// 0.01),
+// child: SizedBox(
+// height: height *
+// 0.05,
+// width: width *
+// 0.7,
+// child: Row(
+// crossAxisAlignment:
+// CrossAxisAlignment.start,
+// mainAxisAlignment:
+// MainAxisAlignment.start,
+// children: [
+// Image(
+// image: AssetImage(
+// recentOrders[index]),
+// height: 35.0,
+// ),
+// SizedBox(
+// width: 10.0,
+// ),
+// Column(
+// crossAxisAlignment:
+// CrossAxisAlignment.start,
+// children: [
+// Text(
+// 'Santushti Smoothies and Shakes',
+// style: TextStyle(
+// fontSize: 13.0),
+// ),
+// Text(
+// 'Fatehgunj',
+// style: TextStyle(
+// fontSize: 11.0,
+// color: Colors.grey[600],
+// height: 2.0),
+// ),
+// ],
+// ),
+// ],
+// ),
+// ),
+// ),

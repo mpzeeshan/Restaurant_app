@@ -3,7 +3,6 @@ import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/models/search_model.dart';
 import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/offers.dart';
-import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/home.dart';
 
 SearchModels s = SearchModels();
@@ -251,7 +250,7 @@ class DataSearch extends SearchDelegate<String> {
         title: RichText(
           text: TextSpan(
             text: suggestionList[index].substring(0, query.length),
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.grey[800],fontSize: 16.0 ),
             children: [
               TextSpan(
                 text: suggestionList[index].substring(query.length),

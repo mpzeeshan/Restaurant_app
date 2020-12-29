@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/cart.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 Commons c = Commons();
 List<bool> extras = [false,false,false];
+
+final String coin = 'imgs/coin.svg';
+final Widget svg = SvgPicture.asset(
+    coin,
+    semanticsLabel: 'Coin Logo'
+);
 
 
 class SingleProduct extends StatefulWidget {
@@ -89,9 +96,15 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  '500',
-                                  style: TextStyle(color: Colors.grey[600]),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(coin,height: 12.0,),
+                                    SizedBox(width: MediaQuery.of(context).size.width*0.01,),
+                                    Text(
+                                      '500',
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

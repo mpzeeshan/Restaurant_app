@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/home.dart';
-import 'package:simplify/screens/cart.dart';
+import 'package:simplify/screens/search.dart';
 import 'package:simplify/screens/single_product_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 Commons c = Commons();
-
+final String coin = 'imgs/coin.svg';
+final Widget svg = SvgPicture.asset(
+    coin,
+    semanticsLabel: 'Coin Logo'
+);
 
 class Products extends StatefulWidget {
 
@@ -159,15 +164,7 @@ class _ProductsState extends State<Products> {
               ),
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: MediaQuery.of(context).size.width * 0.015,
-                    backgroundColor: Colors.orange,
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.yellow[600],
-                      size: MediaQuery.of(context).size.width * 0.025,
-                    ),
-                  ),
+                  SvgPicture.asset(coin,height: 12.0,),
                   Text(
                     ' $coins',
                     style: TextStyle(
@@ -214,26 +211,47 @@ class _ProductsState extends State<Products> {
           child: SafeArea(
             child: Scaffold(
                 appBar: AppBar(
+                  bottom: PreferredSize(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.024, ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2.0),
+                        child: GestureDetector(
+                          child: Container(
+                            color: Colors.white,
+                            height: 50.0,
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  "Search Restaurant / Dishes",
+                                  style:
+                                  TextStyle(color:  Colors.grey, fontSize: 15.0),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.search),
+                                  color: Colors.black,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            showSearch(context: context, delegate: DataSearch());
+                          },
+                        ),
+                      ),
+                    ),
+                      preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.05),
+                  ),
                   elevation: 0.0,
                   backgroundColor: Colors.white,
-                  bottom: TabBar(
-                    indicatorPadding: EdgeInsets.all(4.0),
-                    unselectedLabelColor: Colors.grey[600],
 
-                    indicatorColor: Colors.blue[900],
-                    labelColor: Colors.white,
-                    indicator: BoxDecoration(
-
-                    gradient: LinearGradient(
-                    colors: [Colors.blue[900], Colors.blue[900]]),
-
-                    ),
-                    tabs: [
-                      Tab(text: 'Vegetarian',),
-                      Tab(text: 'Non-Vegetarian',),
-                      Tab(text: 'Under \$ 15',),
-                    ],
-                  ),
                   leading: GestureDetector(
                     child: Icon(
                       Icons.arrow_back,
@@ -255,38 +273,23 @@ class _ProductsState extends State<Products> {
                   ),
                 ),
                 backgroundColor: Colors.white,
-                body: TabBarView(children : [
-                  Padding(
-                    padding: EdgeInsets.only(left:MediaQuery.of(context).size.height*0.01,top: 0.0,right: MediaQuery.of(context).size.height*0.01,bottom: 0.0),
-                    child: GridView.count(
-                        crossAxisCount: 2,
-                        childAspectRatio: (0.73),
-                        controller: ScrollController(),
-                        scrollDirection: Axis.vertical,
-                        children:
-                        List.generate(c.imageList.length, (index) {
-                          return products(
-                              c.imageList[index],
-                              c.catList[index],
-                              c.pnameList[index],
-                              c.coinsList[index],
-                              index);
-                        })),
-                  ),
-                  Center(child: Padding(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.teal,
-                    ),
-                  )),
-                  Center(child: Padding(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.05),
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.teal,
-
-                    ),
-                  )),
-                ]),
+                body: Padding(
+                  padding: EdgeInsets.only(left:MediaQuery.of(context).size.height*0.01,top: 0.0,right: MediaQuery.of(context).size.height*0.01,bottom: 0.0),
+                  child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: (0.73),
+                      controller: ScrollController(),
+                      scrollDirection: Axis.vertical,
+                      children:
+                      List.generate(c.imageList.length, (index) {
+                        return products(
+                            c.imageList[index],
+                            c.catList[index],
+                            c.pnameList[index],
+                            c.coinsList[index],
+                            index);
+                      })),
+                ),
 
                 bottomNavigationBar: GestureDetector(
                     onTap: () {

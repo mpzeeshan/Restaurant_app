@@ -6,6 +6,7 @@ import 'package:simplify/UserAccount/edit_account.dart';
 import 'package:simplify/UserAccount/help.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/payment/gift_card.dart';
+import 'package:simplify/screens/home.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
@@ -19,8 +20,7 @@ class More extends StatefulWidget {
 }
 
 class _MoreState extends State<More> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+
 
   bool _expand;
 
@@ -401,6 +401,12 @@ class _MoreState extends State<More> {
             currentIndex: 4,
             onTap: (value) {
               switch (value) {
+                case 0:
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
+                  break;
                 case 1:
                   Navigator.push(
                     context,
@@ -411,7 +417,7 @@ class _MoreState extends State<More> {
                 case 2:
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Search()),
+                    MaterialPageRoute(builder: (context) => OrderHistory()),
                   );
                   break;
                 case 3:
@@ -444,10 +450,10 @@ class _MoreState extends State<More> {
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.search),
+                icon: Icon(Icons.history),
                 // ignore: deprecated_member_use
                 title: Text(
-                  'Search',
+                  'Orders',
                 ),
               ),
               BottomNavigationBarItem(

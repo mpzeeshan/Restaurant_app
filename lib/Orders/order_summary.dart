@@ -45,60 +45,13 @@ class OrderSummary extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image(
-                              image: AssetImage(m.recentOrders[0]),
-                              height: MediaQuery.of(context).size.height*0.1,
-                            ),
-                            SizedBox(
-                              width: 15.0,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Santushti Smoothies and Shakes'),
-                                  SizedBox(
-                                    height: 7.0,
-                                  ),
-                                  Text(
-                                    'North Indian',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12.0),
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Text(
-                                    'Fatehgunj',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12.0),
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Container(
-                                    height: 20.0,
-                                    child: RaisedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'ORDER DELIVERED',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 10.0),
-                                      ),
-                                      color: Colors.grey[400],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+
                           ],
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
                     Text(
                       'YOUR ORDER',
@@ -323,6 +276,7 @@ class OrderSummary extends StatelessWidget {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.015,
                           ),
+
                         ],
                       ),
                     ),
@@ -334,3 +288,53 @@ class OrderSummary extends StatelessWidget {
     );
   }
 }
+
+
+// Image(
+// image: AssetImage(m.recentOrders[0]),
+// height: MediaQuery.of(context).size.height*0.1,
+// ),
+// SizedBox(
+// width: 15.0,
+// ),
+// Container(
+// width: MediaQuery.of(context).size.width * 0.6,
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// Text('Santushti Smoothies and Shakes'),
+// SizedBox(
+// height: 7.0,
+// ),
+// Text(
+// 'North Indian',
+// style: TextStyle(
+// color: Colors.grey, fontSize: 12.0),
+// ),
+// SizedBox(
+// height: 5.0,
+// ),
+// Text(
+// 'Fatehgunj',
+// style: TextStyle(
+// color: Colors.grey, fontSize: 12.0),
+// ),
+// SizedBox(
+// height: 5.0,
+// ),
+// Container(
+// height: 20.0,
+// child: RaisedButton(
+// onPressed: () {},
+// child: Text(
+// 'ORDER DELIVERED',
+// style: TextStyle(
+// color: Colors.white,
+// fontSize: 10.0),
+// ),
+// color: Colors.grey[400],
+// ),
+// ),
+// ],
+// ),
+// ),
