@@ -1,25 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/UserAccount/SavedAddresses.dart';
+import 'package:simplify/screens/home.dart';
+import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:simplify/payment/payments.dart';
 import 'package:simplify/Orders/order_summary.dart';
 
+
 class Cart extends StatefulWidget {
+
+
+  bool offerFlag;
+  int selectedAddress;
+  Cart(this.offerFlag,this.selectedAddress);
+
   @override
-  _CartState createState() => _CartState();
+  _CartState createState() => _CartState(this.offerFlag,this.selectedAddress);
 }
 
 class _CartState extends State<Cart> {
+
+  int itemCountForPayments= 0;
+  bool offerFlag;
+  int selectedAddress;
+  _CartState(this.offerFlag,this.selectedAddress);
 
   TextEditingController _instructionsController = TextEditingController();
 
   var disc = 5;
   var delFee = 2;
+  int cartTotal;
 
   @override
   void initState(){
+    cartTotal = total;
+    itemCountForPayments = itemCountFP();
     super.initState();
+  }
+
+  int itemCountFP(){
+    int temp = 0;
+    for(int i=0;i<c.counList.length;i++){
+      temp = temp+c.counList[i];
+    }
+    return temp;
   }
 
 
@@ -42,11 +67,32 @@ class _CartState extends State<Cart> {
                   onTap: () {
                     setState(() {
                       c.counList[count] = c.counList[count] - 1;
+                      cartTotal -=10;
+                      total -=10;
+                      itemCountForPayments -= 1;
                       if (c.counList[count] >= 1) {
                         c.priceList[count] = c.priceList[count] - 10;
                       }
-                      if (c.counList[count] <= 0) {
+                      if (c.counList[count] == 0) {
                         c.flagList[count] = true;
+                        cartCount.remove(count);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home()
+                          ),
+                        );
+                        if (cartCount.length == 0){
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                Future.delayed(Duration(seconds: 1), () {
+                                });
+                                return AlertDialog(
+                                  title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
+                                );
+                              });
+                        }
                       }
                     });
                   },
@@ -95,7 +141,10 @@ class _CartState extends State<Cart> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
+                      cartTotal +=10;
+                      total +=10;
                       c.counList[count] = c.counList[count] + 1;
+                      itemCountForPayments += 1;
                       if (c.counList[count] > 1) {
                         c.priceList[count] = c.priceList[count] + 10;
                       }
@@ -134,7 +183,12 @@ class _CartState extends State<Cart> {
             ),
             leading: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SavedAddresses(false,true)
+                    ),
+                  );
                 },
                 child: Icon(
                   Icons.arrow_back,
@@ -153,39 +207,40 @@ class _CartState extends State<Cart> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-
-
-
                     SizedBox(
                       height: MediaQuery.of(context).size.height*0.04,
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height*0.07,
+                      height: cartCount.length >= 2 ?MediaQuery.of(context).size.height*0.12:MediaQuery.of(context).size.height*0.07,
                       child: ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) => Row(
-
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        itemCount: cartCount.length,
+                        itemBuilder: (context, index) => Column(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Spicy Trio',
-                                  style: TextStyle(fontSize: 15.0),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      c.pnameList[cartCount[index]],
+                                      style: TextStyle(fontSize: 15.0),
+                                    ),
+                                    Text(
+                                      '\$'+c.priceList[cartCount[index]].toString()+'.00',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          color: Colors.grey[600],
+                                          height: 1.5),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  '\$'+c.priceList[index].toString()+'.00',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.grey[600],
-                                      height: 1.5),
-                                ),
+
+                                size(cartCount[index]),
                               ],
                             ),
-
-                            size(index),
+                            SizedBox(height: MediaQuery.of(context).size.height*0.01,),
                           ],
                         ),
                       ),
@@ -210,23 +265,75 @@ class _CartState extends State<Cart> {
                       thickness: 1.3,
                       color: Colors.black,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 5.0),
-                      child: ListTile(
-                        leading: Image(
-                          image: AssetImage('imgs/discount.png'),
-                          height: 30.0,
-                        ),
-                        title: Text(
-                          'APPLY COUPON',
-                          style: TextStyle(
+                    Visibility(
+                      visible: offerFlag == false,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 5.0),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Offers(true)
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Image(
+                              image: AssetImage('imgs/discount.png'),
+                              height: 30.0,
+                            ),
+                            title: Text(
+                              'APPLY COUPON',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  letterSpacing: 0.8,
+                                  fontSize: 15.0),
+                            ),
+                            trailing: Icon(
+                              Icons.keyboard_arrow_right,
                               color: Colors.black,
-                              letterSpacing: 0.8,
-                              fontSize: 15.0),
+                            ),
+                          ),
                         ),
-                        trailing: Icon(
-                          Icons.keyboard_arrow_right,
-                          color: Colors.black,
+                      ),
+                    ),
+                    Visibility(
+                      visible: offerFlag == true,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 5.0),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Offers(true)
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Image(
+                              image: AssetImage('imgs/discount.png'),
+                              height: 30.0,
+                            ),
+                            title: Text(
+                              appliedOffer.toString(),
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  letterSpacing: 0.8,
+                                  fontSize: 15.0),
+                            ),
+                            trailing: RaisedButton(
+                              elevation: 0.0,
+                              color: Colors.white,
+                              onPressed: (){
+                                setState(() {
+                                  offerFlag = false;
+                                });
+                              },
+                              child: Icon(Icons.delete),
+                            )
+                          ),
                         ),
                       ),
                     ),
@@ -253,13 +360,35 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                         Text(
-                          '\$'+c.priceList[0].toString()+'.00',
+                          '\$'+cartTotal.toString()+'.00',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    Visibility(
+                      visible: offerFlag == true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            appliedOffer.toString(),
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          Text(
+                            '-\$'+appliedOfferPrice.toString()+'.00',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: offerFlag == true,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,7 +398,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.green),
                         ),
                         Text(
-                            '\$'+disc.toString()+'.00',
+                            '\$00.00',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -315,7 +444,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                         Text(
-                          '\$'+(c.priceList[0]+delFee+disc).toString()+'.00',
+                          '\$'+(cartTotal+delFee-appliedOfferPrice).toString()+'.00',
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                       ],
@@ -341,10 +470,11 @@ class _CartState extends State<Cart> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Image(
-                          image: AssetImage('imgs/work.png'),
-                          height: MediaQuery.of(context).size.height * 0.07,
-                        ),
+                        // Image(
+                        //   image: AssetImage('imgs/work.png'),
+                        //   height: MediaQuery.of(context).size.height * 0.07,
+                        // ),
+                        Icon(am.addressIcons[selectedAddress],),
                         SizedBox(
                           width: 15.0,
                         ),
@@ -352,15 +482,20 @@ class _CartState extends State<Cart> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Work',
+                              am.place[selectedAddress],
                               style: TextStyle(
                                 fontSize: 14.0,
                               ),
                             ),
-                            Text(
-                              '393, Seventh street, durga nagar...',
-                              style:
-                                  TextStyle(color: Colors.grey[600], height: 1.3),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width*0.5,
+                              child: Text(
+                                am.location[selectedAddress],
+                                maxLines: 1,
+
+                                style:
+                                    TextStyle(color: Colors.grey[600], height: 1.3),
+                              ),
                             ),
                           ],
                         ),
@@ -379,7 +514,7 @@ class _CartState extends State<Cart> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                            builder: (context) => SavedAddresses()
+                            builder: (context) => SavedAddresses(false,false)
                             ),
                         );
                       },
@@ -435,7 +570,7 @@ class _CartState extends State<Cart> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Payments()),
+                                MaterialPageRoute(builder: (context) => Payments(itemCountForPayments,delFee,(cartTotal+delFee-appliedOfferPrice),cartTotal)),
                               );
                             },
                             child: Container(

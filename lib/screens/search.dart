@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/Orders/order_history.dart';
+import 'package:simplify/UserAccount/more.dart';
 import 'package:simplify/models/search_model.dart';
 import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/home.dart';
 
 SearchModels s = SearchModels();
+final List<String> recentOrdersImage = [
+  "imgs/myAccount/pavbhaji.png",
+  "imgs/myAccount/chana_img.png",
+  "imgs/myAccount/pavbhaji.png",
+  "imgs/myAccount/chana_img.png",
+];
 
 class Search extends StatefulWidget {
   @override
@@ -89,9 +96,15 @@ class _SearchState extends State<Search> {
                       ),
                       itemCount: s.recentSearch.length,
                       itemBuilder: (context, index) => ListTile(
-                        title: Text(
-                          s.recentSearch[index],
-                          style: TextStyle(color: Colors.grey[600]),
+                        title: Row(
+                          children: [
+                            Image(image: AssetImage(recentOrdersImage[index]),height: MediaQuery.of(context).size.height*0.04,),
+                            SizedBox(width: MediaQuery.of(context).size.width*0.05,),
+                            Text(
+                              s.recentSearch[index],
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
                         ),
                         leading: Icon(
                           Icons.search,
@@ -123,20 +136,26 @@ class _SearchState extends State<Search> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Offers()),
+                MaterialPageRoute(builder: (context) => Offers(false)),
               );
               break;
 
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Cart()),
+                MaterialPageRoute(builder: (context) => Cart(false,0)),
               );
               break;
             case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => OrderHistory()),
+              );
+              break;
+            case 4:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => More()),
               );
               break;
           }
@@ -247,17 +266,24 @@ class DataSearch extends SearchDelegate<String> {
         onTap: () {
           showResults(context);
         },
-        title: RichText(
-          text: TextSpan(
-            text: suggestionList[index].substring(0, query.length),
-            style: TextStyle(color: Colors.grey[800],fontSize: 16.0 ),
-            children: [
-              TextSpan(
-                text: suggestionList[index].substring(query.length),
-                style: TextStyle(color: Colors.grey),
-              )
-            ],
-          ),
+        // trailing: Image(image: AssetImage('imgs/myAccount/chana_img.png'),height: MediaQuery.of(context).size.height*0.04,),
+        title: Row(
+          children: [
+            Image(image: AssetImage(recentOrdersImage[index]),height: MediaQuery.of(context).size.height*0.04,),
+            SizedBox(width: MediaQuery.of(context).size.width*0.05,),
+            RichText(
+              text: TextSpan(
+                text: suggestionList[index].substring(0, query.length),
+                style: TextStyle(color: Colors.grey[800],fontSize: 16.0 ),
+                children: [
+                  TextSpan(
+                    text: suggestionList[index].substring(query.length),
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
         leading: Icon(
           Icons.search,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplify/Orders/order_history.dart';
+import 'package:simplify/login/login.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/products.dart';
@@ -7,7 +9,7 @@ import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
 import 'package:simplify/UserAccount/more.dart';
 
-Commons c = Commons();
+Commons h = Commons();
 
 class Home extends StatefulWidget {
   @override
@@ -34,12 +36,20 @@ class _HomeState extends State<Home> {
   final List<String> imgList = ["imgs/kfc.png","imgs/kfc.png"];
   String _currentItemSelected;
   bool _selected = false;
+  SharedPreferences sharedPreferences;
 
   @override
   void initState() {
     super.initState();
     _currentItemSelected = textList[0];
+    checkLoginStatus();
+  }
 
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if(sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+    }
   }
 
   GestureDetector topDishes(image, category) {
@@ -48,7 +58,7 @@ class _HomeState extends State<Home> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Products(),
+            builder: (context) => Products(category),
           ),
         );
       },
@@ -94,7 +104,7 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                c.offer(),
+                h.offer(),
                 Text(
                   "$one",
                   style: TextStyle(
@@ -269,19 +279,10 @@ class _HomeState extends State<Home> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 5.0),
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Products(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Top Dishes',
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17.0),
-                          )),
+                      child: Text(
+                        'Top Dishes',
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17.0),
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
@@ -331,7 +332,7 @@ class _HomeState extends State<Home> {
                     case 1:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Offers()),
+                        MaterialPageRoute(builder: (context) => Offers(false)),
                       );
                       break;
 
@@ -342,10 +343,25 @@ class _HomeState extends State<Home> {
                       );
                       break;
                     case 3:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Cart()),
-                      );
+                      if(cartCount.length == 0){
+                        print('Cart is empty!');
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              Future.delayed(Duration(seconds: 2), () {
+                                Navigator.of(context).pop(true);
+                              });
+                              return AlertDialog(
+                                title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
+                              );
+                            });
+                      }else{
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Cart(false,0)),
+                        );
+                      }
+
                       break;
                     case 4:
                       Navigator.push(

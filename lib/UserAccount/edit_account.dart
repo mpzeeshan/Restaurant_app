@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:simplify/login/otp.dart';
 
 class EditAccount extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _EditAccountState extends State<EditAccount> {
                         TextField(
                           controller: _nameController,
                           decoration: InputDecoration(
-                            hintText: 'John Woosh',
+                            hintText: otpModel.data.fullname.toString(),
 
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
@@ -72,7 +73,7 @@ class _EditAccountState extends State<EditAccount> {
                         TextField(
                           controller: _emailController,
                           decoration: InputDecoration(
-                            hintText: 'john@gmail.com',
+                            hintText: otpModel.data.email.toString(),
                             prefixIcon: Icon(Icons.email),
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
@@ -88,7 +89,7 @@ class _EditAccountState extends State<EditAccount> {
                           TextInputType.number,
 
                           decoration: InputDecoration(
-                            hintText: '9876567890',
+                            hintText: otpModel.data.mobile.toString(),
                             prefixIcon: Icon(Icons.phone),
                             hintStyle: TextStyle(
                               color: Colors.grey[400],

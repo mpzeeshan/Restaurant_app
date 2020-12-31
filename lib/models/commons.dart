@@ -64,7 +64,7 @@ class Commons {
 
   //*********************************CART TOTAL BOTTOM NAV**********************************//
 
-  Row cartTotal(height) {
+  Row cartTotal(height,total) {
     return Row(
       children: [
         Expanded(
@@ -85,7 +85,7 @@ class Commons {
                         ),
                   ),
                   Text(
-                    '\$15.00',
+                    '\$'+total.toString()+'.00',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -113,7 +113,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
+            Visibility(visible: !orderFlag,child: getRange(context)),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
@@ -265,8 +265,45 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
       ),
     );
 }
+RaisedButton getRange(context){
+    bool pickedFlag = false;
+    var Date = DateTime.now();
+      return RaisedButton(
+          elevation: 0.0,
+          color: Colors.white,
+          onPressed: () async {
+            final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                context: context,
+                initialFirstDate: DateTime.now().subtract(Duration(days: 6)),
+                initialLastDate: (DateTime.now()).add( Duration(days: 0)),
+                firstDate: DateTime(2017).subtract(Duration(days: 7)),
+                lastDate: DateTime.now().add(Duration(days: 366))
+            );
+            if (picked != null && picked.length == 2) {
+              print(picked);
+              pickedFlag = true;
 
+            }
+          },
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text("Pick Date"),
+                  SizedBox(width: 5.0,),
+                  Icon(Icons.date_range),
+                ],
+              ),
+              Visibility(
+                  visible: pickedFlag,
+                  child: Text(pickedFlag?Date.toString():'')),
+
+
+        ])
+      );
+    }
 }
+
 
 
 // Padding(

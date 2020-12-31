@@ -231,11 +231,11 @@ class _SingleProductState extends State<SingleProduct> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Cart(),
+                  builder: (context) => Cart(false,0),
                 ),
               );
             },
-            child: c.cartTotal(height)),
+            child: c.cartTotal(height,15)),
       ),
     );
   }

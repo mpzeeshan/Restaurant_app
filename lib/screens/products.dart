@@ -7,21 +7,42 @@ import 'package:simplify/screens/single_product_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 Commons c = Commons();
+int total=0;
+List<int> cartCount = [];
+
 final String coin = 'imgs/coin.svg';
 final Widget svg = SvgPicture.asset(
     coin,
     semanticsLabel: 'Coin Logo'
 );
 
+// ignore: must_be_immutable
 class Products extends StatefulWidget {
-
+  String receivedTitle;
+  Products(this.receivedTitle);
   @override
-  _ProductsState createState() => _ProductsState();
+  _ProductsState createState() => _ProductsState(this.receivedTitle);
 }
 
 class _ProductsState extends State<Products> {
-  //*********************** METHOD FOR INCREMENT AND DECREMENT BUTTON **********************************************//
 
+  String receivedTitle;
+  _ProductsState(this.receivedTitle);
+
+  @override
+  void initState(){
+    super.initState();
+    setState(() {
+     if(cartCount.length == 0){
+       for(int i=0;i<c.flagList.length;i++){
+         c.flagList[i] = true;
+       }
+     }
+    });
+    super.initState();
+  }
+
+  //*********************** METHOD FOR INCREMENT AND DECREMENT BUTTON **********************************************//
   Container size(count) {
     return Container(
       decoration: BoxDecoration(
@@ -43,9 +64,12 @@ class _ProductsState extends State<Products> {
                       c.counList[count] = c.counList[count] - 1;
                       if (c.counList[count] >= 1) {
                         c.priceList[count] = c.priceList[count] - 10;
+                        total -=  10;
                       }
                       if (c.counList[count] <= 0) {
+                        total -=  10;
                         c.flagList[count] = true;
+                        cartCount.remove(count);
                       }
                     });
                   },
@@ -67,6 +91,8 @@ class _ProductsState extends State<Products> {
                   onTap: () {
                     setState(() {
                       c.counList[count] = c.counList[count] + 1;
+                      total +=10;
+                      cartCount.add(count);
                       c.flagList[count] = false;
                     });
                   },
@@ -97,6 +123,7 @@ class _ProductsState extends State<Products> {
                       c.counList[count] = c.counList[count] + 1;
                       if (c.counList[count] > 1) {
                         c.priceList[count] = c.priceList[count] + 10;
+                        total +=10;
                       }
                     });
                   },
@@ -175,7 +202,6 @@ class _ProductsState extends State<Products> {
                 ],
               ),
               Padding(
-                ///////444444444444444
                 padding: const EdgeInsets.only(top: 10.0),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.45,
@@ -267,9 +293,9 @@ class _ProductsState extends State<Products> {
 
                   ),
                   title: Text(
-                    ' Single Serve Meals. Free Delivery.',
+                    receivedTitle.toUpperCase(),
                     style: TextStyle(
-                        color: Colors.black, fontSize: 16.0),
+                        color: Colors.black, fontSize: 15.0),
                   ),
                 ),
                 backgroundColor: Colors.white,
@@ -293,14 +319,28 @@ class _ProductsState extends State<Products> {
 
                 bottomNavigationBar: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SavedAddresses(),
-                        ),
-                      );
+                      if(cartCount.length == 0){
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              Future.delayed(Duration(seconds: 2), () {
+                                Navigator.of(context).pop(true);
+                              });
+                              return AlertDialog(
+                                title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
+                              );
+                            });
+                      }else{
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SavedAddresses(false,false),
+                          ),
+                        );
+                      }
+
                     },
-                    child: c.cartTotal(height)),
+                    child: c.cartTotal(height,total)),
               ),
 
           ),

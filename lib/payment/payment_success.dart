@@ -133,22 +133,6 @@ class PaymentSuccess extends StatelessWidget {
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OrderHistory()),
-                    );
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height*0.055,
-                    color: Colors.green,
-                    width: MediaQuery.of(context).size.width*0.5,
-                    child: Center(
-                      child: Text('Track Order',style: TextStyle(color: Colors.white,fontSize: 17.0),),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
                       MaterialPageRoute(builder: (context) => Help()),
                     );
                   },
@@ -158,6 +142,22 @@ class PaymentSuccess extends StatelessWidget {
                     width: MediaQuery.of(context).size.width*0.5,
                     child: Center(
                       child: Text('Need Help ?',style: TextStyle(color: Colors.white,fontSize: 17.0),),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OrderHistory()),
+                    );
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height*0.055,
+                    color: Colors.green,
+                    width: MediaQuery.of(context).size.width*0.5,
+                    child: Center(
+                      child: Text('Track Order',style: TextStyle(color: Colors.white,fontSize: 17.0),),
                     ),
                   ),
                 )

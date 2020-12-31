@@ -5,6 +5,9 @@ import 'package:simplify/screens/home.dart';
 import 'package:simplify/models/otp_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:simplify/services/otp_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+OtpModel otpModel;
 
 class Ottp extends StatefulWidget {
   @override
@@ -17,13 +20,12 @@ class _OtpState extends State<Ottp> {
   bool isFilled = false;
   bool _wrong = false;
   String errorMessage;
-  OtpModel otpModel;
+
   var pinn;
 
   TextEditingController _myController = TextEditingController();
 
   static var receivedPinn;
-
 
   @override
   void dispose() {
@@ -33,20 +35,25 @@ class _OtpState extends State<Ottp> {
 
   @override
   void initState() {
-
     super.initState();
     _myController.text = '';
     _myController.addListener(() {
-      setState(() {});// setState every time text changes
+      setState(() {}); // setState every time text changes
     });
-    serviceOtp.getOTP().then((response){
+    serviceOtp.getOTP().then((response) {
       if (response.error) {
         errorMessage = response.errorMessage ?? 'An error occurred';
       }
       otpModel = response.data;
       receivedPinn = otpModel.otp;
-      });
-    }
+      sharedPref();
+    });
+  }
+
+  void sharedPref() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("token", otpModel.data.password);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,12 +187,11 @@ class _OtpState extends State<Ottp> {
                               var ph = int.parse(receivedPinn);
 
                               if (ph == pinn) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Home(),
-                                  ),
-                                );
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Home()),
+                                    (Route<dynamic> route) => false);
                               } else if (ph != pinn) {
                                 setState(() {
                                   _wrong = !_wrong;

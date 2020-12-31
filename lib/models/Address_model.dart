@@ -6,8 +6,8 @@ class AddressModel {
 
   // ignore: non_constant_identifier_names
   final List<String> location = [
-    "393, Seventh street, durga nagar, Maletioist near lax road, malhar point, mumbai",
-    "393, Seventh street, durga nagar, Maletioist near lax road, malhar point, mumbai",
+    "#7, That street, Tulsa, United States of America",
+    "#23, East Texas, Texas, United States of America",
   ];
 
   final List<IconData> addressIcons = [Icons.work_outline, Icons.home_outlined];

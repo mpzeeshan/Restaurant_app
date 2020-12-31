@@ -4,23 +4,23 @@ import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/UserAccount/edit_account.dart';
 import 'package:simplify/UserAccount/help.dart';
+import 'package:simplify/login/otp.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/payment/gift_card.dart';
+import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/home.dart';
-import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
-import 'package:simplify/screens/search.dart';
 import 'package:simplify/payment/wallet.dart';
 
 MoreModel m = MoreModel();
 
 class More extends StatefulWidget {
+
   @override
   _MoreState createState() => _MoreState();
 }
 
 class _MoreState extends State<More> {
-
 
   bool _expand;
 
@@ -59,9 +59,9 @@ class _MoreState extends State<More> {
                     child: Column(
                       children: [
                         ListTile(
-                          title: Text('JOHN WOOSH'),
+                          title: Text(otpModel.data.fullname.toUpperCase()),
                           subtitle: Text(
-                            '31873813 | john@gmail.com',
+                            otpModel.data.mobile+' | '+otpModel.data.email,
                             style: TextStyle(
                                 fontSize: 11.0, color: Colors.grey[500]),
                           ),
@@ -214,7 +214,7 @@ class _MoreState extends State<More> {
                                     if(index == 0){
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SavedAddresses()),
+                                        MaterialPageRoute(builder: (context) => SavedAddresses(true,false)),
                                       );
                                     }
                                     if(index == 1){
@@ -410,7 +410,7 @@ class _MoreState extends State<More> {
                 case 1:
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Offers()),
+                    MaterialPageRoute(builder: (context) => Offers(false)),
                   );
                   break;
 
@@ -423,7 +423,7 @@ class _MoreState extends State<More> {
                 case 3:
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Products()),
+                    MaterialPageRoute(builder: (context) => Cart(false,0)),
                   );
                   break;
                 case 4:

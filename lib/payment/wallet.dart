@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/login/otp.dart';
 
 class Wallet extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _WalletState extends State<Wallet> {
                     height: MediaQuery.of(context).size.height * 0.035,
                   ),
                   Text(
-                    '\$  95',
+                    '\$'+otpModel.data.wallet.toString()+'.00',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                   ),
                   Divider(
