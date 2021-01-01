@@ -53,6 +53,11 @@ class _OtpState extends State<Ottp> {
   void sharedPref() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("token", otpModel.data.password);
+    sharedPreferences.setString("fullName", otpModel.data.fullname);
+    sharedPreferences.setString("email", otpModel.data.email);
+    sharedPreferences.setString("phone", otpModel.data.mobile);
+    sharedPreferences.setString("wallet", otpModel.data.wallet);
+    print(sharedPreferences.get("token"));
   }
 
   @override

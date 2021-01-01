@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/models/commons.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+
 
 final List<String> recentOrders = [
   "imgs/myAccount/pavbhaji.png",

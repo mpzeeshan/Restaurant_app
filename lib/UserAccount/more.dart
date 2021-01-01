@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/UserAccount/edit_account.dart';
 import 'package:simplify/UserAccount/help.dart';
+import 'package:simplify/login/login.dart';
 import 'package:simplify/login/otp.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/payment/gift_card.dart';
@@ -13,6 +15,10 @@ import 'package:simplify/screens/offers.dart';
 import 'package:simplify/payment/wallet.dart';
 
 MoreModel m = MoreModel();
+String emailPref;
+String phonePref;
+String fullNamePref;
+
 
 class More extends StatefulWidget {
 
@@ -23,12 +29,27 @@ class More extends StatefulWidget {
 class _MoreState extends State<More> {
 
   bool _expand;
+  SharedPreferences sharedPreferences;
+  bool _isLoading = false;
 
   @override
   void initState() {
     _expand = true;
     super.initState();
+    getPref();
+  }
 
+  void getPref() async{
+    setState(() {
+      _isLoading = true;
+    });
+    sharedPreferences = sharedPreferences = await SharedPreferences.getInstance();
+    fullNamePref = sharedPreferences.getString("fullName");
+    phonePref = sharedPreferences.getString("phone");
+    emailPref = sharedPreferences.getString("email");
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -59,9 +80,9 @@ class _MoreState extends State<More> {
                     child: Column(
                       children: [
                         ListTile(
-                          title: Text(otpModel.data.fullname.toUpperCase()),
-                          subtitle: Text(
-                            otpModel.data.mobile+' | '+otpModel.data.email,
+                          title: _isLoading? LinearProgressIndicator():Text(fullNamePref.toUpperCase()),
+                          subtitle: _isLoading?LinearProgressIndicator():Text(
+                            phonePref+' | '+emailPref,
                             style: TextStyle(
                                 fontSize: 11.0, color: Colors.grey[500]),
                           ),
@@ -71,91 +92,6 @@ class _MoreState extends State<More> {
                                 context,
                                 MaterialPageRoute(builder: (context) => EditAccount()),
                               );
-
-                              // showDialog(
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return AlertDialog(
-                              //         content: Container(
-                              //           height:
-                              //           MediaQuery.of(context).size.height *
-                              //               0.25,
-                              //           width:
-                              //           MediaQuery.of(context).size.width *
-                              //               0.8,
-                              //           child: Column(
-                              //             crossAxisAlignment:
-                              //             CrossAxisAlignment.start,
-                              //             children: [
-                              //               Text(
-                              //                 'Edit Account',
-                              //                 style: TextStyle(
-                              //                     fontWeight: FontWeight.bold,fontSize: 17.0),
-                              //               ),
-                              //               SizedBox(
-                              //                 height: MediaQuery.of(context)
-                              //                     .size
-                              //                     .height *
-                              //                     0.02,
-                              //               ),
-                              //               TextField(
-                              //                 controller: _emailController,
-                              //                 decoration: InputDecoration(
-                              //                   hintText: 'john@gmail.com',
-                              //                 ),
-                              //               ),
-                              //               TextField(
-                              //                 controller: _phoneController,
-                              //                 keyboardType:
-                              //                 TextInputType.number,
-                              //                 decoration: InputDecoration(
-                              //                   hintText: '9876567890',
-                              //                 ),
-                              //               ),
-                              //               SizedBox(
-                              //                 height: MediaQuery.of(context)
-                              //                     .size
-                              //                     .height *
-                              //                     0.01,
-                              //               ),
-                              //               Expanded(
-                              //                 child: Row(
-                              //                   children: [
-                              //                     SizedBox(
-                              //                       height:
-                              //                       MediaQuery.of(context)
-                              //                           .size
-                              //                           .height *
-                              //                           0.045,
-                              //                       width:
-                              //                       MediaQuery.of(context)
-                              //                           .size
-                              //                           .width *
-                              //                           0.67,
-                              //                       child: RaisedButton(
-                              //                         color: Colors
-                              //                             .deepOrange[400],
-                              //                         child: Center(
-                              //                             child: Text(
-                              //                               'UPDATE',
-                              //                               style: TextStyle(
-                              //                                   color: Colors.white,
-                              //                                   letterSpacing: 1.0,
-                              //                                   fontSize: 17.0),
-                              //                             )),
-                              //                         onPressed: () {
-                              //                           setState(() {});
-                              //                         },
-                              //                       ),
-                              //                     ),
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       );
-                              //     });
                             },
                             child: Text(
                               'EDIT',
@@ -291,92 +227,6 @@ class _MoreState extends State<More> {
                           trailing: Icon(Icons.keyboard_arrow_right,
                               color: Colors.black),
                         ),
-                        // ExpansionTile(
-                        //   title: Text('RECENT ORDERS'),
-                        //   subtitle: Text(
-                        //     'View recent orders',
-                        //     style: TextStyle(
-                        //         fontSize: 11.0, color: Colors.grey[500]),
-                        //   ),
-                        //   trailing: Icon(Icons.keyboard_arrow_down,
-                        //       color: Colors.black),
-                        //   // children: [
-                          //   DottedLine(
-                          //     dashColor: Colors.grey,
-                          //   ),
-                          //   Container(
-                          //     height: 350,
-                          //     child: ListView.builder(
-                          //       itemCount: 2,
-                          //       itemBuilder: (context, index) => Padding(
-                          //         padding: const EdgeInsets.only(top: 30.0),
-                          //         child: Row(
-                          //           mainAxisAlignment: MainAxisAlignment.start,
-                          //           crossAxisAlignment:
-                          //               CrossAxisAlignment.start,
-                          //           children: [
-                          //             Image(
-                          //               image:
-                          //                   AssetImage(m.recentOrders[index]),
-                          //               height: 80.0,
-                          //             ),
-                          //             SizedBox(
-                          //               width: 15.0,
-                          //             ),
-                          //             Container(
-                          //               width:
-                          //                   MediaQuery.of(context).size.width *
-                          //                       0.45,
-                          //               child: Column(
-                          //                 crossAxisAlignment:
-                          //                     CrossAxisAlignment.start,
-                          //                 children: [
-                          //                   Text(m.recentName[index]),
-                          //                   SizedBox(
-                          //                     height: 7.0,
-                          //                   ),
-                          //                   Text(
-                          //                     m.recentDate[index],
-                          //                     style: TextStyle(
-                          //                         color: Colors.grey,
-                          //                         fontSize: 12.0),
-                          //                   ),
-                          //                   SizedBox(
-                          //                     height: 5.0,
-                          //                   ),
-                          //                   Text(
-                          //                     m.recentPrice[index],
-                          //                     style: TextStyle(
-                          //                         color: Colors.grey,
-                          //                         fontSize: 12.0),
-                          //                   ),
-                          //                   RaisedButton(
-                          //                     onPressed: () {},
-                          //                     child: Text(
-                          //                       'RE ORDER',
-                          //                       style: TextStyle(
-                          //                           color: Colors.white),
-                          //                     ),
-                          //                     color: Colors.grey[400],
-                          //                   ),
-                          //                   SizedBox(
-                          //                     height: 15.0,
-                          //                   ),
-                          //                   Divider(
-                          //                     thickness: 1.3,
-                          //                     height: 1.0,
-                          //                     color: Colors.grey,
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ],
-                     //   ),
                       ],
                     ),
                   ),
@@ -384,9 +234,16 @@ class _MoreState extends State<More> {
                       height: 3.0, thickness: 17.0, color: Colors.grey[350]),
                   Padding(
                     padding: const EdgeInsets.only(left: 26.0, top: 27.0),
-                    child: Text(
-                      'LOGOUT',
-                      style: TextStyle(fontSize: 16.0),
+                    child: GestureDetector(
+                      onTap: (){
+                        sharedPreferences.clear();
+                        // sharedPreferences.commit();
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+                      },
+                      child: Text(
+                        'LOGOUT',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
                     ),
                   ),
                 ],

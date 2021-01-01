@@ -267,7 +267,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
 }
 RaisedButton getRange(context){
     bool pickedFlag = false;
-    var Date = DateTime.now();
+    var date = DateTime.now();
       return RaisedButton(
           elevation: 0.0,
           color: Colors.white,
@@ -296,7 +296,7 @@ RaisedButton getRange(context){
               ),
               Visibility(
                   visible: pickedFlag,
-                  child: Text(pickedFlag?Date.toString():'')),
+                  child: Text(pickedFlag?date.toString():'')),
 
 
         ])

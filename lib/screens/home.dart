@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/login/login.dart';
+import 'package:simplify/models/banner_model.dart';
+import 'package:simplify/models/category_model.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/search.dart';
 import 'package:simplify/UserAccount/more.dart';
+import 'package:simplify/services/banner_service.dart';
+import 'package:simplify/services/catergory_service.dart';
 
 Commons h = Commons();
 
@@ -31,26 +36,92 @@ class Item {
 class _HomeState extends State<Home> {
   //********************************** TOP DISHES ********************************************************//
 
-  final List<String> textList = ['KFC','Burger King'];
+  BannerService get serviceBanner => GetIt.I<BannerService>();
+  CategoryService get serviceCategory => GetIt.I<CategoryService>();
 
+  final List<String> textList = ['KFC','Burger King'];
   final List<String> imgList = ["imgs/kfc.png","imgs/kfc.png"];
-  String _currentItemSelected;
+
+
   bool _selected = false;
+  bool _isLoading = true;
+  bool _isLoadingBanner = false;
+  bool _isLoadingCategory = false;
+
+  BannerModel bannerModel;
+  CategoryModel categoryModel;
+
   SharedPreferences sharedPreferences;
+
+  String receivedImage;
+  String errorMessage;
+  String catErrorMessage;
+  String bannerImage;
+  String categoryImage;
+  String bannerLink;
+  String categoryLink;
+  String _currentItemSelected;
 
   @override
   void initState() {
     super.initState();
     _currentItemSelected = textList[0];
+
     checkLoginStatus();
+
+    bannerService();
+    categoryService();
+
   }
 
-  checkLoginStatus() async {
+  void bannerService(){
+    setState(() {
+      _isLoadingBanner = true;
+    });
+    serviceBanner.getBanners().then((response) {
+      if (response.error) {
+        errorMessage = response.errorMessage ?? 'An error occurred : from bannerService()';
+      }
+      bannerModel = response.data;
+      bannerImage = bannerModel.data[0].image;
+      bannerLink='https://newsteam.in/foodapp/uploads/banner/'+bannerImage;
+      setState(() {
+        _isLoadingBanner = false;
+      });
+    });
+
+  }
+
+  void categoryService(){
+    serviceCategory.getCategories().then((response) {
+      if (response.error) {
+        catErrorMessage = response.errorMessage ?? 'An error occurred : from categoryservice()';
+      }
+      categoryModel = response.data;
+      categoryImage = categoryModel.data[0].picFile;
+      categoryLink = 'https://newsteam.in/foodapp/uploads/category/'+categoryImage;
+      print(categoryLink);
+    });
+  }
+
+    checkLoginStatus() async {
+    setState(() {
+      _isLoading = true;
+    });
     sharedPreferences = await SharedPreferences.getInstance();
     if(sharedPreferences.getString("token") == null) {
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+      return false;
+    }else{
+      print(sharedPreferences.getString("token"));
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
+
+
+
 
   GestureDetector topDishes(image, category) {
     return GestureDetector(
@@ -69,6 +140,7 @@ class _HomeState extends State<Home> {
             height: MediaQuery.of(context).size.height*0.145,
             image: AssetImage('$image'),
           ),
+          // Image.network(categoryLink,height: MediaQuery.of(context).size.height*0.145,),
           Padding(
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005,),
             child: Text(
@@ -89,10 +161,12 @@ class _HomeState extends State<Home> {
   Stack on_offer(image, one, two, three) {
     return Stack(
       children: [
-        Image(
-          image: AssetImage('$image'),
-          height: MediaQuery.of(context).size.height*0.221,
-        ),
+        // Image(
+        //   image: AssetImage('$image'),
+        //   height: MediaQuery.of(context).size.height*0.221,
+        // ),
+
+        Image.network(bannerLink,height: MediaQuery.of(context).size.height*0.221,),
         Positioned(
             bottom: 0.0,
             child:
@@ -134,7 +208,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return _isLoading? Container(color: Colors.teal,child: SafeArea(child:
+
+    Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),))))) :
+
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.teal[700], fontFamily: 'Robot'),
       home: Builder(
@@ -241,17 +323,19 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             SizedBox(
+                              height: MediaQuery.of(context).size.height*0.221,
                               width: MediaQuery.of(context).size.width,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  on_offer(
+                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),))
+                                      :on_offer(
                                       "imgs/image_home1.png",
                                       "45% OFF!",
                                       "COUPON 'STAR200'",
                                       "AMAYA FREN RESIDENCY VADODARA"),
-                                  on_offer("imgs/image_home2.png",
+                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)):on_offer("imgs/image_home2.png",
                                       "BREAKFAST AT", "50% OFF", "EXPLORE NOW"),
                                 ],
                               ),
@@ -261,14 +345,15 @@ class _HomeState extends State<Home> {
                               width: MediaQuery.of(context).size.width,
                             ),
                             SizedBox(
+                              height: MediaQuery.of(context).size.height*0.221,
                               width: MediaQuery.of(context).size.width,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  on_offer("imgs/image_home3.png", "SANDWICH'S",
+                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)):on_offer("imgs/image_home3.png", "SANDWICH'S",
                                       "START FROM \$ 20", "EXPLORE NOW"),
-                                  on_offer("imgs/image_home4.png",
+                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)):on_offer("imgs/image_home4.png",
                                       "BREAKFAST AT", "50% OFF", "EXPLORE NOW"),
                                 ],
                               ),
@@ -290,8 +375,14 @@ class _HomeState extends State<Home> {
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          topDishes("imgs/four.jpeg", "Regular"),
-                          topDishes("imgs/pimgone.jpeg", "Beverages"),
+                          _isLoadingCategory?SizedBox(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
+                              :topDishes("imgs/four.jpeg", "Regular"),
+                          _isLoadingCategory?SizedBox(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
+                              :topDishes("imgs/pimgone.jpeg", "Beverages"),
 //
                         ],
                       ),
@@ -302,8 +393,14 @@ class _HomeState extends State<Home> {
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          topDishes("imgs/pchickenimg.jpeg", "Daily Special"),
-                          topDishes("imgs/six.jpeg", "Lunch"),
+                          _isLoadingCategory?SizedBox(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
+                              : topDishes("imgs/pchickenimg.jpeg", "Daily Special"),
+                          _isLoadingCategory?SizedBox(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
+                              :topDishes("imgs/six.jpeg", "Lunch"),
                         ],
                       ),
                     ),
@@ -313,8 +410,14 @@ class _HomeState extends State<Home> {
                         //Top Dishes
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          topDishes("imgs/pchickenimg.jpeg", "Lunch Special"),
-                          topDishes("imgs/six.jpeg", "Dinner"),
+                          _isLoadingCategory?SizedBox(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
+                              :topDishes("imgs/pchickenimg.jpeg", "Lunch Special"),
+                          _isLoadingCategory?SizedBox(
+                              height: MediaQuery.of(context).size.height*0.05,
+                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
+                              :topDishes("imgs/six.jpeg", "Dinner"),
                         ],
                       ),
                     ),
@@ -335,7 +438,6 @@ class _HomeState extends State<Home> {
                         MaterialPageRoute(builder: (context) => Offers(false)),
                       );
                       break;
-
                     case 2:
                       Navigator.push(
                         context,
@@ -426,19 +528,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-//GestureDetector(
-//onTap: () {
-//Navigator.push(
-//context,
-//MaterialPageRoute(
-//builder: (context) => SavedAddresses(),
-//),
-//);
-//},
-//child: Text(
-//'31 A, RK Flats, near Vasushiti Mall. ...',
-//style: TextStyle(
-//fontSize: 11.0, color: Colors.grey[600]),
-//),
-//),

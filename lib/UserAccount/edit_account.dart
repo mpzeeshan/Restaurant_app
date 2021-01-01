@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:simplify/UserAccount/more.dart';
 import 'package:flutter/material.dart';
 import 'package:simplify/login/otp.dart';
 
@@ -10,6 +10,7 @@ class EditAccount extends StatefulWidget {
 
 class _EditAccountState extends State<EditAccount> {
 
+
   final phoneRegex = RegExp(r"([6789]\d\d\d\d\d\d\d\d\d)");
   final emailRegex = RegExp(r"(^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$)");
   final dobRegex = RegExp(r"(^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$)");
@@ -19,6 +20,8 @@ class _EditAccountState extends State<EditAccount> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _dobController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class _EditAccountState extends State<EditAccount> {
                         TextField(
                           controller: _nameController,
                           decoration: InputDecoration(
-                            hintText: otpModel.data.fullname.toString(),
+                            hintText: fullNamePref,
 
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
@@ -73,7 +76,7 @@ class _EditAccountState extends State<EditAccount> {
                         TextField(
                           controller: _emailController,
                           decoration: InputDecoration(
-                            hintText: otpModel.data.email.toString(),
+                            hintText: emailPref,
                             prefixIcon: Icon(Icons.email),
                             hintStyle: TextStyle(
                               color: Colors.grey[400],
@@ -89,7 +92,7 @@ class _EditAccountState extends State<EditAccount> {
                           TextInputType.number,
 
                           decoration: InputDecoration(
-                            hintText: otpModel.data.mobile.toString(),
+                            hintText: phonePref,
                             prefixIcon: Icon(Icons.phone),
                             hintStyle: TextStyle(
                               color: Colors.grey[400],

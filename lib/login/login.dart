@@ -19,6 +19,14 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  // checkLoginStatus().then((success) {
+  // if (success) {
+  // Navigator.pushReplacementNamed(context, '/home');
+  // } else {
+  // Navigator.pushReplacementNamed(context, '/login');
+  // }
+  // });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

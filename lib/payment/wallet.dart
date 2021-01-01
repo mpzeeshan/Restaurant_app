@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simplify/login/otp.dart';
 
 class Wallet extends StatefulWidget {
@@ -8,6 +9,25 @@ class Wallet extends StatefulWidget {
 
 class _WalletState extends State<Wallet> {
   TextEditingController amount = TextEditingController();
+  SharedPreferences sharedPreferences;
+  String walletPref;
+  bool _isLoading = false;
+
+  @override
+  void initState(){
+    super.initState();
+    getPref();
+  }
+  void getPref() async{
+    setState(() {
+      _isLoading = true;
+    });
+    sharedPreferences = sharedPreferences = await SharedPreferences.getInstance();
+    walletPref = sharedPreferences.getString("wallet");
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +68,14 @@ class _WalletState extends State<Wallet> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.035,
                   ),
-                  Text(
-                    '\$'+otpModel.data.wallet.toString()+'.00',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+
+                  _isLoading? LinearProgressIndicator() : Text(
+                    '\$'+walletPref+'.00',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0)
                   ),
+                  // Text(
+                  //   _isLoading? LinearProgressIndicator():'\$'+walletPref+'.00',
+                  //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+                  // ),
                   Divider(
                     thickness: 1.0,
                     color: Colors.grey[600],
