@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:simplify/models/commons.dart';
+import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/cart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Commons c = Commons();
-List<bool> extras = [false,false,false];
 
 final String coin = 'imgs/coin.svg';
 final Widget svg = SvgPicture.asset(
@@ -15,12 +13,25 @@ final Widget svg = SvgPicture.asset(
 
 
 class SingleProduct extends StatefulWidget {
+  String image;
+  String category;
+  String name;
+  String coins;
+  int count;
+
+  SingleProduct(this.image,this.category,this.name,this.coins,this.count);
   @override
-  _SingleProductState createState() => _SingleProductState();
+  _SingleProductState createState() => _SingleProductState(image,category,name,coins,count);
 }
 
 class _SingleProductState extends State<SingleProduct> {
+  String image;
+  String category;
+  String name;
+  String coins;
+  int count;
 
+  _SingleProductState(this.image,this.category,this.name,this.coins,this.count);
   @override
   void initState() {
     super.initState();
@@ -46,7 +57,7 @@ class _SingleProductState extends State<SingleProduct> {
                     Stack(
                       children: [
                         Image(
-                          image: AssetImage('imgs/pimgthree.jpeg'),
+                          image: AssetImage(image),
                         ),
                         Positioned(
                           top: 15.0,
@@ -82,13 +93,13 @@ class _SingleProductState extends State<SingleProduct> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Spicy Trio',
+                                      name,
                                       style: TextStyle(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      'Beverages',
+                                      category,
                                       style: TextStyle(
                                           color: Colors.grey[600],
                                           height: 1.5,
@@ -101,7 +112,7 @@ class _SingleProductState extends State<SingleProduct> {
                                     SvgPicture.asset(coin,height: 12.0,),
                                     SizedBox(width: MediaQuery.of(context).size.width*0.01,),
                                     Text(
-                                      '500',
+                                      coins,
                                       style: TextStyle(color: Colors.grey[600]),
                                     ),
                                   ],
@@ -126,11 +137,11 @@ class _SingleProductState extends State<SingleProduct> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '\$10.00',
+                                  '\$'+c.priceList[count].toString()+'.00',
                                   style: TextStyle(
                                       color: Colors.blue[900], fontSize: 18.0),
                                 ),
-                                size(0),
+                                size(count),
                               ],
                             ),
                             SizedBox(
@@ -172,7 +183,7 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                size(0),
+                                extrasSize(0),
                             ],),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.025,
@@ -191,7 +202,7 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                size(0),
+                                extrasSize(1),
                               ],),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.025,
@@ -210,12 +221,11 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                size(0),
+                                extrasSize(2),
                               ],),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.02,
                             ),
-
                           ],
                         ),
                       ),
@@ -235,7 +245,7 @@ class _SingleProductState extends State<SingleProduct> {
                 ),
               );
             },
-            child: c.cartTotal(height,15)),
+            child: c.cartTotal(height,total)),
       ),
     );
   }
@@ -258,6 +268,7 @@ class _SingleProductState extends State<SingleProduct> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
+                      total -= 10;
                       c.counList[count] = c.counList[count] - 1;
                       if (c.counList[count] >= 1) {
                         c.priceList[count] = c.priceList[count] - 10;
@@ -286,6 +297,7 @@ class _SingleProductState extends State<SingleProduct> {
                     setState(() {
                       c.counList[count] = c.counList[count] + 1;
                       c.flagList[count] = false;
+                      total += 10;
                     });
                   },
                   child: Padding(
@@ -312,6 +324,7 @@ class _SingleProductState extends State<SingleProduct> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
+                      total += 10;
                       c.counList[count] = c.counList[count] + 1;
                       if (c.counList[count] > 1) {
                         c.priceList[count] = c.priceList[count] + 10;
@@ -336,4 +349,105 @@ class _SingleProductState extends State<SingleProduct> {
       ),
     );
   }
+
+  Container extrasSize(count) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey[300]),
+      ),
+      child: SizedBox(
+        height: 25.0,
+        width: 75.0,
+        child: Container(
+          color: c.extras_flag[count] ? Colors.white : Colors.grey[100],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Visibility(
+                visible: !c.extras_flag[count],
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      total -= 10;
+                      c.extras_counList[count] = c.extras_counList[count] - 1;
+                      if (c.extras_counList[count] >= 1) {
+                        c.extras_priceList[count] = c.extras_priceList[count] - 10;
+                      }
+                      if (c.extras_counList[count] <= 0) {
+                        c.extras_flag[count] = true;
+                      }
+                    });
+                  },
+                  child: SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: Center(
+                      child: Text(
+                        '-',
+                        style: TextStyle(color: Colors.black, fontSize: 19.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: c.extras_flag[count],
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      total += 10;
+                      c.extras_counList[count] = c.extras_counList[count] + 1;
+                      c.extras_flag[count] = false;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 11.0),
+                    child: Text(
+                      'Add',
+                      style: TextStyle(color: Colors.orange[700]),
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: !c.extras_flag[count],
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 3.0),
+                  child: Text(
+                    c.extras_counList[count].toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: !c.extras_flag[count],
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      total += 10;
+                      c.extras_counList[count] = c.extras_counList[count] + 1;
+                      if (c.extras_counList[count] > 1) {
+                        c.extras_priceList[count] = c.extras_priceList[count] + 10;
+                      }
+                    });
+                  },
+                  child: SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: Center(
+                      child: Text(
+                        '+',
+                        style: TextStyle(color: Colors.black, fontSize: 17.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }

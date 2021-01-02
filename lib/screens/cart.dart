@@ -10,7 +10,6 @@ import 'package:simplify/Orders/order_summary.dart';
 
 class Cart extends StatefulWidget {
 
-
   bool offerFlag;
   int selectedAddress;
   Cart(this.offerFlag,this.selectedAddress);
@@ -36,6 +35,7 @@ class _CartState extends State<Cart> {
   void initState(){
     cartTotal = total;
     itemCountForPayments = itemCountFP();
+    print(cartCount.length);
     super.initState();
   }
 
@@ -44,6 +44,7 @@ class _CartState extends State<Cart> {
     for(int i=0;i<c.counList.length;i++){
       temp = temp+c.counList[i];
     }
+    print(temp);
     return temp;
   }
 
@@ -76,22 +77,14 @@ class _CartState extends State<Cart> {
                       if (c.counList[count] == 0) {
                         c.flagList[count] = true;
                         cartCount.remove(count);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home()
-                          ),
-                        );
+
                         if (cartCount.length == 0){
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                Future.delayed(Duration(seconds: 1), () {
-                                });
-                                return AlertDialog(
-                                  title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
-                                );
-                              });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Home()
+                            ),
+                          );
                         }
                       }
                     });
@@ -183,12 +176,13 @@ class _CartState extends State<Cart> {
             ),
             leading: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SavedAddresses(false,true)
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => SavedAddresses(false,true)
+                  //   ),
+                  // );
+                  Navigator.pop(context);
                 },
                 child: Icon(
                   Icons.arrow_back,
@@ -208,7 +202,7 @@ class _CartState extends State<Cart> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.04,
+                      height: MediaQuery.of(context).size.height*0.028,
                     ),
                     Container(
                       height: cartCount.length >= 2 ?MediaQuery.of(context).size.height*0.12:MediaQuery.of(context).size.height*0.07,
@@ -444,7 +438,7 @@ class _CartState extends State<Cart> {
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                         Text(
-                          '\$'+(cartTotal+delFee-appliedOfferPrice).toString()+'.00',
+                          '\$'+((cartTotal+delFee)-appliedOfferPrice).toString()+'.00',
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                       ],
@@ -492,7 +486,6 @@ class _CartState extends State<Cart> {
                               child: Text(
                                 am.location[selectedAddress],
                                 maxLines: 1,
-
                                 style:
                                     TextStyle(color: Colors.grey[600], height: 1.3),
                               ),
@@ -570,7 +563,7 @@ class _CartState extends State<Cart> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Payments(itemCountForPayments,delFee,(cartTotal+delFee-appliedOfferPrice),cartTotal)),
+                                MaterialPageRoute(builder: (context) => Payments(itemCountForPayments,delFee,(cartTotal-appliedOfferPrice),(cartTotal-appliedOfferPrice),appliedOfferPrice)),
                               );
                             },
                             child: Container(

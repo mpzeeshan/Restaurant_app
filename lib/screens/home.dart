@@ -16,22 +16,33 @@ import 'package:simplify/services/catergory_service.dart';
 
 Commons h = Commons();
 
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
 class Item {
-  Item(this.name,this.icon);
+  Item(this.name, this.icon);
+
   String name;
   Image icon;
 
   List<Item> restaurants = <Item>[
-    Item('KFC',Image(image: AssetImage('imgs/kfc.png'),height: 10.0,)),
-    Item('Burger King',Image(image: AssetImage('imgs/kfc.png'),height: 10.0,)),
+    Item(
+        'KFC',
+        Image(
+          image: AssetImage('imgs/kfc.png'),
+          height: 10.0,
+        )),
+    Item(
+        'Burger King',
+        Image(
+          image: AssetImage('imgs/kfc.png'),
+          height: 10.0,
+        )),
   ];
 }
-
 
 class _HomeState extends State<Home> {
   //********************************** TOP DISHES ********************************************************//
@@ -39,9 +50,8 @@ class _HomeState extends State<Home> {
   BannerService get serviceBanner => GetIt.I<BannerService>();
   CategoryService get serviceCategory => GetIt.I<CategoryService>();
 
-  final List<String> textList = ['KFC','Burger King'];
-  final List<String> imgList = ["imgs/kfc.png","imgs/kfc.png"];
-
+  final List<String> textList = ['KFC', 'Burger King'];
+  final List<String> imgList = ["imgs/kfc.png", "imgs/kfc.png"];
 
   bool _selected = false;
   bool _isLoading = true;
@@ -64,64 +74,70 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
+
     _currentItemSelected = textList[0];
 
     checkLoginStatus();
 
     bannerService();
     categoryService();
-
+    super.initState();
   }
 
-  void bannerService(){
+  void bannerService() {
     setState(() {
       _isLoadingBanner = true;
     });
     serviceBanner.getBanners().then((response) {
       if (response.error) {
-        errorMessage = response.errorMessage ?? 'An error occurred : from bannerService()';
+        errorMessage =
+            response.errorMessage ?? 'An error occurred : from bannerService()';
       }
       bannerModel = response.data;
       bannerImage = bannerModel.data[0].image;
-      bannerLink='https://newsteam.in/foodapp/uploads/banner/'+bannerImage;
+      bannerLink = 'https://newsteam.in/foodapp/uploads/banner/' + bannerImage;
       setState(() {
         _isLoadingBanner = false;
       });
     });
-
   }
 
-  void categoryService(){
+  void categoryService() {
+    setState(() {
+      _isLoadingCategory = true;
+    });
     serviceCategory.getCategories().then((response) {
       if (response.error) {
-        catErrorMessage = response.errorMessage ?? 'An error occurred : from categoryservice()';
+        catErrorMessage = response.errorMessage ??
+            'An error occurred : from categoryservice()';
       }
       categoryModel = response.data;
       categoryImage = categoryModel.data[0].picFile;
-      categoryLink = 'https://newsteam.in/foodapp/uploads/category/'+categoryImage;
-      print(categoryLink);
+      categoryLink = 'https://newsteam.in/foodapp/uploads/category/' + categoryImage;
+      print('Category Link: '+categoryLink);
+      setState(() {
+        _isLoadingCategory = false;
+      });
     });
   }
 
-    checkLoginStatus() async {
+  checkLoginStatus() async {
     setState(() {
       _isLoading = true;
     });
     sharedPreferences = await SharedPreferences.getInstance();
-    if(sharedPreferences.getString("token") == null) {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+    if (sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => Login()),
+          (Route<dynamic> route) => false);
       return false;
-    }else{
+    } else {
       print(sharedPreferences.getString("token"));
     }
     setState(() {
       _isLoading = false;
     });
   }
-
-
-
 
   GestureDetector topDishes(image, category) {
     return GestureDetector(
@@ -136,13 +152,15 @@ class _HomeState extends State<Home> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image(
-            height: MediaQuery.of(context).size.height*0.145,
-            image: AssetImage('$image'),
-          ),
-          // Image.network(categoryLink,height: MediaQuery.of(context).size.height*0.145,),
+          // Image(
+          //   height: MediaQuery.of(context).size.height * 0.145,
+          //   image: AssetImage('$image'),
+          // ),
+          Image.network(categoryLink,height: MediaQuery.of(context).size.height*0.158,),
           Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005,),
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.005,
+            ),
             child: Text(
               '$category',
               style: TextStyle(color: Colors.black, letterSpacing: 0.3),
@@ -166,11 +184,15 @@ class _HomeState extends State<Home> {
         //   height: MediaQuery.of(context).size.height*0.221,
         // ),
 
-        Image.network(bannerLink,height: MediaQuery.of(context).size.height*0.221,),
+        Image.network(
+          bannerLink,
+          height: MediaQuery.of(context).size.height * 0.221,
+        ),
         Positioned(
             bottom: 0.0,
-            child:
-                Image(image: AssetImage('imgs/image_shado.png'), height: MediaQuery.of(context).size.height*0.109)),
+            child: Image(
+                image: AssetImage('imgs/image_shado.png'),
+                height: MediaQuery.of(context).size.height * 0.109)),
         Positioned(
           bottom: 0.0,
           child: Padding(
@@ -208,323 +230,473 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading? Container(color: Colors.teal,child: SafeArea(child:
-
-    Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),))))) :
-
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.teal[700], fontFamily: 'Robot'),
-      home: Builder(
-        builder: (context) => Container(
-          color: Colors.teal[700],
-          child: SafeArea(
-            child: Scaffold(
-              backgroundColor: Colors.white,
-              body: Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width*0.024, top: 0.0, right: MediaQuery.of(context).size.width*0.024, bottom:0.0 ),
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.012),
-                      child: Row(
+    return _isLoading
+        ? Container(
+            color: Colors.teal,
+            child: SafeArea(
+                child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.white,
+                    child: Center(
+                        child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
+                    )))))
+        : MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme:
+                ThemeData(primaryColor: Colors.teal[700], fontFamily: 'Robot'),
+            home: Builder(
+              builder: (context) => Container(
+                color: Colors.teal[700],
+                child: SafeArea(
+                  child: Scaffold(
+                    backgroundColor: Colors.white,
+                    body: Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.024,
+                          top: 0.0,
+                          right: MediaQuery.of(context).size.width * 0.024,
+                          bottom: 0.0),
+                      child: ListView(
                         children: [
-                          // Icon(
-                          //   Icons.menu,
-                          //   color: Colors.black,
-                          // ),
-                          // SizedBox(
-                          //   width: 10.0,
-                          // ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Image(image: AssetImage('imgs/kfc.png'),height: MediaQuery.of(context).size.height*0.055,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      PopupMenuButton<String>(
-                                          itemBuilder: (context) {
-                                            return textList.map((str) {
-                                              return PopupMenuItem(
-                                                value: str,
-                                                child: Row(
-                                                  children: [
-                                                    Text(str,style: TextStyle(color: Colors.blue[900]),),
-                                                  ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top:
+                                    MediaQuery.of(context).size.height * 0.012),
+                            child: Row(
+                              children: [
+                                // Icon(
+                                //   Icons.menu,
+                                //   color: Colors.black,
+                                // ),
+                                // SizedBox(
+                                //   width: 10.0,
+                                // ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage('imgs/kfc.png'),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.055,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            PopupMenuButton<String>(
+                                              itemBuilder: (context) {
+                                                return textList.map((str) {
+                                                  return PopupMenuItem(
+                                                    value: str,
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          str,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .blue[900]),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }).toList();
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Text(
+                                                    _currentItemSelected,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.blue[900],
+                                                        fontSize: 15.0,
+                                                        letterSpacing: 0.7),
+                                                  ),
+                                                ],
+                                              ),
+                                              onSelected: (v) {
+                                                setState(() {
+                                                  print('!!!===== $v');
+                                                  _currentItemSelected = v;
+                                                  _selected = !_selected;
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              _selected
+                                                  ? 'East Texas, #7 Wall street...'
+                                                  : 'Tulsa, #1 This street...',
+                                              style: TextStyle(fontSize: 11.0),
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => More(),
                                                 ),
                                               );
-                                          }).toList();
-                                          },
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Text(_currentItemSelected,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue[900],fontSize: 15.0,letterSpacing: 0.7),),
-
-                                              ],
-                                            ),
-                                            onSelected: (v) {
-                                              setState(() {
-                                                print('!!!===== $v');
-                                                _currentItemSelected = v;
-                                                _selected = !_selected;
-                                              });
                                             },
-                                          ),
-                                      Text(_selected?'East Texas, #7 Wall street...':'Tulsa, #1 This street...',style: TextStyle(fontSize: 11.0),),
-                                    ],
+                                            child: Icon(
+                                              Icons.arrow_right,
+                                              color: Colors.blue[900],
+                                              size: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.034,
+                                            )),
+                                      ],
+                                    ),
+                                    // Padding(
+                                    //   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.1),
+                                    //   child: Text('East Texas, #7 Wall street...',style: TextStyle(fontSize: 11.0),),
+                                    // ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Search(),
+                                              ),
+                                            );
+                                          },
+                                          child: Icon(Icons.search))),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.005,
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.03),
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.221,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        _isLoadingBanner
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.teal),
+                                              ))
+                                            : on_offer(
+                                                "imgs/image_home1.png",
+                                                "45% OFF!",
+                                                "COUPON 'STAR200'",
+                                                "AMAYA FREN RESIDENCY VADODARA"),
+                                        _isLoadingBanner
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.teal),
+                                              ))
+                                            : on_offer(
+                                                "imgs/image_home2.png",
+                                                "BREAKFAST AT",
+                                                "50% OFF",
+                                                "EXPLORE NOW"),
+                                      ],
+                                    ),
                                   ),
-                                  GestureDetector(
-                                      onTap: (){
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => More(),
-                                          ),
-                                        );
-                                      },
-                                      child: Icon(Icons.arrow_right,color: Colors.blue[900],size: MediaQuery.of(context).size.height*0.034,)),
+                                  SizedBox(
+                                    height: 4.0,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.221,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        _isLoadingBanner
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.teal),
+                                              ))
+                                            : on_offer(
+                                                "imgs/image_home3.png",
+                                                "SANDWICH'S",
+                                                "START FROM \$ 20",
+                                                "EXPLORE NOW"),
+                                        _isLoadingBanner
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.teal),
+                                              ))
+                                            : on_offer(
+                                                "imgs/image_home4.png",
+                                                "BREAKFAST AT",
+                                                "50% OFF",
+                                                "EXPLORE NOW"),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
-                             // Padding(
-                             //   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.1),
-                             //   child: Text('East Texas, #7 Wall street...',style: TextStyle(fontSize: 11.0),),
-                             // ),
-                            ],
+                            ),
                           ),
-                          Expanded(
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Search(),
-                                        ),
-                                      );
-                                    },
-                                    child: Icon(Icons.search))),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              'Top Dishes',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17.0),
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.005, bottom: MediaQuery.of(context).size.height*0.03),
-                      child: Container(
-
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height*0.221,
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),))
-                                      :on_offer(
-                                      "imgs/image_home1.png",
-                                      "45% OFF!",
-                                      "COUPON 'STAR200'",
-                                      "AMAYA FREN RESIDENCY VADODARA"),
-                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)):on_offer("imgs/image_home2.png",
-                                      "BREAKFAST AT", "50% OFF", "EXPLORE NOW"),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 4.0,
-                              width: MediaQuery.of(context).size.width,
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height*0.221,
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)):on_offer("imgs/image_home3.png", "SANDWICH'S",
-                                      "START FROM \$ 20", "EXPLORE NOW"),
-                                  _isLoadingBanner ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)):on_offer("imgs/image_home4.png",
-                                      "BREAKFAST AT", "50% OFF", "EXPLORE NOW"),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: Text(
-                        'Top Dishes',
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17.0),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
-                      child: Row(
-                        //Top Dishes
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _isLoadingCategory?SizedBox(
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
-                              :topDishes("imgs/four.jpeg", "Regular"),
-                          _isLoadingCategory?SizedBox(
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
-                              :topDishes("imgs/pimgone.jpeg", "Beverages"),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.02),
+                            child: Row(
+                              //Top Dishes
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _isLoadingCategory
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.teal),
+                                        )))
+                                    : topDishes("imgs/four.jpeg", "Regular"),
+                                _isLoadingCategory
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.teal),
+                                        )))
+                                    : topDishes(
+                                        "imgs/pimgone.jpeg", "Beverages"),
 //
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.02),
+                            child: Row(
+                              //Top Dishes
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _isLoadingCategory
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.teal),
+                                        )))
+                                    : topDishes("imgs/pchickenimg.jpeg",
+                                        "Daily Special"),
+                                _isLoadingCategory
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.teal),
+                                        )))
+                                    : topDishes("imgs/six.jpeg", "Lunch"),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.02,
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.03),
+                            child: Row(
+                              //Top Dishes
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _isLoadingCategory
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.teal),
+                                        )))
+                                    : topDishes("imgs/pchickenimg.jpeg",
+                                        "Lunch Special"),
+                                _isLoadingCategory
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.teal),
+                                        )))
+                                    : topDishes("imgs/six.jpeg", "Dinner"),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02),
-                      child: Row(
-                        //Top Dishes
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _isLoadingCategory?SizedBox(
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
-                              : topDishes("imgs/pchickenimg.jpeg", "Daily Special"),
-                          _isLoadingCategory?SizedBox(
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
-                              :topDishes("imgs/six.jpeg", "Lunch"),
-                        ],
-                      ),
+                    bottomNavigationBar: BottomNavigationBar(
+                      backgroundColor: Colors.white,
+                      selectedItemColor: Colors.blue[900],
+                      unselectedItemColor: Colors.black,
+                      type: BottomNavigationBarType.fixed,
+                      currentIndex: 0,
+                      onTap: (value) {
+                        switch (value) {
+                          case 1:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Offers(false)),
+                            );
+                            break;
+                          case 2:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderHistory()),
+                            );
+                            break;
+                          case 3:
+                            if (cartCount.length == 0) {
+                              print('Cart is empty!');
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    Future.delayed(Duration(seconds: 2), () {
+                                      Navigator.of(context).pop(true);
+                                    });
+                                    return AlertDialog(
+                                      title: Text(
+                                        'Your cart is empty! :(',
+                                        style: TextStyle(fontSize: 15.0),
+                                      ),
+                                    );
+                                  });
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Cart(false, 0)),
+                              );
+                            }
+
+                            break;
+                          case 4:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => More()),
+                            );
+                            break;
+                        }
+                      },
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.home),
+                          // ignore: deprecated_member_use
+                          title: Text(
+                            'Home',
+                          ),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.local_offer),
+                          // ignore: deprecated_member_use
+                          title: Text(
+                            'Offers',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.history),
+                          // ignore: deprecated_member_use
+                          title: Text(
+                            'Orders',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.business_center),
+                          // ignore: deprecated_member_use
+                          title: Text(
+                            'Cart',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.more_horiz),
+                          // ignore: deprecated_member_use
+                          title: Text(
+                            'More',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.02,bottom: MediaQuery.of(context).size.height*0.03),
-                      child: Row(
-                        //Top Dishes
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _isLoadingCategory?SizedBox(
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
-                              :topDishes("imgs/pchickenimg.jpeg", "Lunch Special"),
-                          _isLoadingCategory?SizedBox(
-                              height: MediaQuery.of(context).size.height*0.05,
-                              child: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),)))
-                              :topDishes("imgs/six.jpeg", "Dinner"),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                backgroundColor: Colors.white,
-                selectedItemColor: Colors.blue[900],
-                unselectedItemColor: Colors.black,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: 0,
-                onTap: (value) {
-                  switch (value) {
-                    case 1:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Offers(false)),
-                      );
-                      break;
-                    case 2:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => OrderHistory()),
-                      );
-                      break;
-                    case 3:
-                      if(cartCount.length == 0){
-                        print('Cart is empty!');
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              Future.delayed(Duration(seconds: 2), () {
-                                Navigator.of(context).pop(true);
-                              });
-                              return AlertDialog(
-                                title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
-                              );
-                            });
-                      }else{
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Cart(false,0)),
-                        );
-                      }
-
-                      break;
-                    case 4:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => More()),
-                      );
-                      break;
-                  }
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    // ignore: deprecated_member_use
-                    title: Text(
-                      'Home',
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.local_offer),
-                    // ignore: deprecated_member_use
-                    title: Text(
-                      'Offers',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.history),
-                    // ignore: deprecated_member_use
-                    title: Text(
-                      'Orders',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.business_center),
-                    // ignore: deprecated_member_use
-                    title: Text(
-                      'Cart',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.more_horiz),
-                    // ignore: deprecated_member_use
-                    title: Text(
-                      'More',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }

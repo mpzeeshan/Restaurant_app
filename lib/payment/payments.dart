@@ -4,21 +4,23 @@ import 'package:simplify/payment/payment_success.dart';
 class Payments extends StatefulWidget {
   int itemCountFromCart;
   int deliveryFee;
-  int totalAmountFromCart;
+  int subTotal;
   int cartTotal;
-  Payments(this.itemCountFromCart,this.deliveryFee,this.totalAmountFromCart,this.cartTotal);
+  int appliedOfferPrice;
+  Payments(this.itemCountFromCart,this.deliveryFee,this.subTotal,this.cartTotal,this.appliedOfferPrice);
   @override
-  _PaymentsState createState() => _PaymentsState(this.itemCountFromCart,this.deliveryFee,this.totalAmountFromCart,this.cartTotal);
+  _PaymentsState createState() => _PaymentsState(this.itemCountFromCart,this.deliveryFee,this.subTotal,this.cartTotal,this.appliedOfferPrice);
 }
 
 class _PaymentsState extends State<Payments> {
 
   int itemCountFromCart;
   int deliveryFee;
-  int totalAmountFromCart;
+  int subTotal;
   int cartTotal;
+  int appliedOfferPrice;
 
-  _PaymentsState(this.itemCountFromCart,this.deliveryFee,this.totalAmountFromCart,this.cartTotal);
+  _PaymentsState(this.itemCountFromCart,this.deliveryFee,this.subTotal,this.cartTotal,this.appliedOfferPrice);
   bool card = false;
   bool cash = false;
   int selectedRadioTile;
@@ -132,7 +134,7 @@ class _PaymentsState extends State<Payments> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Price('+itemCountFromCart.toString()+' Items)',style: TextStyle(color: Colors.grey[600],fontSize: 15.0),),
-                                  Text('\$'+cartTotal.toString()+'.00',style: TextStyle(color: Colors.grey[600],fontSize: 15.0)),
+                                  Text('\$'+(cartTotal).toString()+'.00',style: TextStyle(color: Colors.grey[600],fontSize: 15.0)),
                                 ],
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height*0.01,),
@@ -149,7 +151,7 @@ class _PaymentsState extends State<Payments> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Total Amount',style: TextStyle(color: Colors.black,fontSize: 17.0),),
-                                  Text('\$'+totalAmountFromCart.toString()+'.00',style: TextStyle(color: Colors.grey[600])),
+                                  Text('\$'+(cartTotal+deliveryFee).toString()+'.00',style: TextStyle(color: Colors.grey[600])),
                                 ],
                               ),
                             ],
@@ -180,7 +182,7 @@ class _PaymentsState extends State<Payments> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PaymentSuccess(),
+                                      builder: (context) => PaymentSuccess(subTotal,deliveryFee,appliedOfferPrice,(cartTotal+deliveryFee)),
                                     ),
                                   );
 
@@ -201,24 +203,3 @@ class _PaymentsState extends State<Payments> {
   }
 }
 
-
-// Container(
-// height: MediaQuery.of(context).size.height *
-// 0.055,
-// width: MediaQuery.of(context).size.width,
-// child: RaisedButton(
-// onPressed: () {
-// Navigator.push(
-// context,
-// MaterialPageRoute(
-// builder: (context) =>
-// PaymentSuccess()),
-// );
-// },
-// child: Text(
-// 'PAY WITH CASH',
-// style: TextStyle(color: Colors.white),
-// ),
-// color: Colors.green,
-// ),
-// ),

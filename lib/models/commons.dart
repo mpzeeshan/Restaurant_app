@@ -34,7 +34,14 @@ class Commons {
   List<int> priceList = [10, 10, 10, 10, 10, 10];
   List<bool> flagList = [true, true, true, true, true, true];
 
+  List<bool> extras_flag = [true,true,true];
+  List<int> extras_priceList = [10, 10, 10];
+  List<int> extras_counList = [0, 0, 0, 0, 0, 0];
+
+
+
   var price = 10;
+
   bool pressed_1 = false;
   bool pressed_2 = false;
   bool pressed_3 = true;
@@ -99,8 +106,10 @@ class Commons {
       ],
     );
   }
-//***************************************************************************************
+//***************************************************************************************//
 
+
+//*********************** Order History *************************************************//
 Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
     return Container(
 
@@ -265,6 +274,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
       ),
     );
 }
+//***************************************************************************************//
 RaisedButton getRange(context){
     bool pickedFlag = false;
     var date = DateTime.now();
@@ -303,57 +313,3 @@ RaisedButton getRange(context){
       );
     }
 }
-
-
-
-// Padding(
-// padding: EdgeInsets.only(
-// left: height *
-// 0.015,
-// top: height *
-// 0.015,
-// right: height *
-// 0.015,
-// bottom: height *
-// 0.01),
-// child: SizedBox(
-// height: height *
-// 0.05,
-// width: width *
-// 0.7,
-// child: Row(
-// crossAxisAlignment:
-// CrossAxisAlignment.start,
-// mainAxisAlignment:
-// MainAxisAlignment.start,
-// children: [
-// Image(
-// image: AssetImage(
-// recentOrders[index]),
-// height: 35.0,
-// ),
-// SizedBox(
-// width: 10.0,
-// ),
-// Column(
-// crossAxisAlignment:
-// CrossAxisAlignment.start,
-// children: [
-// Text(
-// 'Santushti Smoothies and Shakes',
-// style: TextStyle(
-// fontSize: 13.0),
-// ),
-// Text(
-// 'Fatehgunj',
-// style: TextStyle(
-// fontSize: 11.0,
-// color: Colors.grey[600],
-// height: 2.0),
-// ),
-// ],
-// ),
-// ],
-// ),
-// ),
-// ),

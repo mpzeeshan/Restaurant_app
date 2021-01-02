@@ -6,7 +6,6 @@ import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/UserAccount/edit_account.dart';
 import 'package:simplify/UserAccount/help.dart';
 import 'package:simplify/login/login.dart';
-import 'package:simplify/login/otp.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/payment/gift_card.dart';
 import 'package:simplify/screens/cart.dart';

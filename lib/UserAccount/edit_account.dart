@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:simplify/UserAccount/more.dart';
 import 'package:flutter/material.dart';
-import 'package:simplify/login/otp.dart';
 
 class EditAccount extends StatefulWidget {
   @override

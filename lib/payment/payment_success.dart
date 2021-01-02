@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/UserAccount/help.dart';
+import 'package:simplify/screens/products.dart';
 
 
 
 class PaymentSuccess extends StatelessWidget {
-
-
+  int subTotal;
+  int deliveryFee;
+  int offerApplied;
+  int total;
+  PaymentSuccess(this.subTotal,this.deliveryFee,this.offerApplied,this.total);
 
   @override
   Widget build(BuildContext context) {
@@ -60,21 +64,21 @@ class PaymentSuccess extends StatelessWidget {
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
 
                          Container(
-                             height: MediaQuery.of(context).size.height*0.08,
+                             height: cartCount.length > 2 ? MediaQuery.of(context).size.height*0.16:MediaQuery.of(context).size.height*0.08,
                              child: ListView.builder(itemBuilder: (context, index) => Column(
                                children: [
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text('Spicy Trio X 5',style: TextStyle(fontSize: 15.0),),
-                                     Text('\$10.00',style: TextStyle(fontSize: 15.0),),
+                                     Text( c.pnameList[cartCount[index]]+' X '+c.counList[cartCount[index]].toString(),style: TextStyle(fontSize: 15.0),),
+                                     Text('\$'+c.priceList[cartCount[index]].toString()+'.00',style: TextStyle(fontSize: 15.0),),
 
                                    ],),
                                  SizedBox(height: MediaQuery.of(context).size.height*0.020,),
                                ],
 
                              ),
-                             itemCount: 3,
+                             itemCount: cartCount.length,
                              ),
 
                          ),
@@ -85,7 +89,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Subtotal',style: TextStyle(fontSize: 17.0,fontWeight: FontWeight.bold),),
-                             Text('\$12.00',style: TextStyle(fontSize: 17.0),),
+                             Text('\$'+subTotal.toString()+'.00',style: TextStyle(fontSize: 17.0),),
 
                            ],),
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
@@ -93,7 +97,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Delivery Charges',style: TextStyle(fontSize: 15.0),),
-                             Text('\$1.00',style: TextStyle(fontSize: 15.0),),
+                             Text('\$'+deliveryFee.toString()+'.00',style: TextStyle(fontSize: 15.0),),
 
                            ],),
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
@@ -103,7 +107,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Discount',style: TextStyle(fontSize: 15.0),),
-                             Text('\$00.00',style: TextStyle(fontSize: 15.0),),
+                             Text('\$'+offerApplied.toString()+'.00',style: TextStyle(fontSize: 15.0),),
                            ],),
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
                          Divider(thickness: 1.3,),
@@ -112,7 +116,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Paid Via Cash',style: TextStyle(fontSize: 17.0),),
-                             Text('TOTAL  \$12.00',style: TextStyle(fontSize: 17.0),),
+                             Text('TOTAL  \$'+total.toString()+'.00',style: TextStyle(fontSize: 17.0),),
                            ],),
                        ],
                      ),
@@ -169,3 +173,5 @@ class PaymentSuccess extends StatelessWidget {
     );
   }
 }
+
+

@@ -164,7 +164,7 @@ class _ProductsState extends State<Products> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SingleProduct()),
+                    MaterialPageRoute(builder: (context) => SingleProduct(image,category,name,coins,count)),
                   );
                 },
                 child: Image(
