@@ -32,9 +32,15 @@ class _SingleProductState extends State<SingleProduct> {
   int count;
 
   _SingleProductState(this.image,this.category,this.name,this.coins,this.count);
+
   @override
   void initState() {
+    state();
     super.initState();
+  }
+  void state(){
+    setState(() {
+    });
   }
 
   @override
@@ -183,7 +189,7 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                extrasSize(0),
+                                extrasSize(count),
                             ],),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.025,
@@ -202,7 +208,7 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                extrasSize(1),
+                                extrasSize(count),
                               ],),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.025,
@@ -221,7 +227,7 @@ class _SingleProductState extends State<SingleProduct> {
                                     ),
                                   ],
                                 ),
-                                extrasSize(2),
+                                extrasSize(count),
                               ],),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.02,
@@ -265,31 +271,24 @@ class _SingleProductState extends State<SingleProduct> {
             children: [
               Visibility(
                 visible: !c.flagList[count],
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      total -= 10;
-                      c.counList[count] = c.counList[count] - 1;
-                      if (c.counList[count] >= 1) {
-                        c.priceList[count] = c.priceList[count] - 10;
-                      }
-                      if (c.counList[count] <= 0) {
-                        c.flagList[count] = true;
-                      }
-                    });
-                  },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '-',
-                        style: TextStyle(color: Colors.black, fontSize: 19.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                child: IconButton(
+
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    icon:Icon(Icons.horizontal_rule,size: 13.0,),
+                onPressed: (){
+                  setState(() {
+                    total -= 10;
+                    c.counList[count] = c.counList[count] - 1;
+                    if (c.counList[count] >= 1) {
+                      c.priceList[count] = c.priceList[count] - 10;
+                    }
+                    if (c.counList[count] <= 0) {
+                      c.flagList[count] = true;
+                    }
+                  });
+                }
+                ),),
               Visibility(
                 visible: c.flagList[count],
                 child: GestureDetector(
@@ -321,8 +320,13 @@ class _SingleProductState extends State<SingleProduct> {
               ),
               Visibility(
                 visible: !c.flagList[count],
-                child: GestureDetector(
-                  onTap: () {
+                child: IconButton(
+
+
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon: Icon(Icons.add,size: 16.0,),
+                  onPressed: (){
                     setState(() {
                       total += 10;
                       c.counList[count] = c.counList[count] + 1;
@@ -331,16 +335,6 @@ class _SingleProductState extends State<SingleProduct> {
                       }
                     });
                   },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '+',
-                        style: TextStyle(color: Colors.black, fontSize: 17.0),
-                      ),
-                    ),
-                  ),
                 ),
               ),
             ],
@@ -359,45 +353,37 @@ class _SingleProductState extends State<SingleProduct> {
         height: 25.0,
         width: 75.0,
         child: Container(
-          color: c.extras_flag[count] ? Colors.white : Colors.grey[100],
+          color: c.extrasFlag[count][0] ? Colors.white : Colors.grey[100],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
-                visible: !c.extras_flag[count],
-                child: GestureDetector(
-                  onTap: () {
+                visible: !c.extrasFlag[count][0],
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon:Icon(Icons.horizontal_rule,size: 13.0,),
+                  onPressed: (){
                     setState(() {
                       total -= 10;
-                      c.extras_counList[count] = c.extras_counList[count] - 1;
-                      if (c.extras_counList[count] >= 1) {
-                        c.extras_priceList[count] = c.extras_priceList[count] - 10;
+                      c.extrasFlag[count][2] = c.extrasFlag[count][2] - 1;
+                      if (c.extrasFlag[count][2] >= 1) {
+                        c.extrasFlag[count][1] = c.extrasFlag[count][1] - 10;
                       }
-                      if (c.extras_counList[count] <= 0) {
-                        c.extras_flag[count] = true;
+                      if (c.extrasFlag[count][2] <= 0) {
+                        c.extrasFlag[count][0] = true;
                       }
                     });
-                  },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '-',
-                        style: TextStyle(color: Colors.black, fontSize: 19.0),
-                      ),
-                    ),
-                  ),
-                ),
+                  },),
               ),
               Visibility(
-                visible: c.extras_flag[count],
+                visible: c.extrasFlag[count][0],
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
                       total += 10;
-                      c.extras_counList[count] = c.extras_counList[count] + 1;
-                      c.extras_flag[count] = false;
+                      c.extrasFlag[count][2] = c.extrasFlag[count][2] + 1;
+                      c.extrasFlag[count][0] = false;
                     });
                   },
                   child: Padding(
@@ -410,37 +396,30 @@ class _SingleProductState extends State<SingleProduct> {
                 ),
               ),
               Visibility(
-                visible: !c.extras_flag[count],
+                visible: !c.extrasFlag[count][0],
                 child: Padding(
                   padding: const EdgeInsets.only(right: 3.0),
                   child: Text(
-                    c.extras_counList[count].toString(),
+                    c.extrasFlag[count][2].toString(),
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
               ),
               Visibility(
-                visible: !c.extras_flag[count],
-                child: GestureDetector(
-                  onTap: () {
+                visible: !c.extrasFlag[count][0],
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon: Icon(Icons.add, size: 16.0,),
+                  onPressed: (){
                     setState(() {
                       total += 10;
-                      c.extras_counList[count] = c.extras_counList[count] + 1;
-                      if (c.extras_counList[count] > 1) {
-                        c.extras_priceList[count] = c.extras_priceList[count] + 10;
+                      c.extrasFlag[count][2] = c.extrasFlag[count][2] + 1;
+                      if (c.extrasFlag[count][2] > 1) {
+                        c.extrasFlag[count][1] = c.extrasFlag[count][1] + 10;
                       }
                     });
                   },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '+',
-                        style: TextStyle(color: Colors.black, fontSize: 17.0),
-                      ),
-                    ),
-                  ),
                 ),
               ),
             ],

@@ -8,7 +8,6 @@ class CategoryService{
   final _link = 'http://newsteam.in/foodapp/api/UserApi/allCategories';
 
   Future<APIResponse<CategoryModel>> getCategories() async {
-
     return await http.get(_link, headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8',},)
         .then((data) {
       print(data.statusCode);

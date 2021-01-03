@@ -29,6 +29,7 @@ class OrderHistory extends StatelessWidget {
               length: 2,
               child: Scaffold(
               appBar: AppBar(
+
                 title: Text(
                   'ORDER HISTORY',
                   style: TextStyle(
@@ -44,14 +45,11 @@ class OrderHistory extends StatelessWidget {
                   ],
                 ),
                 backgroundColor: Colors.white,
-                leading: GestureDetector(
-                  onTap: () {
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back,color: Colors.black,),
+                  onPressed: (){
                     Navigator.pop(context);
                   },
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
                 ),
               ),
               body: TabBarView(

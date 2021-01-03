@@ -52,10 +52,11 @@ class _PaymentsState extends State<Payments> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            elevation: 0.5,
             title: Text(
               'PAYMENTS',
               style: TextStyle(
-                  color: Colors.black, fontSize: 16.0, letterSpacing: 0.8),
+                  color: Colors.black, fontSize: 15.0, letterSpacing: 0.5),
             ),
             backgroundColor: Colors.white,
             leading: GestureDetector(

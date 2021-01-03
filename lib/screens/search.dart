@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/UserAccount/more.dart';
 import 'package:simplify/models/search_model.dart';
-import 'package:simplify/screens/cart.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/home.dart';
+import 'package:simplify/models/commons.dart';
+
 
 SearchModels s = SearchModels();
 final List<String> recentOrdersImage = [
@@ -21,7 +22,7 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   //bool isTextFiledFocus = false;
-
+  Commons _commons = Commons();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,97 +120,7 @@ class _SearchState extends State<Search> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blue[900],
-        unselectedItemColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        onTap: (value) {
-          switch (value) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
-              );
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Offers(false)),
-              );
-              break;
-
-            case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Cart(false,0)),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OrderHistory()),
-              );
-              break;
-            case 4:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => More()),
-              );
-              break;
-          }
-
-          setState(() {});
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            // ignore: deprecated_member_use
-            title: Text(
-              'Home',
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_offer),
-            // ignore: deprecated_member_use
-            title: Text(
-              'Offers',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            // ignore: deprecated_member_use
-            title: Text(
-              'Orders',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business_center),
-            // ignore: deprecated_member_use
-            title: Text(
-              'Cart',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            // ignore: deprecated_member_use
-            title: Text(
-              'More',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ],
-      ),
+      bottomNavigationBar: _commons.bottomNav(context, 0),
     );
   }
 }

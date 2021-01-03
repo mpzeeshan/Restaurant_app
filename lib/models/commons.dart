@@ -1,7 +1,13 @@
 
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:flutter/material.dart';
+import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/Orders/track_order.dart';
+import 'package:simplify/UserAccount/more.dart';
+import 'package:simplify/screens/home.dart';
+import 'package:simplify/screens/offers.dart';
+import 'package:simplify/screens/products.dart';
+import 'package:simplify/screens/cart.dart';
 
 class Commons {
   List<String> imageList = [
@@ -34,9 +40,9 @@ class Commons {
   List<int> priceList = [10, 10, 10, 10, 10, 10];
   List<bool> flagList = [true, true, true, true, true, true];
 
-  List<bool> extras_flag = [true,true,true];
-  List<int> extras_priceList = [10, 10, 10];
-  List<int> extras_counList = [0, 0, 0, 0, 0, 0];
+  List<List<dynamic>> extrasFlag = [[true,10,0],[true,10,0],[true,10,0],[true,10,0],[true,10,0],[true,10,0]];
+  List<List<int>> extrasPriceList = [[10,10,10], [10,10,10], [10,10,10], [10,10,10], [10,10,10], [10,10,10]];
+  List<List<int>> extrasCounList = [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
 
 
 
@@ -312,4 +318,119 @@ RaisedButton getRange(context){
         ])
       );
     }
+
+  void checkCart(BuildContext context) {
+    if (cartCount.length == 0) {
+      print('Cart is empty!');
+      showDialog(
+          context: context,
+          builder: (context) {
+            Future.delayed(Duration(seconds: 2), () {
+              Navigator.of(context).pop(true);
+            });
+            return AlertDialog(
+              title: Text(
+                'Your cart is empty! :(',
+                style: TextStyle(fontSize: 15.0),
+              ),
+            );
+          });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Cart(false, 0)),
+      );
+    }
+  }
+
+  BottomNavigationBar bottomNav(BuildContext context,int index){
+    return BottomNavigationBar(
+      backgroundColor: Colors.white,
+      selectedItemColor: Colors.blue[900],
+      unselectedItemColor: Colors.black,
+      type: BottomNavigationBarType.fixed,
+      currentIndex: index,
+      onTap: (value) {
+        switch (value) {
+          case 0:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+            break;
+          case 1:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Offers(false)),
+            );
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OrderHistory()),
+            );
+            break;
+          case 3:
+            checkCart(context);
+            break;
+          case 4:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => More()),
+            );
+            break;
+        }
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          // ignore: deprecated_member_use
+          title: Text(
+            'Home',
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.local_offer),
+          // ignore: deprecated_member_use
+          title: Text(
+            'Offers',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history),
+          // ignore: deprecated_member_use
+          title: Text(
+            'Orders',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.business_center),
+          // ignore: deprecated_member_use
+          title: Text(
+            'Cart',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.more_horiz),
+          // ignore: deprecated_member_use
+          title: Text(
+            'More',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
+    );
+  }
+
 }

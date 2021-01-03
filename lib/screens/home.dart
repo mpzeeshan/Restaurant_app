@@ -337,23 +337,24 @@ class _HomeState extends State<Home> {
                                             ),
                                           ],
                                         ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => More(),
-                                                ),
-                                              );
-                                            },
-                                            child: Icon(
-                                              Icons.arrow_right,
-                                              color: Colors.blue[900],
-                                              size: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.034,
-                                            )),
+                                        IconButton(
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            icon: Icon(Icons.arrow_right,color: Colors.blue[900],
+                                          size: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.034,
+
+                                        ), onPressed: (){
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => More(),
+                                            ),
+                                          );
+                                        }),
+
                                       ],
                                     ),
                                     // Padding(
@@ -365,16 +366,20 @@ class _HomeState extends State<Home> {
                                 Expanded(
                                   child: Align(
                                       alignment: Alignment.centerRight,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        constraints: BoxConstraints(),
+                                        onPressed: (){
+                                        Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => Search(),
                                               ),
                                             );
-                                          },
-                                          child: Icon(Icons.search))),
+                                      },
+                                      icon: Icon(Icons.search),
+                                      ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -590,109 +595,7 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
-                    bottomNavigationBar: BottomNavigationBar(
-                      backgroundColor: Colors.white,
-                      selectedItemColor: Colors.blue[900],
-                      unselectedItemColor: Colors.black,
-                      type: BottomNavigationBarType.fixed,
-                      currentIndex: 0,
-                      onTap: (value) {
-                        switch (value) {
-                          case 1:
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Offers(false)),
-                            );
-                            break;
-                          case 2:
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OrderHistory()),
-                            );
-                            break;
-                          case 3:
-                            if (cartCount.length == 0) {
-                              print('Cart is empty!');
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    Future.delayed(Duration(seconds: 2), () {
-                                      Navigator.of(context).pop(true);
-                                    });
-                                    return AlertDialog(
-                                      title: Text(
-                                        'Your cart is empty! :(',
-                                        style: TextStyle(fontSize: 15.0),
-                                      ),
-                                    );
-                                  });
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Cart(false, 0)),
-                              );
-                            }
-
-                            break;
-                          case 4:
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => More()),
-                            );
-                            break;
-                        }
-                      },
-                      items: [
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.home),
-                          // ignore: deprecated_member_use
-                          title: Text(
-                            'Home',
-                          ),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.local_offer),
-                          // ignore: deprecated_member_use
-                          title: Text(
-                            'Offers',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.history),
-                          // ignore: deprecated_member_use
-                          title: Text(
-                            'Orders',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.business_center),
-                          // ignore: deprecated_member_use
-                          title: Text(
-                            'Cart',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.more_horiz),
-                          // ignore: deprecated_member_use
-                          title: Text(
-                            'More',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
+                    bottomNavigationBar: c.bottomNav(context,0),
                   ),
                 ),
               ),
@@ -700,3 +603,4 @@ class _HomeState extends State<Home> {
           );
   }
 }
+

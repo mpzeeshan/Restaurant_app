@@ -6,6 +6,7 @@ import 'package:simplify/screens/products.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:simplify/payment/payments.dart';
 import 'package:simplify/Orders/order_summary.dart';
+import 'package:simplify/screens/single_product_view.dart';
 
 
 class Cart extends StatefulWidget {
@@ -33,6 +34,8 @@ class _CartState extends State<Cart> {
 
   @override
   void initState(){
+    setState(() {
+    });
     cartTotal = total;
     itemCountForPayments = itemCountFP();
     print(cartCount.length);
@@ -47,7 +50,9 @@ class _CartState extends State<Cart> {
     print(temp);
     return temp;
   }
-
+  void _onGoBack(dynamic value) {
+    setState(() {});
+  }
 
   Container size(count) {
     return Container(
@@ -64,8 +69,11 @@ class _CartState extends State<Cart> {
             children: [
               Visibility(
                 visible: !c.flagList[count],
-                child: GestureDetector(
-                  onTap: () {
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon: Icon(Icons.horizontal_rule,size: 13.0,),
+                  onPressed: (){
                     setState(() {
                       c.counList[count] = c.counList[count] - 1;
                       cartTotal -=10;
@@ -89,18 +97,7 @@ class _CartState extends State<Cart> {
                       }
                     });
                   },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '-',
-                        style: TextStyle(color: Colors.black, fontSize: 19.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                ),),
               Visibility(
                 visible: c.flagList[count],
                 child: GestureDetector(
@@ -131,8 +128,12 @@ class _CartState extends State<Cart> {
               ),
               Visibility(
                 visible: !c.flagList[count],
-                child: GestureDetector(
-                  onTap: () {
+                child: IconButton(
+
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon: Icon(Icons.add,size: 16.0,),
+                  onPressed: (){
                     setState(() {
                       cartTotal +=10;
                       total +=10;
@@ -142,18 +143,7 @@ class _CartState extends State<Cart> {
                         c.priceList[count] = c.priceList[count] + 10;
                       }
                     });
-                  },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '+',
-                        style: TextStyle(color: Colors.black, fontSize: 17.0),
-                      ),
-                    ),
-                  ),
-                ),
+                  },),
               ),
             ],
           ),
@@ -172,23 +162,18 @@ class _CartState extends State<Cart> {
             backgroundColor: Colors.white,
             title: Text(
               'CART',
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
+              style: TextStyle(color: Colors.black, fontSize: 15.0),
             ),
-            leading: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => SavedAddresses(false,true)
-                  //   ),
-                  // );
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                )),
-            elevation: 1.8,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            elevation: 0.5,
           ),
           body: Container(
             height: MediaQuery.of(context).size.height,
@@ -205,7 +190,7 @@ class _CartState extends State<Cart> {
                       height: MediaQuery.of(context).size.height*0.028,
                     ),
                     Container(
-                      height: cartCount.length >= 2 ?MediaQuery.of(context).size.height*0.12:MediaQuery.of(context).size.height*0.07,
+                      height: cartCount.length >= 2 ? MediaQuery.of(context).size.height*0.16: MediaQuery.of(context).size.height*0.08,
                       child: ListView.builder(
                         itemCount: cartCount.length,
                         itemBuilder: (context, index) => Column(
@@ -228,13 +213,34 @@ class _CartState extends State<Cart> {
                                           color: Colors.grey[600],
                                           height: 1.5),
                                     ),
+
+                                    Padding(
+                                      padding: EdgeInsets.only(top:3.0),
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+
+                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => SingleProduct(c.imageList[cartCount[index]],c.catList[cartCount[index]],c.pnameList[cartCount[index]],c.coinsList[cartCount[index]],cartCount[index])
+                                            ),
+                                          ).then(_onGoBack);
+                                        },
+                                        child: Text(
+                                          'Customize',
+                                          style: TextStyle(fontSize: 10.0,color: Colors.grey[600]),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
 
                                 size(cartCount[index]),
                               ],
                             ),
-                            SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                            SizedBox(height: MediaQuery.of(context).size.height*0.012,),
                           ],
                         ),
                       ),
@@ -507,7 +513,7 @@ class _CartState extends State<Cart> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                            builder: (context) => SavedAddresses(false,false)
+                            builder: (context) => SavedAddresses(false,true)  // 1.false coz not from manage address 2. true coz from cart or to cart
                             ),
                         );
                       },

@@ -51,16 +51,10 @@ class _OffersState extends State<Offers> {
               image: AssetImage(image),
             ),
             Positioned(
-              top: 15.0,
-              child: GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                ),
-                onTap: () {
+              top: MediaQuery.of(context).size.height*0.012,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back,color: Colors.black,),
+                onPressed: (){
                   Navigator.pop(context);
                 },
               ),

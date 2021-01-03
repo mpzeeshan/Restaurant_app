@@ -19,9 +19,9 @@ class PaymentSuccess extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: Text('ORDER PLACED',style: TextStyle(fontSize: 16.0,color: Colors.black),),
+            title: Text('ORDER PLACED',style: TextStyle(fontSize: 15.0,color: Colors.black),),
             backgroundColor: Colors.white,
-            elevation: 1.0,
+            elevation: 0.5,
             leading: GestureDetector(
                 onTap: () {
                   Navigator.pop(context);

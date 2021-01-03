@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/models/commons.dart';
-import 'package:simplify/screens/home.dart';
 import 'package:simplify/screens/search.dart';
 import 'package:simplify/screens/single_product_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -58,8 +57,11 @@ class _ProductsState extends State<Products> {
             children: [
               Visibility(
                 visible: !c.flagList[count],
-                child: GestureDetector(
-                  onTap: () {
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon: Icon(Icons.horizontal_rule,size: 13.0,),
+                  onPressed: (){
                     setState(() {
                       c.counList[count] = c.counList[count] - 1;
                       if (c.counList[count] >= 1) {
@@ -73,16 +75,6 @@ class _ProductsState extends State<Products> {
                       }
                     });
                   },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '-',
-                        style: TextStyle(color: Colors.black, fontSize: 19.0),
-                      ),
-                    ),
-                  ),
                 ),
               ),
               Visibility(
@@ -117,8 +109,11 @@ class _ProductsState extends State<Products> {
               ),
               Visibility(
                 visible: !c.flagList[count],
-                child: GestureDetector(
-                  onTap: () {
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  icon: Icon(Icons.add,size: 16.0,),
+                  onPressed: (){
                     setState(() {
                       c.counList[count] = c.counList[count] + 1;
                       if (c.counList[count] > 1) {
@@ -127,16 +122,6 @@ class _ProductsState extends State<Products> {
                       }
                     });
                   },
-                  child: SizedBox(
-                    height: 25.0,
-                    width: 25.0,
-                    child: Center(
-                      child: Text(
-                        '+',
-                        style: TextStyle(color: Colors.black, fontSize: 17.0),
-                      ),
-                    ),
-                  ),
                 ),
               ),
             ],
@@ -147,7 +132,9 @@ class _ProductsState extends State<Products> {
   }
 
   //***************************************************************************************************************//
-
+    void _onGoBack(dynamic value) {
+    setState(() {});
+  }
   //****************************************METHOD FOR PRODUCTS****************************************************//
 
   Padding products(image, category, name, coins, count) {
@@ -164,8 +151,8 @@ class _ProductsState extends State<Products> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SingleProduct(image,category,name,coins,count)),
-                  );
+                      MaterialPageRoute(builder: (context) => SingleProduct(image,category,name,coins,count))
+                  ).then(_onGoBack);
                 },
                 child: Image(
                   height: MediaQuery.of(context).size.width * 0.31,
@@ -175,9 +162,15 @@ class _ProductsState extends State<Products> {
               Padding(
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.01),
-                child: Text(
-                  '$category',
-                  style: TextStyle(color: Colors.grey[500], fontSize: 11.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '$category',
+                      style: TextStyle(color: Colors.grey[500], fontSize: 11.0),
+                    ),
+
+                  ],
                 ),
               ),
               Padding(
@@ -230,121 +223,113 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    return  DefaultTabController(
-        length: 3,
-        child: Container(
-          color: Colors.teal[700],
-          child: SafeArea(
-            child: Scaffold(
-                appBar: AppBar(
-                  bottom: PreferredSize(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.024, ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2.0),
-                        child: GestureDetector(
-                          child: Container(
-                            color: Colors.white,
-                            height: 50.0,
-                            width: MediaQuery.of(context).size.width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
+    return  Container(
+      color: Colors.teal[700],
+      child: SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              bottom: PreferredSize(
+                child: Padding(
+                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.024, ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(2.0),
+                    child: GestureDetector(
+                      child: Container(
+                        color: Colors.white,
+                        height: 50.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
 
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Text(
-                                  "Search Restaurant / Dishes",
-                                  style:
-                                  TextStyle(color:  Colors.grey, fontSize: 15.0),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.search),
-                                  color: Colors.black,
-                                  onPressed: () {},
-                                ),
-                              ],
+                            SizedBox(
+                              width: 5.0,
                             ),
-                          ),
-                          onTap: () {
-                            showSearch(context: context, delegate: DataSearch());
-                          },
+                            Text(
+                              "Search Restaurant / Dishes",
+                              style:
+                              TextStyle(color:  Colors.grey, fontSize: 15.0),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.search),
+                              color: Colors.black,
+                              onPressed: () {},
+                            ),
+                          ],
                         ),
                       ),
+                      onTap: () {
+                        showSearch(context: context, delegate: DataSearch());
+                      },
                     ),
-                      preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.05),
-                  ),
-                  elevation: 0.0,
-                  backgroundColor: Colors.white,
-
-                  leading: GestureDetector(
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Home()),
-                      );
-                    },
-
-                  ),
-                  title: Text(
-                    receivedTitle.toUpperCase(),
-                    style: TextStyle(
-                        color: Colors.black, fontSize: 15.0),
                   ),
                 ),
-                backgroundColor: Colors.white,
-                body: Padding(
-                  padding: EdgeInsets.only(left:MediaQuery.of(context).size.height*0.01,top: 0.0,right: MediaQuery.of(context).size.height*0.01,bottom: 0.0),
-                  child: GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: (0.73),
-                      controller: ScrollController(),
-                      scrollDirection: Axis.vertical,
-                      children:
-                      List.generate(c.imageList.length, (index) {
-                        return products(
-                            c.imageList[index],
-                            c.catList[index],
-                            c.pnameList[index],
-                            c.coinsList[index],
-                            index);
-                      })),
-                ),
-
-                bottomNavigationBar: GestureDetector(
-                    onTap: () {
-                      if(cartCount.length == 0){
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              Future.delayed(Duration(seconds: 2), () {
-                                Navigator.of(context).pop(true);
-                              });
-                              return AlertDialog(
-                                title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
-                              );
-                            });
-                      }else{
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SavedAddresses(false,false),
-                          ),
-                        );
-                      }
-
-                    },
-                    child: c.cartTotal(height,total)),
+                  preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.05),
               ),
+              elevation: 0.5,
+              backgroundColor: Colors.white,
 
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              title: Text(
+                receivedTitle.toUpperCase(),
+                style: TextStyle(
+                    color: Colors.black, fontSize: 15.0),
+              ),
+            ),
+            backgroundColor: Colors.white,
+            body: Padding(
+              padding: EdgeInsets.only(left:MediaQuery.of(context).size.height*0.01,top: 0.0,right: MediaQuery.of(context).size.height*0.01,bottom: 0.0),
+              child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: (0.73),
+                  controller: ScrollController(),
+                  scrollDirection: Axis.vertical,
+                  children:
+                  List.generate(c.imageList.length, (index) {
+                    return products(
+                        c.imageList[index],
+                        c.catList[index],
+                        c.pnameList[index],
+                        c.coinsList[index],
+                        index);
+                  })),
+            ),
+
+            bottomNavigationBar: GestureDetector(
+                onTap: () {
+                  if(cartCount.length == 0){
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          Future.delayed(Duration(seconds: 2), () {
+                            Navigator.of(context).pop(true);
+                          });
+                          return AlertDialog(
+                            title: Text('Your cart is empty! :(',style: TextStyle(fontSize: 15.0),),
+                          );
+                        });
+                  }else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SavedAddresses(false,true),
+                      ),
+                    ).then(_onGoBack);
+                  }
+
+                },
+                child: c.cartTotal(height,total)),
           ),
-        ),
-      );
+
+      ),
+    );
   }
 }

@@ -6,6 +6,7 @@ import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/UserAccount/edit_account.dart';
 import 'package:simplify/UserAccount/help.dart';
 import 'package:simplify/login/login.dart';
+import 'package:simplify/models/commons.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/payment/gift_card.dart';
 import 'package:simplify/screens/cart.dart';
@@ -18,18 +19,19 @@ String emailPref;
 String phonePref;
 String fullNamePref;
 
-
 class More extends StatefulWidget {
-
   @override
   _MoreState createState() => _MoreState();
 }
 
 class _MoreState extends State<More> {
 
-  bool _expand;
   SharedPreferences sharedPreferences;
+
+  Commons _commons = Commons();
+
   bool _isLoading = false;
+  bool _expand;
 
   @override
   void initState() {
@@ -38,11 +40,12 @@ class _MoreState extends State<More> {
     getPref();
   }
 
-  void getPref() async{
+  void getPref() async {
     setState(() {
       _isLoading = true;
     });
-    sharedPreferences = sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences =
+        sharedPreferences = await SharedPreferences.getInstance();
     fullNamePref = sharedPreferences.getString("fullName");
     phonePref = sharedPreferences.getString("phone");
     emailPref = sharedPreferences.getString("email");
@@ -57,11 +60,16 @@ class _MoreState extends State<More> {
       color: Colors.teal,
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(leading: GestureDetector(
-              onTap: (){
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back,color: Colors.black,)),
+            ),
             backgroundColor: Colors.white,
             elevation: 0.5,
           ),
@@ -79,22 +87,30 @@ class _MoreState extends State<More> {
                     child: Column(
                       children: [
                         ListTile(
-                          title: _isLoading? LinearProgressIndicator():Text(fullNamePref.toUpperCase()),
-                          subtitle: _isLoading?LinearProgressIndicator():Text(
-                            phonePref+' | '+emailPref,
-                            style: TextStyle(
-                                fontSize: 11.0, color: Colors.grey[500]),
-                          ),
+                          title: _isLoading
+                              ? LinearProgressIndicator()
+                              : Text(fullNamePref.toUpperCase()),
+                          subtitle: _isLoading
+                              ? LinearProgressIndicator()
+                              : Text(
+                                  phonePref + ' | ' + emailPref,
+                                  style: TextStyle(
+                                      fontSize: 11.0, color: Colors.grey[500]),
+                                ),
                           trailing: GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => EditAccount()),
+                                MaterialPageRoute(
+                                    builder: (context) => EditAccount()),
                               );
                             },
                             child: Text(
                               'EDIT',
-                              style: TextStyle(color: Colors.orange,fontWeight: FontWeight.bold,letterSpacing: 1.0),
+                              style: TextStyle(
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.0),
                             ),
                           ),
                         ),
@@ -110,28 +126,32 @@ class _MoreState extends State<More> {
                           height: 8.0,
                         ),
                         ExpansionTile(
-                          onExpansionChanged: ((_){
+                          onExpansionChanged: ((_) {
                             setState(() {
                               _expand = !_expand;
-
                             });
-
-                          } ),
-                          title: Text('MY ACCOUNTS',style: TextStyle(color: _expand?Colors.black:Colors.teal),),
+                          }),
+                          title: Text(
+                            'MY ACCOUNTS',
+                            style: TextStyle(
+                                color: _expand ? Colors.black : Colors.teal),
+                          ),
                           subtitle: Text(
                             'Manage Address, Wallet, Gift Card',
                             style: TextStyle(
                                 fontSize: 11.0, color: Colors.grey[500]),
                           ),
-
-                          trailing: Icon(_expand?Icons.keyboard_arrow_down:Icons.keyboard_arrow_up,
+                          trailing: Icon(
+                              _expand
+                                  ? Icons.keyboard_arrow_down
+                                  : Icons.keyboard_arrow_up,
                               color: Colors.black),
                           children: [
                             DottedLine(
                               dashColor: Colors.grey,
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height*0.21,
+                              height: MediaQuery.of(context).size.height * 0.21,
                               child: ListView.builder(
                                 itemCount: 3,
                                 itemBuilder: (context, index) => ListTile(
@@ -145,27 +165,30 @@ class _MoreState extends State<More> {
                                   ),
                                   trailing: Icon(Icons.keyboard_arrow_right,
                                       color: Colors.grey),
-                                  onTap: (){
-                                    if(index == 0){
+                                  onTap: () {
+                                    if (index == 0) {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SavedAddresses(true,false)),
+                                        MaterialPageRoute(
+                                            builder: (context) => SavedAddresses(
+                                                true,
+                                                false)), //if from manageAddress send first as true and
                                       );
                                     }
-                                    if(index == 1){
+                                    if (index == 1) {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => Wallet()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Wallet()),
                                       );
                                     }
-                                    if(index == 2){
+                                    if (index == 2) {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => GiftCard()),
+                                        MaterialPageRoute(
+                                            builder: (context) => GiftCard()),
                                       );
-
                                     }
-
                                   },
                                 ),
                               ),
@@ -184,7 +207,7 @@ class _MoreState extends State<More> {
                           height: 8.0,
                         ),
                         ListTile(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => Help()),
@@ -211,10 +234,11 @@ class _MoreState extends State<More> {
                           height: 8.0,
                         ),
                         ListTile(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => OrderHistory()),
+                              MaterialPageRoute(
+                                  builder: (context) => OrderHistory()),
                             );
                           },
                           title: Text('RECENT ORDERS'),
@@ -234,10 +258,13 @@ class _MoreState extends State<More> {
                   Padding(
                     padding: const EdgeInsets.only(left: 26.0, top: 27.0),
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         sharedPreferences.clear();
                         // sharedPreferences.commit();
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => Login()),
+                            (Route<dynamic> route) => false);
                       },
                       child: Text(
                         'LOGOUT',
@@ -249,89 +276,7 @@ class _MoreState extends State<More> {
               ),
             ),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.blue[900],
-            unselectedItemColor: Colors.black,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: 4,
-            onTap: (value) {
-              switch (value) {
-                case 0:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Home()),
-                  );
-                  break;
-                case 1:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Offers(false)),
-                  );
-                  break;
-
-                case 2:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OrderHistory()),
-                  );
-                  break;
-                case 3:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Cart(false,0)),
-                  );
-                  break;
-                case 4:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => More()),
-                  );
-                  break;
-              }
-
-              setState(() {});
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                // ignore: deprecated_member_use
-                title: Text('Home'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_offer),
-                // ignore: deprecated_member_use
-                title: Text(
-                  'Offers',
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.history),
-                // ignore: deprecated_member_use
-                title: Text(
-                  'Orders',
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.business_center),
-                // ignore: deprecated_member_use
-                title: Text(
-                  'Cart',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.more_horiz),
-                // ignore: deprecated_member_use
-                title: Text(
-                  'More',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ],
-          ),
+          bottomNavigationBar: _commons.bottomNav(context, 4),
         ),
       ),
     );
