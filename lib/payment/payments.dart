@@ -3,10 +3,10 @@ import 'package:simplify/payment/payment_success.dart';
 
 class Payments extends StatefulWidget {
   int itemCountFromCart;
-  int deliveryFee;
-  int subTotal;
-  int cartTotal;
-  int appliedOfferPrice;
+  double deliveryFee;
+  double subTotal;
+  double cartTotal;
+  double appliedOfferPrice;
   Payments(this.itemCountFromCart,this.deliveryFee,this.subTotal,this.cartTotal,this.appliedOfferPrice);
   @override
   _PaymentsState createState() => _PaymentsState(this.itemCountFromCart,this.deliveryFee,this.subTotal,this.cartTotal,this.appliedOfferPrice);
@@ -15,10 +15,10 @@ class Payments extends StatefulWidget {
 class _PaymentsState extends State<Payments> {
 
   int itemCountFromCart;
-  int deliveryFee;
-  int subTotal;
-  int cartTotal;
-  int appliedOfferPrice;
+  double deliveryFee;
+  double subTotal;
+  double cartTotal;
+  double appliedOfferPrice;
 
   _PaymentsState(this.itemCountFromCart,this.deliveryFee,this.subTotal,this.cartTotal,this.appliedOfferPrice);
   bool card = false;
@@ -86,9 +86,10 @@ class _PaymentsState extends State<Payments> {
                     title: Row(children: [
                       Icon(Icons.credit_card),
                       SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                      Text("Credit/Debit/UPI/Net Banking.",style: TextStyle(color: card ? Colors.teal:Colors.black),)
 
                     ],),
-                    subtitle: Text("Credit/Debit/UPI/Net Banking.",style: TextStyle(color: card ? Colors.teal:Colors.black),),
+
                     onChanged: (val) {
                       print("Credit option pressed $val");
                       setSelectedRadioTile(val);
@@ -100,8 +101,11 @@ class _PaymentsState extends State<Payments> {
                     groupValue: selectedRadioTile,
                     title: Row(children: [
                       Icon(Icons.payments),
+                      SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                      Text("Cash on Delivery.",style: TextStyle(color: cash ? Colors.teal:Colors.black ),),
+
                     ],),
-                    subtitle: Text("Cash on Delivery.",style: TextStyle(color: cash ? Colors.teal:Colors.black ),),
+
                     onChanged: (val) {
                       print("Cash on delivery pressed $val");
                       setSelectedRadioTile(val);
@@ -135,7 +139,7 @@ class _PaymentsState extends State<Payments> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Price('+itemCountFromCart.toString()+' Items)',style: TextStyle(color: Colors.grey[600],fontSize: 15.0),),
-                                  Text('\$'+(cartTotal).toString()+'.00',style: TextStyle(color: Colors.grey[600],fontSize: 15.0)),
+                                  Text('\$'+(cartTotal).toString(),style: TextStyle(color: Colors.grey[600],fontSize: 15.0)),
                                 ],
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height*0.01,),
@@ -143,7 +147,7 @@ class _PaymentsState extends State<Payments> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Delivery Charges',style: TextStyle(color: Colors.grey[600],fontSize: 15.0),),
-                                  Text('\$'+deliveryFee.toString()+'.00',style: TextStyle(color: Colors.grey[600],fontSize: 15.0)),
+                                  Text('\$'+deliveryFee.toString(),style: TextStyle(color: Colors.grey[600],fontSize: 15.0)),
                                 ],
                               ),
                               Divider(thickness: 0.8,),
@@ -152,7 +156,7 @@ class _PaymentsState extends State<Payments> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Total Amount',style: TextStyle(color: Colors.black,fontSize: 17.0),),
-                                  Text('\$'+(cartTotal+deliveryFee).toString()+'.00',style: TextStyle(color: Colors.grey[600])),
+                                  Text('\$'+(cartTotal+deliveryFee).toString(),style: TextStyle(color: Colors.grey[600])),
                                 ],
                               ),
                             ],

@@ -1,13 +1,16 @@
 
-import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+
 import 'package:flutter/material.dart';
+import 'package:simplify/Local_db/database_helper.dart';
 import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/Orders/track_order.dart';
+import 'package:simplify/UserAccount/SavedAddresses.dart';
 import 'package:simplify/UserAccount/more.dart';
 import 'package:simplify/screens/home.dart';
 import 'package:simplify/screens/offers.dart';
 import 'package:simplify/screens/products.dart';
 import 'package:simplify/screens/cart.dart';
+import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 
 class Commons {
   List<String> imageList = [
@@ -98,7 +101,7 @@ class Commons {
                         ),
                   ),
                   Text(
-                    '\$'+total.toString()+'.00',
+                    '\$'+total.toStringAsFixed(2),
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -141,7 +144,7 @@ Container orderHist(height,width,recentOrders, buildCount, orderFlag,context){
                         height: 10.0,
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height*0.28,
+                        height: 215.0,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
                               Radius.circular(5.0),
@@ -319,31 +322,25 @@ RaisedButton getRange(context){
       );
     }
 
-  void checkCart(BuildContext context) {
-    if (cartCount.length == 0) {
-      print('Cart is empty!');
-      showDialog(
-          context: context,
-          builder: (context) {
-            Future.delayed(Duration(seconds: 2), () {
-              Navigator.of(context).pop(true);
-            });
-            return AlertDialog(
-              title: Text(
-                'Your cart is empty! :(',
-                style: TextStyle(fontSize: 15.0),
-              ),
-            );
-          });
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Cart(false, 0)),
-      );
-    }
+
+
+  void checkCart(BuildContext context) async{
+
+      var count = await DatabaseHelper.instance.getCountForCart();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Cart(false, selectedAddress, 0, 0)),
+        );
+
   }
 
+
+
   BottomNavigationBar bottomNav(BuildContext context,int index){
+
     return BottomNavigationBar(
       backgroundColor: Colors.white,
       selectedItemColor: Colors.blue[900],
@@ -362,7 +359,7 @@ RaisedButton getRange(context){
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Offers(false)),
+                  builder: (context) => Offers(false,0)),
             );
             break;
           case 2:

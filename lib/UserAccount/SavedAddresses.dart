@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/Local_db/database_helper.dart';
 import 'package:simplify/models/Address_model.dart';
 import 'package:simplify/UserAccount/NewAddress.dart';
 import 'package:simplify/screens/cart.dart';
@@ -25,15 +26,13 @@ class _SavedAddressesState extends State<SavedAddresses> {
 
   _SavedAddressesState(this.manageAddress, this.fromCart);
 
-  List _selected = List<bool>.generate(am.place.length, (int index) => false);
-
+  //List _selected = List<bool>.generate(am.place.length, (int index) => false);
+  List _selected = [true,false];
   @override
   void initState() {
     selectedAddress = 0;
     super.initState();
   }
-
-  void SelectAddress() {}
 
   @override
   Widget build(BuildContext context) {
@@ -242,13 +241,14 @@ class _SavedAddressesState extends State<SavedAddresses> {
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         onPressed: () {
+                          var coun = DatabaseHelper.instance.getCountForCart();
                           if (manageAddress == true) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => NewAddress()),
                             );
-                          } else if (cartCount.length == 0) {
+                          } else if (coun == 0) {
                             showDialog(
                                 context: context,
                                 builder: (context) {
@@ -271,12 +271,12 @@ class _SavedAddressesState extends State<SavedAddresses> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      Cart(false, selectedAddress)),
+                                      Cart(false, selectedAddress, 0, 0)),
                             );
                           }
                         },
                         child: Text(
-                          manageAddress ? 'ADD NEW' : 'CART',
+                          manageAddress ? 'ADD NEW' : 'NEXT',
                           style: TextStyle(
                               color: Colors.white,
                               letterSpacing: 1.0,

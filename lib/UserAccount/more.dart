@@ -9,9 +9,6 @@ import 'package:simplify/login/login.dart';
 import 'package:simplify/models/commons.dart';
 import 'package:simplify/models/more_model.dart';
 import 'package:simplify/payment/gift_card.dart';
-import 'package:simplify/screens/cart.dart';
-import 'package:simplify/screens/home.dart';
-import 'package:simplify/screens/offers.dart';
 import 'package:simplify/payment/wallet.dart';
 
 MoreModel m = MoreModel();
@@ -143,7 +140,7 @@ class _MoreState extends State<More> {
                           ),
                           trailing: Icon(
                               _expand
-                                  ? Icons.keyboard_arrow_down
+                                  ? Icons.keyboard_arrow_right
                                   : Icons.keyboard_arrow_up,
                               color: Colors.black),
                           children: [
@@ -151,7 +148,7 @@ class _MoreState extends State<More> {
                               dashColor: Colors.grey,
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.21,
+                              height: 165.0,
                               child: ListView.builder(
                                 itemCount: 3,
                                 itemBuilder: (context, index) => ListTile(

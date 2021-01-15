@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simplify/Orders/order_history.dart';
-import 'package:simplify/UserAccount/more.dart';
 import 'package:simplify/models/search_model.dart';
-import 'package:simplify/screens/offers.dart';
-import 'package:simplify/screens/home.dart';
 import 'package:simplify/models/commons.dart';
 
 

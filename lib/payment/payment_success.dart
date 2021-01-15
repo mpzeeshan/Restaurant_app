@@ -1,16 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:simplify/Local_db/database_helper.dart';
 import 'package:simplify/Orders/order_history.dart';
 import 'package:simplify/UserAccount/help.dart';
 import 'package:simplify/screens/products.dart';
 
 
 
-class PaymentSuccess extends StatelessWidget {
-  int subTotal;
-  int deliveryFee;
-  int offerApplied;
-  int total;
+class PaymentSuccess extends StatefulWidget {
+  double subTotal;
+  double deliveryFee;
+  double offerApplied;
+  double total;
   PaymentSuccess(this.subTotal,this.deliveryFee,this.offerApplied,this.total);
+
+  @override
+  _PaymentSuccessState createState() => _PaymentSuccessState(this.subTotal,this.deliveryFee,this.offerApplied,this.total);
+}
+
+class _PaymentSuccessState extends State<PaymentSuccess> {
+  double subTotal;
+  double deliveryFee;
+  double offerApplied;
+  double total;
+
+  static List<Map> a;
+
+  bool _isLoading = false;
+
+  _PaymentSuccessState(this.subTotal,this.deliveryFee,this.offerApplied,this.total);
+
+  @override
+  void initState(){
+    getCartProducts();
+    super.initState();
+  }
+
+  Future getCartProducts() async{
+    setState(() {
+      _isLoading = true;
+    });
+    a = await DatabaseHelper.instance.queryForCart();
+    print(a[0][productName]);
+    setState(() {
+      _isLoading =  false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +65,7 @@ class PaymentSuccess extends StatelessWidget {
                   color: Colors.black,
                 )),
           ),
-          body: Container(
+          body: _isLoading ? Center(child:CircularProgressIndicator()):Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -64,21 +98,21 @@ class PaymentSuccess extends StatelessWidget {
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
 
                          Container(
-                             height: cartCount.length > 2 ? MediaQuery.of(context).size.height*0.16:MediaQuery.of(context).size.height*0.08,
+                             height: a.length > 2 ? MediaQuery.of(context).size.height*0.16:MediaQuery.of(context).size.height*0.06,
                              child: ListView.builder(itemBuilder: (context, index) => Column(
                                children: [
                                  Row(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    children: [
-                                     Text( c.pnameList[cartCount[index]]+' X '+c.counList[cartCount[index]].toString(),style: TextStyle(fontSize: 15.0),),
-                                     Text('\$'+c.priceList[cartCount[index]].toString()+'.00',style: TextStyle(fontSize: 15.0),),
+                                     Text( a[index][productName]+' X '+a[index][productQuantity].toString(),style: TextStyle(fontSize: 15.0),),
+                                     Text('\$'+(double.parse(a[index][productPrice])*int.parse(a[index][productQuantity])).toString(),style: TextStyle(fontSize: 15.0),),
 
                                    ],),
                                  SizedBox(height: MediaQuery.of(context).size.height*0.020,),
                                ],
 
                              ),
-                             itemCount: cartCount.length,
+                             itemCount: a.length,
                              ),
 
                          ),
@@ -89,7 +123,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Subtotal',style: TextStyle(fontSize: 17.0,fontWeight: FontWeight.bold),),
-                             Text('\$'+subTotal.toString()+'.00',style: TextStyle(fontSize: 17.0),),
+                             Text('\$'+widget.subTotal.toString(),style: TextStyle(fontSize: 17.0),),
 
                            ],),
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
@@ -97,7 +131,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Delivery Charges',style: TextStyle(fontSize: 15.0),),
-                             Text('\$'+deliveryFee.toString()+'.00',style: TextStyle(fontSize: 15.0),),
+                             Text('\$'+widget.deliveryFee.toString(),style: TextStyle(fontSize: 15.0),),
 
                            ],),
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
@@ -107,7 +141,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Discount',style: TextStyle(fontSize: 15.0),),
-                             Text('\$'+offerApplied.toString()+'.00',style: TextStyle(fontSize: 15.0),),
+                             Text('\$'+widget.offerApplied.toString(),style: TextStyle(fontSize: 15.0),),
                            ],),
                          SizedBox(height: MediaQuery.of(context).size.height*0.01,),
                          Divider(thickness: 1.3,),
@@ -116,7 +150,7 @@ class PaymentSuccess extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                            children: [
                              Text('Paid Via Cash',style: TextStyle(fontSize: 17.0),),
-                             Text('TOTAL  \$'+total.toString()+'.00',style: TextStyle(fontSize: 17.0),),
+                             Text('TOTAL  \$'+widget.total.toString(),style: TextStyle(fontSize: 17.0),),
                            ],),
                        ],
                      ),
